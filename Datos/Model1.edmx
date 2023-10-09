@@ -1,0 +1,2026 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ContextoZM.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="IdCategoria" />
+          </Key>
+          <Property Name="IdCategoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="CreadoPor" Type="int" />
+          <Property Name="EditadoPor" Type="int" />
+          <Property Name="EliminadoPor" Type="int" />
+          <Property Name="FechaCreacion" Type="datetime" />
+          <Property Name="FechaActualizacion" Type="datetime" />
+          <Property Name="FechaEliminacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombres" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Apellidos" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Cedula" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="Correo" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Telefono" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="CreadoPor" Type="int" />
+          <Property Name="EditadoPor" Type="int" />
+          <Property Name="EliminadoPor" Type="int" />
+          <Property Name="FechaCreacion" Type="datetime" />
+          <Property Name="FechaActualizacion" Type="datetime" />
+          <Property Name="FechaEliminacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Color">
+          <Key>
+            <PropertyRef Name="IdColor" />
+          </Key>
+          <Property Name="IdColor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="CreadoPor" Type="int" />
+          <Property Name="EditadoPor" Type="int" />
+          <Property Name="EliminadoPor" Type="int" />
+          <Property Name="FechaCreacion" Type="datetime" />
+          <Property Name="FechaActualizacion" Type="datetime" />
+          <Property Name="FechaEliminacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Marca">
+          <Key>
+            <PropertyRef Name="IdMarca" />
+          </Key>
+          <Property Name="IdMarca" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="CreadoPor" Type="int" />
+          <Property Name="EditadoPor" Type="int" />
+          <Property Name="EliminadoPor" Type="int" />
+          <Property Name="FechaCreacion" Type="datetime" />
+          <Property Name="FechaActualizacion" Type="datetime" />
+          <Property Name="FechaEliminacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="IdProducto" />
+          </Key>
+          <Property Name="IdProducto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Modelo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="255" />
+          <Property Name="Stock" Type="int" Nullable="false" />
+          <Property Name="PrecioCompra" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="PrecioVenta" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Almacenamiento" Type="nvarchar" MaxLength="50" />
+          <Property Name="GarantiaMeses" Type="int" />
+          <Property Name="RAM" Type="nvarchar" MaxLength="50" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="IdMarca" Type="int" />
+          <Property Name="IdCategoria" Type="int" />
+          <Property Name="IdColor" Type="int" />
+          <Property Name="CreadoPor" Type="int" Nullable="false" />
+          <Property Name="EditadoPor" Type="int" />
+          <Property Name="EliminadoPor" Type="int" />
+          <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+          <Property Name="FechaActualizacion" Type="datetime" />
+          <Property Name="FechaEliminacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Proveedor">
+          <Key>
+            <PropertyRef Name="IdProveedor" />
+          </Key>
+          <Property Name="IdProveedor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Telefono" Type="nvarchar" MaxLength="15" />
+          <Property Name="Correo" Type="nvarchar" MaxLength="100" />
+          <Property Name="Direccion" Type="nvarchar" MaxLength="255" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="CreadoPor" Type="int" />
+          <Property Name="EditadoPor" Type="int" />
+          <Property Name="EliminadoPor" Type="int" />
+          <Property Name="FechaCreacion" Type="datetime" />
+          <Property Name="FechaActualizacion" Type="datetime" />
+          <Property Name="FechaEliminacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DetalleFacturaCompra">
+          <Key>
+            <PropertyRef Name="IdDetalleFacturaCompra" />
+          </Key>
+          <Property Name="IdDetalleFacturaCompra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdFacturaCompra" Type="int" Nullable="false" />
+          <Property Name="IdProducto" Type="int" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="PrecioUnitario" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FacturaCompra">
+          <Key>
+            <PropertyRef Name="IdFacturaCompra" />
+          </Key>
+          <Property Name="IdFacturaCompra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NumeroFactura" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="Subtotal" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Impuesto" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="IdProveedor" Type="int" Nullable="false" />
+          <Property Name="CreadoPor" Type="int" Nullable="false" />
+          <Property Name="AnuladoPor" Type="int" />
+          <Property Name="FechaAnulacion" Type="datetime" />
+          <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+          <Property Name="RazonAnulamiento" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Controlador">
+          <Key>
+            <PropertyRef Name="IdControlador" />
+          </Key>
+          <Property Name="IdControlador" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreControlador" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdModulo" Type="int" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="Icono" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Modulo">
+          <Key>
+            <PropertyRef Name="IdModulo" />
+          </Key>
+          <Property Name="IdModulo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreModulo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Operacion">
+          <Key>
+            <PropertyRef Name="IdOperacion" />
+          </Key>
+          <Property Name="IdOperacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreOperacion" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdControlador" Type="int" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="IdRol" />
+          </Key>
+          <Property Name="IdRol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreRol" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RolOperacion">
+          <Key>
+            <PropertyRef Name="IdRolOperacion" />
+          </Key>
+          <Property Name="IdRolOperacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdRol" Type="int" />
+          <Property Name="IdOperacion" Type="int" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Apellidos" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NombreUsuario" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Correo" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Cedula" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="IdRol" Type="int" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="Contrasena" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DetalleFacturaVenta">
+          <Key>
+            <PropertyRef Name="IdDetalleFacturaVenta" />
+          </Key>
+          <Property Name="IdDetalleFacturaVenta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdFacturaVenta" Type="int" Nullable="false" />
+          <Property Name="IdProducto" Type="int" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="PrecioUnitario" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IMEI" Type="nvarchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="FacturaVenta">
+          <Key>
+            <PropertyRef Name="IdFacturaVenta" />
+          </Key>
+          <Property Name="IdFacturaVenta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NumeroFactura" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="Subtotal" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Impuesto" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="IdCliente" Type="int" Nullable="false" />
+          <Property Name="CreadoPor" Type="int" Nullable="false" />
+          <Property Name="AnuladoPor" Type="int" />
+          <Property Name="FechaAnulacion" Type="datetime" />
+          <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+          <Property Name="RazonAnulamiento" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Garantia">
+          <Key>
+            <PropertyRef Name="IdGarantia" />
+          </Key>
+          <Property Name="IdGarantia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdDetalleFacturaVenta" Type="int" Nullable="false" />
+          <Property Name="FechaInicio" Type="datetime" Nullable="false" />
+          <Property Name="FechaFin" Type="datetime" Nullable="false" />
+          <Property Name="Estado" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Categoria__Cread__3E52440B">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Categoria">
+              <PropertyRef Name="CreadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Categoria__Edita__3F466844">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Categoria">
+              <PropertyRef Name="EditadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Categoria__Elimi__403A8C7D">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Categoria">
+              <PropertyRef Name="EliminadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cliente__CreadoP__571DF1D5">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="CreadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cliente__Editado__5812160E">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="EditadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cliente__Elimina__59063A47">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="EliminadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Color__CreadoPor__440B1D61">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Color" Type="Self.Color" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Color">
+              <PropertyRef Name="CreadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Color__EditadoPo__44FF419A">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Color" Type="Self.Color" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Color">
+              <PropertyRef Name="EditadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Color__Eliminado__45F365D3">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Color" Type="Self.Color" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Color">
+              <PropertyRef Name="EliminadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Controlad__IdMod__2F10007B">
+          <End Role="Modulo" Type="Self.Modulo" Multiplicity="0..1" />
+          <End Role="Controlador" Type="Self.Controlador" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modulo">
+              <PropertyRef Name="IdModulo" />
+            </Principal>
+            <Dependent Role="Controlador">
+              <PropertyRef Name="IdModulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetalleFa__IdFac__00200768">
+          <End Role="FacturaVenta" Type="Self.FacturaVenta" Multiplicity="1" />
+          <End Role="DetalleFacturaVenta" Type="Self.DetalleFacturaVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FacturaVenta">
+              <PropertyRef Name="IdFacturaVenta" />
+            </Principal>
+            <Dependent Role="DetalleFacturaVenta">
+              <PropertyRef Name="IdFacturaVenta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetalleFa__IdFac__70DDC3D8">
+          <End Role="FacturaCompra" Type="Self.FacturaCompra" Multiplicity="1" />
+          <End Role="DetalleFacturaCompra" Type="Self.DetalleFacturaCompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FacturaCompra">
+              <PropertyRef Name="IdFacturaCompra" />
+            </Principal>
+            <Dependent Role="DetalleFacturaCompra">
+              <PropertyRef Name="IdFacturaCompra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetalleFa__IdPro__01142BA1">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="DetalleFacturaVenta" Type="Self.DetalleFacturaVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="DetalleFacturaVenta">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetalleFa__IdPro__71D1E811">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="DetalleFacturaCompra" Type="Self.DetalleFacturaCompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="DetalleFacturaCompra">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FacturaCo__Anula__693CA210">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="FacturaCompra" Type="Self.FacturaCompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="FacturaCompra">
+              <PropertyRef Name="AnuladoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FacturaCo__Cread__68487DD7">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="FacturaCompra" Type="Self.FacturaCompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="FacturaCompra">
+              <PropertyRef Name="CreadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FacturaCo__IdPro__6754599E">
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
+          <End Role="FacturaCompra" Type="Self.FacturaCompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="IdProveedor" />
+            </Principal>
+            <Dependent Role="FacturaCompra">
+              <PropertyRef Name="IdProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FacturaVe__Anula__787EE5A0">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="FacturaVenta" Type="Self.FacturaVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="FacturaVenta">
+              <PropertyRef Name="AnuladoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FacturaVe__Cread__778AC167">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="FacturaVenta" Type="Self.FacturaVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="FacturaVenta">
+              <PropertyRef Name="CreadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FacturaVe__IdCli__76969D2E">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="FacturaVenta" Type="Self.FacturaVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="FacturaVenta">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Garantia__IdDeta__06CD04F7">
+          <End Role="DetalleFacturaVenta" Type="Self.DetalleFacturaVenta" Multiplicity="1" />
+          <End Role="Garantia" Type="Self.Garantia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DetalleFacturaVenta">
+              <PropertyRef Name="IdDetalleFacturaVenta" />
+            </Principal>
+            <Dependent Role="Garantia">
+              <PropertyRef Name="IdDetalleFacturaVenta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Marca__CreadoPor__38996AB5">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Marca" Type="Self.Marca" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Marca">
+              <PropertyRef Name="CreadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Marca__EditadoPo__398D8EEE">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Marca" Type="Self.Marca" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Marca">
+              <PropertyRef Name="EditadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Marca__Eliminado__3A81B327">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Marca" Type="Self.Marca" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Marca">
+              <PropertyRef Name="EliminadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Operacion__IdCon__31EC6D26">
+          <End Role="Controlador" Type="Self.Controlador" Multiplicity="0..1" />
+          <End Role="Operacion" Type="Self.Operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Controlador">
+              <PropertyRef Name="IdControlador" />
+            </Principal>
+            <Dependent Role="Operacion">
+              <PropertyRef Name="IdControlador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Producto__Creado__4CA06362">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="CreadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Producto__Editad__4D94879B">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="EditadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Producto__Elimin__4E88ABD4">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="EliminadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Producto__IdCate__4AB81AF0">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="IdCategoria" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="IdCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Producto__IdColo__4BAC3F29">
+          <End Role="Color" Type="Self.Color" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Color">
+              <PropertyRef Name="IdColor" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="IdColor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Producto__IdMarc__49C3F6B7">
+          <End Role="Marca" Type="Self.Marca" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Marca">
+              <PropertyRef Name="IdMarca" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="IdMarca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Proveedor__Cread__5EBF139D">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Proveedor">
+              <PropertyRef Name="CreadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Proveedor__Edita__5FB337D6">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Proveedor">
+              <PropertyRef Name="EditadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Proveedor__Elimi__60A75C0F">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Proveedor">
+              <PropertyRef Name="EliminadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RolOperac__IdOpe__35BCFE0A">
+          <End Role="Operacion" Type="Self.Operacion" Multiplicity="0..1" />
+          <End Role="RolOperacion" Type="Self.RolOperacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operacion">
+              <PropertyRef Name="IdOperacion" />
+            </Principal>
+            <Dependent Role="RolOperacion">
+              <PropertyRef Name="IdOperacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RolOperac__IdRol__34C8D9D1">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
+          <End Role="RolOperacion" Type="Self.RolOperacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="IdRol" />
+            </Principal>
+            <Dependent Role="RolOperacion">
+              <PropertyRef Name="IdRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Usuario__IdRol__267ABA7A">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="IdRol" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="IdRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ContextoZMStoreContainer">
+          <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="Catalogo" store:Type="Tables" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="Catalogo" store:Type="Tables" />
+          <EntitySet Name="Color" EntityType="Self.Color" Schema="Catalogo" store:Type="Tables" />
+          <EntitySet Name="Marca" EntityType="Self.Marca" Schema="Catalogo" store:Type="Tables" />
+          <EntitySet Name="Producto" EntityType="Self.Producto" Schema="Catalogo" store:Type="Tables" />
+          <EntitySet Name="Proveedor" EntityType="Self.Proveedor" Schema="Catalogo" store:Type="Tables" />
+          <EntitySet Name="DetalleFacturaCompra" EntityType="Self.DetalleFacturaCompra" Schema="Compras" store:Type="Tables" />
+          <EntitySet Name="FacturaCompra" EntityType="Self.FacturaCompra" Schema="Compras" store:Type="Tables" />
+          <EntitySet Name="Controlador" EntityType="Self.Controlador" Schema="Seguridad" store:Type="Tables" />
+          <EntitySet Name="Modulo" EntityType="Self.Modulo" Schema="Seguridad" store:Type="Tables" />
+          <EntitySet Name="Operacion" EntityType="Self.Operacion" Schema="Seguridad" store:Type="Tables" />
+          <EntitySet Name="Rol" EntityType="Self.Rol" Schema="Seguridad" store:Type="Tables" />
+          <EntitySet Name="RolOperacion" EntityType="Self.RolOperacion" Schema="Seguridad" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="Seguridad" store:Type="Tables" />
+          <EntitySet Name="DetalleFacturaVenta" EntityType="Self.DetalleFacturaVenta" Schema="Ventas" store:Type="Tables" />
+          <EntitySet Name="FacturaVenta" EntityType="Self.FacturaVenta" Schema="Ventas" store:Type="Tables" />
+          <EntitySet Name="Garantia" EntityType="Self.Garantia" Schema="Ventas" store:Type="Tables" />
+          <AssociationSet Name="FK__Categoria__Cread__3E52440B" Association="Self.FK__Categoria__Cread__3E52440B">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Categoria" EntitySet="Categoria" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Categoria__Edita__3F466844" Association="Self.FK__Categoria__Edita__3F466844">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Categoria" EntitySet="Categoria" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Categoria__Elimi__403A8C7D" Association="Self.FK__Categoria__Elimi__403A8C7D">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Categoria" EntitySet="Categoria" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cliente__CreadoP__571DF1D5" Association="Self.FK__Cliente__CreadoP__571DF1D5">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cliente__Editado__5812160E" Association="Self.FK__Cliente__Editado__5812160E">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cliente__Elimina__59063A47" Association="Self.FK__Cliente__Elimina__59063A47">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Color__CreadoPor__440B1D61" Association="Self.FK__Color__CreadoPor__440B1D61">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Color" EntitySet="Color" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Color__EditadoPo__44FF419A" Association="Self.FK__Color__EditadoPo__44FF419A">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Color" EntitySet="Color" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Color__Eliminado__45F365D3" Association="Self.FK__Color__Eliminado__45F365D3">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Color" EntitySet="Color" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Controlad__IdMod__2F10007B" Association="Self.FK__Controlad__IdMod__2F10007B">
+            <End Role="Modulo" EntitySet="Modulo" />
+            <End Role="Controlador" EntitySet="Controlador" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetalleFa__IdFac__00200768" Association="Self.FK__DetalleFa__IdFac__00200768">
+            <End Role="FacturaVenta" EntitySet="FacturaVenta" />
+            <End Role="DetalleFacturaVenta" EntitySet="DetalleFacturaVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetalleFa__IdFac__70DDC3D8" Association="Self.FK__DetalleFa__IdFac__70DDC3D8">
+            <End Role="FacturaCompra" EntitySet="FacturaCompra" />
+            <End Role="DetalleFacturaCompra" EntitySet="DetalleFacturaCompra" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetalleFa__IdPro__01142BA1" Association="Self.FK__DetalleFa__IdPro__01142BA1">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="DetalleFacturaVenta" EntitySet="DetalleFacturaVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetalleFa__IdPro__71D1E811" Association="Self.FK__DetalleFa__IdPro__71D1E811">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="DetalleFacturaCompra" EntitySet="DetalleFacturaCompra" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FacturaCo__Anula__693CA210" Association="Self.FK__FacturaCo__Anula__693CA210">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="FacturaCompra" EntitySet="FacturaCompra" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FacturaCo__Cread__68487DD7" Association="Self.FK__FacturaCo__Cread__68487DD7">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="FacturaCompra" EntitySet="FacturaCompra" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FacturaCo__IdPro__6754599E" Association="Self.FK__FacturaCo__IdPro__6754599E">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="FacturaCompra" EntitySet="FacturaCompra" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FacturaVe__Anula__787EE5A0" Association="Self.FK__FacturaVe__Anula__787EE5A0">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="FacturaVenta" EntitySet="FacturaVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FacturaVe__Cread__778AC167" Association="Self.FK__FacturaVe__Cread__778AC167">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="FacturaVenta" EntitySet="FacturaVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FacturaVe__IdCli__76969D2E" Association="Self.FK__FacturaVe__IdCli__76969D2E">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="FacturaVenta" EntitySet="FacturaVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Garantia__IdDeta__06CD04F7" Association="Self.FK__Garantia__IdDeta__06CD04F7">
+            <End Role="DetalleFacturaVenta" EntitySet="DetalleFacturaVenta" />
+            <End Role="Garantia" EntitySet="Garantia" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Marca__CreadoPor__38996AB5" Association="Self.FK__Marca__CreadoPor__38996AB5">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Marca" EntitySet="Marca" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Marca__EditadoPo__398D8EEE" Association="Self.FK__Marca__EditadoPo__398D8EEE">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Marca" EntitySet="Marca" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Marca__Eliminado__3A81B327" Association="Self.FK__Marca__Eliminado__3A81B327">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Marca" EntitySet="Marca" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Operacion__IdCon__31EC6D26" Association="Self.FK__Operacion__IdCon__31EC6D26">
+            <End Role="Controlador" EntitySet="Controlador" />
+            <End Role="Operacion" EntitySet="Operacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Producto__Creado__4CA06362" Association="Self.FK__Producto__Creado__4CA06362">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Producto__Editad__4D94879B" Association="Self.FK__Producto__Editad__4D94879B">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Producto__Elimin__4E88ABD4" Association="Self.FK__Producto__Elimin__4E88ABD4">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Producto__IdCate__4AB81AF0" Association="Self.FK__Producto__IdCate__4AB81AF0">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Producto__IdColo__4BAC3F29" Association="Self.FK__Producto__IdColo__4BAC3F29">
+            <End Role="Color" EntitySet="Color" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Producto__IdMarc__49C3F6B7" Association="Self.FK__Producto__IdMarc__49C3F6B7">
+            <End Role="Marca" EntitySet="Marca" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Proveedor__Cread__5EBF139D" Association="Self.FK__Proveedor__Cread__5EBF139D">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Proveedor" EntitySet="Proveedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Proveedor__Edita__5FB337D6" Association="Self.FK__Proveedor__Edita__5FB337D6">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Proveedor" EntitySet="Proveedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Proveedor__Elimi__60A75C0F" Association="Self.FK__Proveedor__Elimi__60A75C0F">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Proveedor" EntitySet="Proveedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RolOperac__IdOpe__35BCFE0A" Association="Self.FK__RolOperac__IdOpe__35BCFE0A">
+            <End Role="Operacion" EntitySet="Operacion" />
+            <End Role="RolOperacion" EntitySet="RolOperacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RolOperac__IdRol__34C8D9D1" Association="Self.FK__RolOperac__IdRol__34C8D9D1">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="RolOperacion" EntitySet="RolOperacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Usuario__IdRol__267ABA7A" Association="Self.FK__Usuario__IdRol__267ABA7A">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ContextoZM" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="IdCategoria" />
+          </Key>
+          <Property Name="IdCategoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="CreadoPor" Type="Int32" />
+          <Property Name="EditadoPor" Type="Int32" />
+          <Property Name="EliminadoPor" Type="Int32" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="FechaActualizacion" Type="DateTime" Precision="3" />
+          <Property Name="FechaEliminacion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__Categoria__Cread__3E52440B" FromRole="Categoria" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario1" Relationship="Self.FK__Categoria__Edita__3F466844" FromRole="Categoria" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario2" Relationship="Self.FK__Categoria__Elimi__403A8C7D" FromRole="Categoria" ToRole="Usuario" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK__Producto__IdCate__4AB81AF0" FromRole="Categoria" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Apellidos" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cedula" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Correo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Telefono" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreadoPor" Type="Int32" />
+          <Property Name="EditadoPor" Type="Int32" />
+          <Property Name="EliminadoPor" Type="Int32" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="FechaActualizacion" Type="DateTime" Precision="3" />
+          <Property Name="FechaEliminacion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__Cliente__CreadoP__571DF1D5" FromRole="Cliente" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario1" Relationship="Self.FK__Cliente__Editado__5812160E" FromRole="Cliente" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario2" Relationship="Self.FK__Cliente__Elimina__59063A47" FromRole="Cliente" ToRole="Usuario" />
+          <NavigationProperty Name="FacturaVenta" Relationship="Self.FK__FacturaVe__IdCli__76969D2E" FromRole="Cliente" ToRole="FacturaVenta" />
+        </EntityType>
+        <EntityType Name="Color">
+          <Key>
+            <PropertyRef Name="IdColor" />
+          </Key>
+          <Property Name="IdColor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="CreadoPor" Type="Int32" />
+          <Property Name="EditadoPor" Type="Int32" />
+          <Property Name="EliminadoPor" Type="Int32" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="FechaActualizacion" Type="DateTime" Precision="3" />
+          <Property Name="FechaEliminacion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__Color__CreadoPor__440B1D61" FromRole="Color" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario1" Relationship="Self.FK__Color__EditadoPo__44FF419A" FromRole="Color" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario2" Relationship="Self.FK__Color__Eliminado__45F365D3" FromRole="Color" ToRole="Usuario" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK__Producto__IdColo__4BAC3F29" FromRole="Color" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Marca">
+          <Key>
+            <PropertyRef Name="IdMarca" />
+          </Key>
+          <Property Name="IdMarca" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="CreadoPor" Type="Int32" />
+          <Property Name="EditadoPor" Type="Int32" />
+          <Property Name="EliminadoPor" Type="Int32" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="FechaActualizacion" Type="DateTime" Precision="3" />
+          <Property Name="FechaEliminacion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__Marca__CreadoPor__38996AB5" FromRole="Marca" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario1" Relationship="Self.FK__Marca__EditadoPo__398D8EEE" FromRole="Marca" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario2" Relationship="Self.FK__Marca__Eliminado__3A81B327" FromRole="Marca" ToRole="Usuario" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK__Producto__IdMarc__49C3F6B7" FromRole="Marca" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="IdProducto" />
+          </Key>
+          <Property Name="IdProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Modelo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcion" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Stock" Type="Int32" Nullable="false" />
+          <Property Name="PrecioCompra" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="PrecioVenta" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Almacenamiento" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GarantiaMeses" Type="Int32" />
+          <Property Name="RAM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="IdMarca" Type="Int32" />
+          <Property Name="IdCategoria" Type="Int32" />
+          <Property Name="IdColor" Type="Int32" />
+          <Property Name="CreadoPor" Type="Int32" Nullable="false" />
+          <Property Name="EditadoPor" Type="Int32" />
+          <Property Name="EliminadoPor" Type="Int32" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaActualizacion" Type="DateTime" Precision="3" />
+          <Property Name="FechaEliminacion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Categoria" Relationship="Self.FK__Producto__IdCate__4AB81AF0" FromRole="Producto" ToRole="Categoria" />
+          <NavigationProperty Name="Color" Relationship="Self.FK__Producto__IdColo__4BAC3F29" FromRole="Producto" ToRole="Color" />
+          <NavigationProperty Name="Marca" Relationship="Self.FK__Producto__IdMarc__49C3F6B7" FromRole="Producto" ToRole="Marca" />
+          <NavigationProperty Name="DetalleFacturaVenta" Relationship="Self.FK__DetalleFa__IdPro__01142BA1" FromRole="Producto" ToRole="DetalleFacturaVenta" />
+          <NavigationProperty Name="DetalleFacturaCompra" Relationship="Self.FK__DetalleFa__IdPro__71D1E811" FromRole="Producto" ToRole="DetalleFacturaCompra" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__Producto__Creado__4CA06362" FromRole="Producto" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario1" Relationship="Self.FK__Producto__Editad__4D94879B" FromRole="Producto" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario2" Relationship="Self.FK__Producto__Elimin__4E88ABD4" FromRole="Producto" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Proveedor">
+          <Key>
+            <PropertyRef Name="IdProveedor" />
+          </Key>
+          <Property Name="IdProveedor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Telefono" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Correo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Direccion" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="CreadoPor" Type="Int32" />
+          <Property Name="EditadoPor" Type="Int32" />
+          <Property Name="EliminadoPor" Type="Int32" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="FechaActualizacion" Type="DateTime" Precision="3" />
+          <Property Name="FechaEliminacion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="FacturaCompra" Relationship="Self.FK__FacturaCo__IdPro__6754599E" FromRole="Proveedor" ToRole="FacturaCompra" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__Proveedor__Cread__5EBF139D" FromRole="Proveedor" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario1" Relationship="Self.FK__Proveedor__Edita__5FB337D6" FromRole="Proveedor" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario2" Relationship="Self.FK__Proveedor__Elimi__60A75C0F" FromRole="Proveedor" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="DetalleFacturaCompra">
+          <Key>
+            <PropertyRef Name="IdDetalleFacturaCompra" />
+          </Key>
+          <Property Name="IdDetalleFacturaCompra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdFacturaCompra" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Int32" Nullable="false" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="PrecioUnitario" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK__DetalleFa__IdPro__71D1E811" FromRole="DetalleFacturaCompra" ToRole="Producto" />
+          <NavigationProperty Name="FacturaCompra" Relationship="Self.FK__DetalleFa__IdFac__70DDC3D8" FromRole="DetalleFacturaCompra" ToRole="FacturaCompra" />
+        </EntityType>
+        <EntityType Name="FacturaCompra">
+          <Key>
+            <PropertyRef Name="IdFacturaCompra" />
+          </Key>
+          <Property Name="IdFacturaCompra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumeroFactura" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Subtotal" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Impuesto" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="IdProveedor" Type="Int32" Nullable="false" />
+          <Property Name="CreadoPor" Type="Int32" Nullable="false" />
+          <Property Name="AnuladoPor" Type="Int32" />
+          <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RazonAnulamiento" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Proveedor" Relationship="Self.FK__FacturaCo__IdPro__6754599E" FromRole="FacturaCompra" ToRole="Proveedor" />
+          <NavigationProperty Name="DetalleFacturaCompra" Relationship="Self.FK__DetalleFa__IdFac__70DDC3D8" FromRole="FacturaCompra" ToRole="DetalleFacturaCompra" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__FacturaCo__Anula__693CA210" FromRole="FacturaCompra" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario1" Relationship="Self.FK__FacturaCo__Cread__68487DD7" FromRole="FacturaCompra" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Controlador">
+          <Key>
+            <PropertyRef Name="IdControlador" />
+          </Key>
+          <Property Name="IdControlador" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreControlador" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdModulo" Type="Int32" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Modulo" Relationship="Self.FK__Controlad__IdMod__2F10007B" FromRole="Controlador" ToRole="Modulo" />
+          <NavigationProperty Name="Operacion" Relationship="Self.FK__Operacion__IdCon__31EC6D26" FromRole="Controlador" ToRole="Operacion" />
+          <Property Name="Icono" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Modulo">
+          <Key>
+            <PropertyRef Name="IdModulo" />
+          </Key>
+          <Property Name="IdModulo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreModulo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Controlador" Relationship="Self.FK__Controlad__IdMod__2F10007B" FromRole="Modulo" ToRole="Controlador" />
+        </EntityType>
+        <EntityType Name="Operacion">
+          <Key>
+            <PropertyRef Name="IdOperacion" />
+          </Key>
+          <Property Name="IdOperacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreOperacion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdControlador" Type="Int32" />
+          <NavigationProperty Name="Controlador" Relationship="Self.FK__Operacion__IdCon__31EC6D26" FromRole="Operacion" ToRole="Controlador" />
+          <NavigationProperty Name="RolOperacion" Relationship="Self.FK__RolOperac__IdOpe__35BCFE0A" FromRole="Operacion" ToRole="RolOperacion" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="IdRol" />
+          </Key>
+          <Property Name="IdRol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreRol" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="RolOperacion" Relationship="Self.FK__RolOperac__IdRol__34C8D9D1" FromRole="Rol" ToRole="RolOperacion" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__Usuario__IdRol__267ABA7A" FromRole="Rol" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="RolOperacion">
+          <Key>
+            <PropertyRef Name="IdRolOperacion" />
+          </Key>
+          <Property Name="IdRolOperacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdRol" Type="Int32" />
+          <Property Name="IdOperacion" Type="Int32" />
+          <NavigationProperty Name="Operacion" Relationship="Self.FK__RolOperac__IdOpe__35BCFE0A" FromRole="RolOperacion" ToRole="Operacion" />
+          <NavigationProperty Name="Rol" Relationship="Self.FK__RolOperac__IdRol__34C8D9D1" FromRole="RolOperacion" ToRole="Rol" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Apellidos" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NombreUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Correo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cedula" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdRol" Type="Int32" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="Contrasena" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Categoria" Relationship="Self.FK__Categoria__Cread__3E52440B" FromRole="Usuario" ToRole="Categoria" />
+          <NavigationProperty Name="Categoria1" Relationship="Self.FK__Categoria__Edita__3F466844" FromRole="Usuario" ToRole="Categoria" />
+          <NavigationProperty Name="Categoria2" Relationship="Self.FK__Categoria__Elimi__403A8C7D" FromRole="Usuario" ToRole="Categoria" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK__Cliente__CreadoP__571DF1D5" FromRole="Usuario" ToRole="Cliente" />
+          <NavigationProperty Name="Cliente1" Relationship="Self.FK__Cliente__Editado__5812160E" FromRole="Usuario" ToRole="Cliente" />
+          <NavigationProperty Name="Cliente2" Relationship="Self.FK__Cliente__Elimina__59063A47" FromRole="Usuario" ToRole="Cliente" />
+          <NavigationProperty Name="Color" Relationship="Self.FK__Color__CreadoPor__440B1D61" FromRole="Usuario" ToRole="Color" />
+          <NavigationProperty Name="Color1" Relationship="Self.FK__Color__EditadoPo__44FF419A" FromRole="Usuario" ToRole="Color" />
+          <NavigationProperty Name="Color2" Relationship="Self.FK__Color__Eliminado__45F365D3" FromRole="Usuario" ToRole="Color" />
+          <NavigationProperty Name="Marca" Relationship="Self.FK__Marca__CreadoPor__38996AB5" FromRole="Usuario" ToRole="Marca" />
+          <NavigationProperty Name="Marca1" Relationship="Self.FK__Marca__EditadoPo__398D8EEE" FromRole="Usuario" ToRole="Marca" />
+          <NavigationProperty Name="Marca2" Relationship="Self.FK__Marca__Eliminado__3A81B327" FromRole="Usuario" ToRole="Marca" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK__Producto__Creado__4CA06362" FromRole="Usuario" ToRole="Producto" />
+          <NavigationProperty Name="Producto1" Relationship="Self.FK__Producto__Editad__4D94879B" FromRole="Usuario" ToRole="Producto" />
+          <NavigationProperty Name="Producto2" Relationship="Self.FK__Producto__Elimin__4E88ABD4" FromRole="Usuario" ToRole="Producto" />
+          <NavigationProperty Name="Proveedor" Relationship="Self.FK__Proveedor__Cread__5EBF139D" FromRole="Usuario" ToRole="Proveedor" />
+          <NavigationProperty Name="Proveedor1" Relationship="Self.FK__Proveedor__Edita__5FB337D6" FromRole="Usuario" ToRole="Proveedor" />
+          <NavigationProperty Name="Proveedor2" Relationship="Self.FK__Proveedor__Elimi__60A75C0F" FromRole="Usuario" ToRole="Proveedor" />
+          <NavigationProperty Name="FacturaCompra" Relationship="Self.FK__FacturaCo__Anula__693CA210" FromRole="Usuario" ToRole="FacturaCompra" />
+          <NavigationProperty Name="FacturaCompra1" Relationship="Self.FK__FacturaCo__Cread__68487DD7" FromRole="Usuario" ToRole="FacturaCompra" />
+          <NavigationProperty Name="Rol" Relationship="Self.FK__Usuario__IdRol__267ABA7A" FromRole="Usuario" ToRole="Rol" />
+          <NavigationProperty Name="FacturaVenta" Relationship="Self.FK__FacturaVe__Anula__787EE5A0" FromRole="Usuario" ToRole="FacturaVenta" />
+          <NavigationProperty Name="FacturaVenta1" Relationship="Self.FK__FacturaVe__Cread__778AC167" FromRole="Usuario" ToRole="FacturaVenta" />
+        </EntityType>
+        <EntityType Name="DetalleFacturaVenta">
+          <Key>
+            <PropertyRef Name="IdDetalleFacturaVenta" />
+          </Key>
+          <Property Name="IdDetalleFacturaVenta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdFacturaVenta" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Int32" Nullable="false" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="PrecioUnitario" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IMEI" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK__DetalleFa__IdPro__01142BA1" FromRole="DetalleFacturaVenta" ToRole="Producto" />
+          <NavigationProperty Name="FacturaVenta" Relationship="Self.FK__DetalleFa__IdFac__00200768" FromRole="DetalleFacturaVenta" ToRole="FacturaVenta" />
+          <NavigationProperty Name="Garantia" Relationship="Self.FK__Garantia__IdDeta__06CD04F7" FromRole="DetalleFacturaVenta" ToRole="Garantia" />
+        </EntityType>
+        <EntityType Name="FacturaVenta">
+          <Key>
+            <PropertyRef Name="IdFacturaVenta" />
+          </Key>
+          <Property Name="IdFacturaVenta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumeroFactura" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Subtotal" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Impuesto" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="IdCliente" Type="Int32" Nullable="false" />
+          <Property Name="CreadoPor" Type="Int32" Nullable="false" />
+          <Property Name="AnuladoPor" Type="Int32" />
+          <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RazonAnulamiento" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK__FacturaVe__IdCli__76969D2E" FromRole="FacturaVenta" ToRole="Cliente" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__FacturaVe__Anula__787EE5A0" FromRole="FacturaVenta" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario1" Relationship="Self.FK__FacturaVe__Cread__778AC167" FromRole="FacturaVenta" ToRole="Usuario" />
+          <NavigationProperty Name="DetalleFacturaVenta" Relationship="Self.FK__DetalleFa__IdFac__00200768" FromRole="FacturaVenta" ToRole="DetalleFacturaVenta" />
+        </EntityType>
+        <EntityType Name="Garantia">
+          <Key>
+            <PropertyRef Name="IdGarantia" />
+          </Key>
+          <Property Name="IdGarantia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdDetalleFacturaVenta" Type="Int32" Nullable="false" />
+          <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaFin" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Estado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DetalleFacturaVenta" Relationship="Self.FK__Garantia__IdDeta__06CD04F7" FromRole="Garantia" ToRole="DetalleFacturaVenta" />
+        </EntityType>
+        <Association Name="FK__Categoria__Cread__3E52440B">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Categoria">
+              <PropertyRef Name="CreadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Categoria__Edita__3F466844">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Categoria">
+              <PropertyRef Name="EditadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Categoria__Elimi__403A8C7D">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Categoria">
+              <PropertyRef Name="EliminadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Producto__IdCate__4AB81AF0">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="IdCategoria" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="IdCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cliente__CreadoP__571DF1D5">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="CreadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cliente__Editado__5812160E">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="EditadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cliente__Elimina__59063A47">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="EliminadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FacturaVe__IdCli__76969D2E">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="FacturaVenta" Type="Self.FacturaVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="FacturaVenta">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Color__CreadoPor__440B1D61">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Color" Type="Self.Color" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Color">
+              <PropertyRef Name="CreadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Color__EditadoPo__44FF419A">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Color" Type="Self.Color" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Color">
+              <PropertyRef Name="EditadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Color__Eliminado__45F365D3">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Color" Type="Self.Color" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Color">
+              <PropertyRef Name="EliminadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Producto__IdColo__4BAC3F29">
+          <End Role="Color" Type="Self.Color" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Color">
+              <PropertyRef Name="IdColor" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="IdColor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Marca__CreadoPor__38996AB5">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Marca" Type="Self.Marca" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Marca">
+              <PropertyRef Name="CreadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Marca__EditadoPo__398D8EEE">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Marca" Type="Self.Marca" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Marca">
+              <PropertyRef Name="EditadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Marca__Eliminado__3A81B327">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Marca" Type="Self.Marca" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Marca">
+              <PropertyRef Name="EliminadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Producto__IdMarc__49C3F6B7">
+          <End Role="Marca" Type="Self.Marca" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Marca">
+              <PropertyRef Name="IdMarca" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="IdMarca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetalleFa__IdPro__01142BA1">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="DetalleFacturaVenta" Type="Self.DetalleFacturaVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="DetalleFacturaVenta">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetalleFa__IdPro__71D1E811">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="DetalleFacturaCompra" Type="Self.DetalleFacturaCompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="DetalleFacturaCompra">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Producto__Creado__4CA06362">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="CreadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Producto__Editad__4D94879B">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="EditadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Producto__Elimin__4E88ABD4">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="EliminadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FacturaCo__IdPro__6754599E">
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
+          <End Role="FacturaCompra" Type="Self.FacturaCompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="IdProveedor" />
+            </Principal>
+            <Dependent Role="FacturaCompra">
+              <PropertyRef Name="IdProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Proveedor__Cread__5EBF139D">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Proveedor">
+              <PropertyRef Name="CreadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Proveedor__Edita__5FB337D6">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Proveedor">
+              <PropertyRef Name="EditadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Proveedor__Elimi__60A75C0F">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Proveedor">
+              <PropertyRef Name="EliminadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetalleFa__IdFac__70DDC3D8">
+          <End Role="FacturaCompra" Type="Self.FacturaCompra" Multiplicity="1" />
+          <End Role="DetalleFacturaCompra" Type="Self.DetalleFacturaCompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FacturaCompra">
+              <PropertyRef Name="IdFacturaCompra" />
+            </Principal>
+            <Dependent Role="DetalleFacturaCompra">
+              <PropertyRef Name="IdFacturaCompra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FacturaCo__Anula__693CA210">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="FacturaCompra" Type="Self.FacturaCompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="FacturaCompra">
+              <PropertyRef Name="AnuladoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FacturaCo__Cread__68487DD7">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="FacturaCompra" Type="Self.FacturaCompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="FacturaCompra">
+              <PropertyRef Name="CreadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Controlad__IdMod__2F10007B">
+          <End Role="Modulo" Type="Self.Modulo" Multiplicity="0..1" />
+          <End Role="Controlador" Type="Self.Controlador" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modulo">
+              <PropertyRef Name="IdModulo" />
+            </Principal>
+            <Dependent Role="Controlador">
+              <PropertyRef Name="IdModulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Operacion__IdCon__31EC6D26">
+          <End Role="Controlador" Type="Self.Controlador" Multiplicity="0..1" />
+          <End Role="Operacion" Type="Self.Operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Controlador">
+              <PropertyRef Name="IdControlador" />
+            </Principal>
+            <Dependent Role="Operacion">
+              <PropertyRef Name="IdControlador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RolOperac__IdOpe__35BCFE0A">
+          <End Role="Operacion" Type="Self.Operacion" Multiplicity="0..1" />
+          <End Role="RolOperacion" Type="Self.RolOperacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operacion">
+              <PropertyRef Name="IdOperacion" />
+            </Principal>
+            <Dependent Role="RolOperacion">
+              <PropertyRef Name="IdOperacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RolOperac__IdRol__34C8D9D1">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
+          <End Role="RolOperacion" Type="Self.RolOperacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="IdRol" />
+            </Principal>
+            <Dependent Role="RolOperacion">
+              <PropertyRef Name="IdRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Usuario__IdRol__267ABA7A">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="IdRol" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="IdRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FacturaVe__Anula__787EE5A0">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="FacturaVenta" Type="Self.FacturaVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="FacturaVenta">
+              <PropertyRef Name="AnuladoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FacturaVe__Cread__778AC167">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="FacturaVenta" Type="Self.FacturaVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="FacturaVenta">
+              <PropertyRef Name="CreadoPor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetalleFa__IdFac__00200768">
+          <End Role="FacturaVenta" Type="Self.FacturaVenta" Multiplicity="1" />
+          <End Role="DetalleFacturaVenta" Type="Self.DetalleFacturaVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FacturaVenta">
+              <PropertyRef Name="IdFacturaVenta" />
+            </Principal>
+            <Dependent Role="DetalleFacturaVenta">
+              <PropertyRef Name="IdFacturaVenta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Garantia__IdDeta__06CD04F7">
+          <End Role="DetalleFacturaVenta" Type="Self.DetalleFacturaVenta" Multiplicity="1" />
+          <End Role="Garantia" Type="Self.Garantia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DetalleFacturaVenta">
+              <PropertyRef Name="IdDetalleFacturaVenta" />
+            </Principal>
+            <Dependent Role="Garantia">
+              <PropertyRef Name="IdDetalleFacturaVenta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Contexto" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categoria" EntityType="Self.Categoria" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+          <EntitySet Name="Color" EntityType="Self.Color" />
+          <EntitySet Name="Marca" EntityType="Self.Marca" />
+          <EntitySet Name="Producto" EntityType="Self.Producto" />
+          <EntitySet Name="Proveedor" EntityType="Self.Proveedor" />
+          <EntitySet Name="DetalleFacturaCompra" EntityType="Self.DetalleFacturaCompra" />
+          <EntitySet Name="FacturaCompra" EntityType="Self.FacturaCompra" />
+          <EntitySet Name="Controlador" EntityType="Self.Controlador" />
+          <EntitySet Name="Modulo" EntityType="Self.Modulo" />
+          <EntitySet Name="Operacion" EntityType="Self.Operacion" />
+          <EntitySet Name="Rol" EntityType="Self.Rol" />
+          <EntitySet Name="RolOperacion" EntityType="Self.RolOperacion" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <EntitySet Name="DetalleFacturaVenta" EntityType="Self.DetalleFacturaVenta" />
+          <EntitySet Name="FacturaVenta" EntityType="Self.FacturaVenta" />
+          <EntitySet Name="Garantia" EntityType="Self.Garantia" />
+          <AssociationSet Name="FK__Categoria__Cread__3E52440B" Association="Self.FK__Categoria__Cread__3E52440B">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Categoria" EntitySet="Categoria" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Categoria__Edita__3F466844" Association="Self.FK__Categoria__Edita__3F466844">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Categoria" EntitySet="Categoria" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Categoria__Elimi__403A8C7D" Association="Self.FK__Categoria__Elimi__403A8C7D">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Categoria" EntitySet="Categoria" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Producto__IdCate__4AB81AF0" Association="Self.FK__Producto__IdCate__4AB81AF0">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cliente__CreadoP__571DF1D5" Association="Self.FK__Cliente__CreadoP__571DF1D5">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cliente__Editado__5812160E" Association="Self.FK__Cliente__Editado__5812160E">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cliente__Elimina__59063A47" Association="Self.FK__Cliente__Elimina__59063A47">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FacturaVe__IdCli__76969D2E" Association="Self.FK__FacturaVe__IdCli__76969D2E">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="FacturaVenta" EntitySet="FacturaVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Color__CreadoPor__440B1D61" Association="Self.FK__Color__CreadoPor__440B1D61">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Color" EntitySet="Color" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Color__EditadoPo__44FF419A" Association="Self.FK__Color__EditadoPo__44FF419A">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Color" EntitySet="Color" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Color__Eliminado__45F365D3" Association="Self.FK__Color__Eliminado__45F365D3">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Color" EntitySet="Color" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Producto__IdColo__4BAC3F29" Association="Self.FK__Producto__IdColo__4BAC3F29">
+            <End Role="Color" EntitySet="Color" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Marca__CreadoPor__38996AB5" Association="Self.FK__Marca__CreadoPor__38996AB5">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Marca" EntitySet="Marca" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Marca__EditadoPo__398D8EEE" Association="Self.FK__Marca__EditadoPo__398D8EEE">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Marca" EntitySet="Marca" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Marca__Eliminado__3A81B327" Association="Self.FK__Marca__Eliminado__3A81B327">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Marca" EntitySet="Marca" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Producto__IdMarc__49C3F6B7" Association="Self.FK__Producto__IdMarc__49C3F6B7">
+            <End Role="Marca" EntitySet="Marca" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetalleFa__IdPro__01142BA1" Association="Self.FK__DetalleFa__IdPro__01142BA1">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="DetalleFacturaVenta" EntitySet="DetalleFacturaVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetalleFa__IdPro__71D1E811" Association="Self.FK__DetalleFa__IdPro__71D1E811">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="DetalleFacturaCompra" EntitySet="DetalleFacturaCompra" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Producto__Creado__4CA06362" Association="Self.FK__Producto__Creado__4CA06362">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Producto__Editad__4D94879B" Association="Self.FK__Producto__Editad__4D94879B">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Producto__Elimin__4E88ABD4" Association="Self.FK__Producto__Elimin__4E88ABD4">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FacturaCo__IdPro__6754599E" Association="Self.FK__FacturaCo__IdPro__6754599E">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="FacturaCompra" EntitySet="FacturaCompra" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Proveedor__Cread__5EBF139D" Association="Self.FK__Proveedor__Cread__5EBF139D">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Proveedor" EntitySet="Proveedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Proveedor__Edita__5FB337D6" Association="Self.FK__Proveedor__Edita__5FB337D6">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Proveedor" EntitySet="Proveedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Proveedor__Elimi__60A75C0F" Association="Self.FK__Proveedor__Elimi__60A75C0F">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Proveedor" EntitySet="Proveedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetalleFa__IdFac__70DDC3D8" Association="Self.FK__DetalleFa__IdFac__70DDC3D8">
+            <End Role="FacturaCompra" EntitySet="FacturaCompra" />
+            <End Role="DetalleFacturaCompra" EntitySet="DetalleFacturaCompra" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FacturaCo__Anula__693CA210" Association="Self.FK__FacturaCo__Anula__693CA210">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="FacturaCompra" EntitySet="FacturaCompra" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FacturaCo__Cread__68487DD7" Association="Self.FK__FacturaCo__Cread__68487DD7">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="FacturaCompra" EntitySet="FacturaCompra" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Controlad__IdMod__2F10007B" Association="Self.FK__Controlad__IdMod__2F10007B">
+            <End Role="Modulo" EntitySet="Modulo" />
+            <End Role="Controlador" EntitySet="Controlador" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Operacion__IdCon__31EC6D26" Association="Self.FK__Operacion__IdCon__31EC6D26">
+            <End Role="Controlador" EntitySet="Controlador" />
+            <End Role="Operacion" EntitySet="Operacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RolOperac__IdOpe__35BCFE0A" Association="Self.FK__RolOperac__IdOpe__35BCFE0A">
+            <End Role="Operacion" EntitySet="Operacion" />
+            <End Role="RolOperacion" EntitySet="RolOperacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RolOperac__IdRol__34C8D9D1" Association="Self.FK__RolOperac__IdRol__34C8D9D1">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="RolOperacion" EntitySet="RolOperacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Usuario__IdRol__267ABA7A" Association="Self.FK__Usuario__IdRol__267ABA7A">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FacturaVe__Anula__787EE5A0" Association="Self.FK__FacturaVe__Anula__787EE5A0">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="FacturaVenta" EntitySet="FacturaVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FacturaVe__Cread__778AC167" Association="Self.FK__FacturaVe__Cread__778AC167">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="FacturaVenta" EntitySet="FacturaVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetalleFa__IdFac__00200768" Association="Self.FK__DetalleFa__IdFac__00200768">
+            <End Role="FacturaVenta" EntitySet="FacturaVenta" />
+            <End Role="DetalleFacturaVenta" EntitySet="DetalleFacturaVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Garantia__IdDeta__06CD04F7" Association="Self.FK__Garantia__IdDeta__06CD04F7">
+            <End Role="DetalleFacturaVenta" EntitySet="DetalleFacturaVenta" />
+            <End Role="Garantia" EntitySet="Garantia" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ContextoZMStoreContainer" CdmEntityContainer="Contexto">
+          <EntitySetMapping Name="Categoria">
+            <EntityTypeMapping TypeName="ContextoZM.Categoria">
+              <MappingFragment StoreEntitySet="Categoria">
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="CreadoPor" ColumnName="CreadoPor" />
+                <ScalarProperty Name="EditadoPor" ColumnName="EditadoPor" />
+                <ScalarProperty Name="EliminadoPor" ColumnName="EliminadoPor" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="FechaActualizacion" ColumnName="FechaActualizacion" />
+                <ScalarProperty Name="FechaEliminacion" ColumnName="FechaEliminacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="ContextoZM.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="CreadoPor" ColumnName="CreadoPor" />
+                <ScalarProperty Name="EditadoPor" ColumnName="EditadoPor" />
+                <ScalarProperty Name="EliminadoPor" ColumnName="EliminadoPor" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="FechaActualizacion" ColumnName="FechaActualizacion" />
+                <ScalarProperty Name="FechaEliminacion" ColumnName="FechaEliminacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Color">
+            <EntityTypeMapping TypeName="ContextoZM.Color">
+              <MappingFragment StoreEntitySet="Color">
+                <ScalarProperty Name="IdColor" ColumnName="IdColor" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="CreadoPor" ColumnName="CreadoPor" />
+                <ScalarProperty Name="EditadoPor" ColumnName="EditadoPor" />
+                <ScalarProperty Name="EliminadoPor" ColumnName="EliminadoPor" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="FechaActualizacion" ColumnName="FechaActualizacion" />
+                <ScalarProperty Name="FechaEliminacion" ColumnName="FechaEliminacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Marca">
+            <EntityTypeMapping TypeName="ContextoZM.Marca">
+              <MappingFragment StoreEntitySet="Marca">
+                <ScalarProperty Name="IdMarca" ColumnName="IdMarca" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="CreadoPor" ColumnName="CreadoPor" />
+                <ScalarProperty Name="EditadoPor" ColumnName="EditadoPor" />
+                <ScalarProperty Name="EliminadoPor" ColumnName="EliminadoPor" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="FechaActualizacion" ColumnName="FechaActualizacion" />
+                <ScalarProperty Name="FechaEliminacion" ColumnName="FechaEliminacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Producto">
+            <EntityTypeMapping TypeName="ContextoZM.Producto">
+              <MappingFragment StoreEntitySet="Producto">
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Modelo" ColumnName="Modelo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
+                <ScalarProperty Name="PrecioCompra" ColumnName="PrecioCompra" />
+                <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
+                <ScalarProperty Name="Almacenamiento" ColumnName="Almacenamiento" />
+                <ScalarProperty Name="GarantiaMeses" ColumnName="GarantiaMeses" />
+                <ScalarProperty Name="RAM" ColumnName="RAM" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="IdMarca" ColumnName="IdMarca" />
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+                <ScalarProperty Name="IdColor" ColumnName="IdColor" />
+                <ScalarProperty Name="CreadoPor" ColumnName="CreadoPor" />
+                <ScalarProperty Name="EditadoPor" ColumnName="EditadoPor" />
+                <ScalarProperty Name="EliminadoPor" ColumnName="EliminadoPor" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="FechaActualizacion" ColumnName="FechaActualizacion" />
+                <ScalarProperty Name="FechaEliminacion" ColumnName="FechaEliminacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Proveedor">
+            <EntityTypeMapping TypeName="ContextoZM.Proveedor">
+              <MappingFragment StoreEntitySet="Proveedor">
+                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="CreadoPor" ColumnName="CreadoPor" />
+                <ScalarProperty Name="EditadoPor" ColumnName="EditadoPor" />
+                <ScalarProperty Name="EliminadoPor" ColumnName="EliminadoPor" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="FechaActualizacion" ColumnName="FechaActualizacion" />
+                <ScalarProperty Name="FechaEliminacion" ColumnName="FechaEliminacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetalleFacturaCompra">
+            <EntityTypeMapping TypeName="ContextoZM.DetalleFacturaCompra">
+              <MappingFragment StoreEntitySet="DetalleFacturaCompra">
+                <ScalarProperty Name="IdDetalleFacturaCompra" ColumnName="IdDetalleFacturaCompra" />
+                <ScalarProperty Name="IdFacturaCompra" ColumnName="IdFacturaCompra" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="PrecioUnitario" ColumnName="PrecioUnitario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FacturaCompra">
+            <EntityTypeMapping TypeName="ContextoZM.FacturaCompra">
+              <MappingFragment StoreEntitySet="FacturaCompra">
+                <ScalarProperty Name="IdFacturaCompra" ColumnName="IdFacturaCompra" />
+                <ScalarProperty Name="NumeroFactura" ColumnName="NumeroFactura" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Subtotal" ColumnName="Subtotal" />
+                <ScalarProperty Name="Impuesto" ColumnName="Impuesto" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+                <ScalarProperty Name="CreadoPor" ColumnName="CreadoPor" />
+                <ScalarProperty Name="AnuladoPor" ColumnName="AnuladoPor" />
+                <ScalarProperty Name="FechaAnulacion" ColumnName="FechaAnulacion" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="RazonAnulamiento" ColumnName="RazonAnulamiento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Controlador">
+            <EntityTypeMapping TypeName="ContextoZM.Controlador">
+              <MappingFragment StoreEntitySet="Controlador">
+                <ScalarProperty Name="Icono" ColumnName="Icono" />
+                <ScalarProperty Name="IdControlador" ColumnName="IdControlador" />
+                <ScalarProperty Name="NombreControlador" ColumnName="NombreControlador" />
+                <ScalarProperty Name="IdModulo" ColumnName="IdModulo" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Modulo">
+            <EntityTypeMapping TypeName="ContextoZM.Modulo">
+              <MappingFragment StoreEntitySet="Modulo">
+                <ScalarProperty Name="IdModulo" ColumnName="IdModulo" />
+                <ScalarProperty Name="NombreModulo" ColumnName="NombreModulo" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Operacion">
+            <EntityTypeMapping TypeName="ContextoZM.Operacion">
+              <MappingFragment StoreEntitySet="Operacion">
+                <ScalarProperty Name="IdOperacion" ColumnName="IdOperacion" />
+                <ScalarProperty Name="NombreOperacion" ColumnName="NombreOperacion" />
+                <ScalarProperty Name="IdControlador" ColumnName="IdControlador" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rol">
+            <EntityTypeMapping TypeName="ContextoZM.Rol">
+              <MappingFragment StoreEntitySet="Rol">
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                <ScalarProperty Name="NombreRol" ColumnName="NombreRol" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RolOperacion">
+            <EntityTypeMapping TypeName="ContextoZM.RolOperacion">
+              <MappingFragment StoreEntitySet="RolOperacion">
+                <ScalarProperty Name="IdRolOperacion" ColumnName="IdRolOperacion" />
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                <ScalarProperty Name="IdOperacion" ColumnName="IdOperacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="ContextoZM.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="NombreUsuario" ColumnName="NombreUsuario" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetalleFacturaVenta">
+            <EntityTypeMapping TypeName="ContextoZM.DetalleFacturaVenta">
+              <MappingFragment StoreEntitySet="DetalleFacturaVenta">
+                <ScalarProperty Name="IdDetalleFacturaVenta" ColumnName="IdDetalleFacturaVenta" />
+                <ScalarProperty Name="IdFacturaVenta" ColumnName="IdFacturaVenta" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="PrecioUnitario" ColumnName="PrecioUnitario" />
+                <ScalarProperty Name="IMEI" ColumnName="IMEI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FacturaVenta">
+            <EntityTypeMapping TypeName="ContextoZM.FacturaVenta">
+              <MappingFragment StoreEntitySet="FacturaVenta">
+                <ScalarProperty Name="IdFacturaVenta" ColumnName="IdFacturaVenta" />
+                <ScalarProperty Name="NumeroFactura" ColumnName="NumeroFactura" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Subtotal" ColumnName="Subtotal" />
+                <ScalarProperty Name="Impuesto" ColumnName="Impuesto" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="CreadoPor" ColumnName="CreadoPor" />
+                <ScalarProperty Name="AnuladoPor" ColumnName="AnuladoPor" />
+                <ScalarProperty Name="FechaAnulacion" ColumnName="FechaAnulacion" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="RazonAnulamiento" ColumnName="RazonAnulamiento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Garantia">
+            <EntityTypeMapping TypeName="ContextoZM.Garantia">
+              <MappingFragment StoreEntitySet="Garantia">
+                <ScalarProperty Name="IdGarantia" ColumnName="IdGarantia" />
+                <ScalarProperty Name="IdDetalleFacturaVenta" ColumnName="IdDetalleFacturaVenta" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

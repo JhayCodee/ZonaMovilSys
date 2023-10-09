@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c2ae005ed18a4d859f6e0a93cbd87f10" Name="Diagram1">
+        <EntityTypeShape EntityType="ContextoZM.Categoria" Width="1.5" PointX="5.25" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContextoZM.Cliente" Width="1.5" PointX="5.25" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContextoZM.Color" Width="1.5" PointX="5.25" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContextoZM.Marca" Width="1.5" PointX="5.25" PointY="21.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContextoZM.Producto" Width="1.5" PointX="7.5" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContextoZM.Proveedor" Width="1.5" PointX="5.25" PointY="25.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContextoZM.DetalleFacturaCompra" Width="1.5" PointX="9.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContextoZM.FacturaCompra" Width="1.5" PointX="7.5" PointY="20.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContextoZM.Controlador" Width="1.5" PointX="1.5" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContextoZM.Modulo" Width="1.5" PointX="1.5" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContextoZM.Operacion" Width="1.5" PointX="0.75" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContextoZM.Rol" Width="1.5" PointX="0.75" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContextoZM.RolOperacion" Width="1.5" PointX="3" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContextoZM.Usuario" Width="1.5" PointX="3" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContextoZM.DetalleFacturaVenta" Width="1.5" PointX="12.75" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContextoZM.FacturaVenta" Width="1.5" PointX="10.5" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContextoZM.Garantia" Width="1.5" PointX="15" PointY="15.25" IsExpanded="true" />
+        <AssociationConnector Association="ContextoZM.FK__Categoria__Cread__3E52440B" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__Categoria__Edita__3F466844" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__Categoria__Elimi__403A8C7D" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__Producto__IdCate__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__Cliente__CreadoP__571DF1D5" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__Cliente__Editado__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__Cliente__Elimina__59063A47" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__FacturaVe__IdCli__76969D2E" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__Color__CreadoPor__440B1D61" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__Color__EditadoPo__44FF419A" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__Color__Eliminado__45F365D3" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__Producto__IdColo__4BAC3F29" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__Marca__CreadoPor__38996AB5" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__Marca__EditadoPo__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__Marca__Eliminado__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__Producto__IdMarc__49C3F6B7" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__DetalleFa__IdPro__01142BA1" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__DetalleFa__IdPro__71D1E811" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__Producto__Creado__4CA06362" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__Producto__Editad__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__Producto__Elimin__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__FacturaCo__IdPro__6754599E" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__Proveedor__Cread__5EBF139D" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__Proveedor__Edita__5FB337D6" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__Proveedor__Elimi__60A75C0F" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__DetalleFa__IdFac__70DDC3D8" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__FacturaCo__Anula__693CA210" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__FacturaCo__Cread__68487DD7" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__Controlad__IdMod__2F10007B" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__Operacion__IdCon__31EC6D26" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__RolOperac__IdOpe__35BCFE0A" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__RolOperac__IdRol__34C8D9D1" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__Usuario__IdRol__267ABA7A" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__FacturaVe__Anula__787EE5A0" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__FacturaVe__Cread__778AC167" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__DetalleFa__IdFac__00200768" ManuallyRouted="false" />
+        <AssociationConnector Association="ContextoZM.FK__Garantia__IdDeta__06CD04F7" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
