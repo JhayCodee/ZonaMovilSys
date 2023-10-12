@@ -59,6 +59,16 @@
         .avatar.avatar-online:after {
             display: none;
         }
+
+        table th {
+            font-size: .8rem !important; /* Tamaño de fuente deseado */
+            font-weight: bold !important; /* Puedes ajustar la negrita según tus preferencias */
+        }
+
+        .dt-buttons {
+            margin-bottom: 16px; /* Ajusta según tus necesidades */
+        }
+
     </style>
 
     <!-- styles zona mobile -->
@@ -244,8 +254,10 @@
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
             },
-            lengthChange: false,
-            pageLength: 10,
+            dom: "<'row'<'col-12'B>>" +
+                "<'row'<'col-md-6'l><'col-md-6'f>>" +
+                "rt" +
+                "<'row'<'col-md-6'i><'col-md-6'p>>",
             responsive: true
         });
     </script>

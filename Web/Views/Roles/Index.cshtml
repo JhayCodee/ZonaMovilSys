@@ -2,14 +2,13 @@
     ViewBag.Title = "Index";
 }
 
-
 <div class="row" id="Index-Rol">
     <div class="col-12">
         <div class="card mb-4">
             <h5 class="card-header">ROLES</h5>
 
             <div class="card-body">
-                <table id="tblRoles" class="table table-striped table-responsive" style="width:100%">
+                <table id="tblRoles" class="table table-hover table-striped table-responsive" style="width:100%">
                     <thead>
                         <tr>
                             <th>Rol</th>
@@ -28,6 +27,9 @@
 
     <div class="col-12">
         <div class="card mb-4">
+
+            <h5 class="card-header">ROLES</h5>
+
             <div class="card-body">
                 <form id="frmRol">
                     <div class="mb-3">
@@ -35,25 +37,16 @@
                         <input type="text" class="form-control" id="NombreRol" name="NombreRol">
                     </div>
 
-
-                    <!-- Agregar dos campos de entrada de 6 columnas cada uno -->
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="Campo1" class="form-label">Campo 1</label>
-                            <input type="text" class="form-control" id="Campo1" name="Campo1">
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="Campo2" class="form-label">Campo 2</label>
-                            <input type="text" class="form-control" id="Campo2" name="Campo2">
+                    <div class="row mb-3">
+                        <div class="col-12" id="checkbox-container">
                         </div>
                     </div>
-
 
                     <!-- Botones en la parte inferior derecha -->
 
                     <div class="d-flex justify-content-end">
-                        <button type="button" class="btn btn-secondary me-2">Regresar</button>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <button type="button" class="btn btn-secondary me-2" id="regresarRol">Regresar</button>
+                        <button type="button" class="btn btn-primary" id="guardarRol">Guardar</button>
                     </div>
                 </form>
             </div>

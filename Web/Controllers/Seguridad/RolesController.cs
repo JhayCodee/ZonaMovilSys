@@ -35,5 +35,16 @@ namespace Web.Controllers.Seguridad
 
             return Json(new { status, data, errorMessage });
         }
+
+        [HttpPost]
+        public JsonResult GetControllers()
+        {
+            List<Controlador_VM> data = new List<Controlador_VM>();
+            string errorMessage = string.Empty;
+
+            bool status = new Controlador_LN().GetControllers(ref data, ref errorMessage);
+
+            return Json(new { status, data, errorMessage });
+        }
     }
 }
