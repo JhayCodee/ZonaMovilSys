@@ -12,7 +12,7 @@
                     <thead>
                         <tr>
                             <th>Rol</th>
-                            <th>Acciones</th>
+                            <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -32,12 +32,17 @@
 
             <div class="card-body">
                 <form id="frmRol">
+
                     <div class="mb-3">
                         <label for="NombreRol" class="form-label">Nombre del Rol</label>
                         <input type="text" class="form-control" id="NombreRol" name="NombreRol">
                     </div>
 
+                    <input type="hidden" class="form-control" id="IdRol" name="IdRol">
+
                     <div class="row mb-3">
+                        <h5 class="mt-3">Permisos</h5>
+
                         <div class="col-12" id="checkbox-container">
                         </div>
                     </div>
@@ -46,7 +51,7 @@
 
                     <div class="d-flex justify-content-end">
                         <button type="button" class="btn btn-secondary me-2" id="regresarRol">Regresar</button>
-                        <button type="button" class="btn btn-primary" id="guardarRol">Guardar</button>
+                        <button type="button" class="btn btn-success" id="guardarRol">Guardar</button>
                     </div>
                 </form>
             </div>

@@ -46,5 +46,36 @@ namespace Web.Controllers.Seguridad
 
             return Json(new { status, data, errorMessage });
         }
+
+        [HttpPost]
+        public JsonResult GetControllersById(int idRol)
+        {
+            List<int?> data = new List<int?>();
+            string errorMessage = string.Empty;
+
+            bool status = ln.GetControllersByRol(idRol, ref data, ref errorMessage);
+
+            return Json(new { status, data, errorMessage });
+        }
+
+        [HttpPost]
+        public JsonResult AddPermisisons(List<int> data, string rolName)
+        {
+            string errorMessage = string.Empty;
+
+            bool status = ln.AddRol(data, rolName, ref errorMessage);
+
+            return Json(new { status, data, errorMessage });
+        }
+
+        [HttpPost]
+        public JsonResult EditPermissions(List<int?> data, string rolName, int idrol)
+        {
+            string errorMessage = string.Empty;
+
+            bool status = ln.UpdateRol(idrol, data, rolName, ref errorMessage);
+
+            return Json(new { status, data, errorMessage });
+        }
     }
 }

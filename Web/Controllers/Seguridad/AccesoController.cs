@@ -34,17 +34,19 @@ namespace Web.Controllers.Seguridad
         [HttpPost]
         public ActionResult Login(string email, string password)
         {
-            Usuario_VM oUser = ln.GetUserByEmailAndPassword(email, password);
+            string errorMsg;
+            Usuario_VM oUser = ln.GetUserByEmailAndPassword(email, password, out errorMsg);
 
-            if (oUser == null)
+            if (!string.IsNullOrEmpty(errorMsg))
             {
-                ViewBag.Error = "Error";
+                ViewBag.Error = errorMsg;
                 return View();
             }
 
             Session["User"] = oUser;
             return RedirectToAction("Index", "Dashboard");
         }
+
 
         public ActionResult Logout()
         {

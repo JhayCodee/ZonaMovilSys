@@ -46,11 +46,25 @@ namespace Seguridad
             return groupedByModule;
         }
 
-        public Usuario_VM GetUserByEmailAndPassword(string email, string password)
+        public Usuario_VM GetUserByEmailAndPassword(string email, string password, out string errorMsg)
         {
-            var usuarioEntity = _db.Usuario.FirstOrDefault(u => u.NombreUsuario == email && u.Contrasena == password.Trim());
+            errorMsg = null;
 
-            if (usuarioEntity == null) return null; // Retornar null si no se encuentra el usuario
+            var usuarioEntity = _db.Usuario.Where(u => u.Activo).FirstOrDefault(u => u.NombreUsuario == email);
+
+            // No se encontró el usuario
+            if (usuarioEntity == null)
+            {
+                errorMsg = "Nombre de usuario incorrecto.";
+                return null;
+            }
+
+            // Se encontró el usuario pero la contraseña no coincide
+            if (usuarioEntity.Contrasena != password.Trim())
+            {
+                errorMsg = "Contraseña incorrecta.";
+                return null;
+            }
 
             var usuarioVM = new Usuario_VM
             {
@@ -66,5 +80,6 @@ namespace Seguridad
 
             return usuarioVM;
         }
+
     }
 }

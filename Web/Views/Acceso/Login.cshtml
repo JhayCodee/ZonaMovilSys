@@ -62,7 +62,7 @@
         <div class="authentication-wrapper authentication-basic container-p-y">
             <div class="authentication-inner">
                 <!-- Register -->
-                <div class="card">
+                <div class="card shadow">
                     <div class="card-body">
                         <!-- Logo -->
                         <div class="app-brand justify-content-center">
@@ -74,31 +74,32 @@
                         <h4 class="mb-2">Bienvenido! 👋</h4>
                         <p class="mb-4">Por favor ingresa tus credenciales.</p>
 
-                        <form   action="@Url.Content("~/Acceso/Login")" method="post">
+                        <!-- Mostrar el mensaje de error si existe -->
+                        @if (!string.IsNullOrEmpty(ViewBag.Error))
+                        {
+                            <div id="serverError" class="alert alert-danger" role="alert">
+                                @ViewBag.Error
+                            </div>
+                        }
+
+
+                        <form id="loginForm" action="@Url.Content("~/Acceso/Login")" method="post">
                             <div class="mb-3">
                                 <label for="email" class="form-label">Nombre de Usuario</label>
-                                <input type="text"
-                                       class="form-control"
-                                       id="email"
-                                       name="email"
-                                       placeholder=""
-                                       autofocus />
+                                <input type="text" class="form-control" id="email" name="email" placeholder="" autofocus />
+                                <span id="errorEmail" class="text-danger"></span>
                             </div>
                             <div class="mb-3 form-password-toggle">
                                 <div class="d-flex justify-content-between">
                                     <label class="form-label" for="password">Contraseña</label>
                                 </div>
                                 <div class="input-group input-group-merge">
-                                    <input type="password"
-                                           id="password"
-                                           class="form-control"
-                                           name="password"
-                                           placeholder=""
-                                           aria-describedby="password" />
+                                    <input type="password" id="password" class="form-control" name="password" placeholder="" aria-describedby="password" />
                                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                 </div>
+                                <span id="errorPassword" class="text-danger"></span>
                             </div>
-                             <div class="mb-3">
+                            <div class="mb-3">
                                 <button class="btn btn-primary d-grid w-100" type="submit">Iniciar Sesión</button>
                             </div>
                         </form>
@@ -113,6 +114,42 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function (event) {
+            const emailInput = document.getElementById("email");
+            const passwordInput = document.getElementById("password");
+
+            let isValid = true;
+
+            // Borrar mensajes anteriores
+            document.getElementById("errorEmail").textContent = "";
+            document.getElementById("errorPassword").textContent = "";
+
+            // Limpiar el mensaje de error del servidor
+            const serverErrorDiv = document.getElementById("serverError");
+            if (serverErrorDiv) {
+                serverErrorDiv.style.display = "none";
+            }
+
+            // Validar el campo email
+            if (!emailInput.value.trim()) {
+                isValid = false;
+                document.getElementById("errorEmail").textContent = "El nombre de usuario es obligatorio.";
+            }
+
+            // Validar el campo password
+            if (!passwordInput.value.trim()) {
+                isValid = false;
+                document.getElementById("errorPassword").textContent = "La contraseña es obligatoria.";
+            }
+
+            if (!isValid) {
+                event.preventDefault(); // Prevenir el envío del formulario
+            }
+        });
+
+    </script>
 
 
 </body>
