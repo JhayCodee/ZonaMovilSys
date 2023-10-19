@@ -1,5 +1,6 @@
 ﻿using Datos;
 using Modelo.Seguridad;
+using Modelo.utils;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -40,6 +41,20 @@ namespace Logica.Seguridad
             }
         }
 
+        public bool GetRolesDropDown(ref List<DropDown> data, ref string errorMessage)
+        {
+            try
+            {
+                data = _db.Rol.Where(x => x.Activo).Select(x => new DropDown { Id = x.IdRol, Value = x.NombreRol }).ToList();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                errorMessage = ex.Message;
+                return false;
+            }
+        }
+
         public bool GetControllersByRol(int idRol, ref List<int?> controllers, ref string errorMessage)
         {
             try
@@ -54,7 +69,7 @@ namespace Logica.Seguridad
                 controllers = _db.Operacion
                                  .Where(o => operationIds.Contains(o.IdOperacion))
                                  .Select(o => o.IdControlador)
-                                 .Distinct()  
+                                 .Distinct()
                                  .ToList();
 
                 return true;

@@ -73,7 +73,6 @@ namespace Seguridad
                 Nombre = usuarioEntity.Nombre,
                 Apellidos = usuarioEntity.Apellidos,
                 Correo = usuarioEntity.Correo,
-                Cedula = usuarioEntity.Cedula,
                 IdRol = usuarioEntity.IdRol,
                 Activo = usuarioEntity.Activo
             };

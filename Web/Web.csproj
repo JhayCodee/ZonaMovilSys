@@ -171,7 +171,8 @@
     <Content Include="Imagenes\profile.png" />
     <Content Include="Scripts\plugins\jQueryDataTables.js" />
     <Content Include="Scripts\plugins\SweetAlert2\swal2.js" />
-    <Content Include="Scripts\VistasJS\Seguridad\Roles.js" />
+    <Content Include="Scripts\VistasJS\Seguridad\Roles\Roles.js" />
+    <Content Include="Scripts\VistasJS\Seguridad\Usuarios\Usuarios.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -191,7 +192,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\Usuarios\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -206,6 +206,7 @@
     <Content Include="Views\Acceso\Login.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\Usuarios\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logica\Logica.csproj">

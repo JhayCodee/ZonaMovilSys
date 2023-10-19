@@ -1,0 +1,151 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div class="row" id="Index-User">
+    <div class="col-12">
+        <div class="card mb-4">
+            <h5 class="card-header">USUARIOS</h5>
+
+            <div class="card-body">
+                <table id="tblUsers" class="table table-hover table-striped table-responsive" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Nombre de Usuario</th>
+                            <th>Nombre Completo</th>
+                            <th>Correo</th>
+                            <th>Estado</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row" id="Form-User" style="display:none;">
+    <div class="col-12">
+        <div class="card mb-4">
+            <h5 class="card-header">Formulario de Usuario</h5>
+
+            <div class="card-body">
+                <form id="UserForm">
+                    <input type="hidden" id="IdUsuario" name="IdUsuario" value="0" />  <!-- Input oculto para IdUsuario -->
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="Nombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="Nombre" name="Nombre" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="Apellidos" class="form-label">Apellidos</label>
+                            <input type="text" class="form-control" id="Apellidos" name="Apellidos" required />
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="NombreUsuario" class="form-label">Nombre de Usuario</label>
+                            <input type="text" class="form-control" id="NombreUsuario" name="NombreUsuario" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="Correo" class="form-label">Correo</label>
+                            <input type="email" class="form-control" id="Correo" name="Correo" required />
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="IdRol" class="form-label">Rol</label>
+                            <select class="selectpicker form-select" id="IdRol" name="IdRol" data-live-search="true">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 text-end">
+                            <!-- Alineación a la derecha -->
+                            <button type="button" class="btn btn-secondary me-2" id="backUsers">Regresar</button>  <!-- Botón Regresar -->
+                            <button type="submit" class="btn btn-primary" id="saveUser">Guardar</button>  <!-- Botón Guardar -->
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            // Inicialización de jQuery Validation
+            $("#UserForm").validate({
+                rules: {
+                    Nombre: {
+                        required: true,
+                        minlength: 2,
+                        normalizer: function (value) {
+                            return $.trim(value);
+                        }
+                    },
+                    Apellidos: {
+                        required: true,
+                        minlength: 2,
+                        normalizer: function (value) {
+                            return $.trim(value);
+                        }
+                    },
+                    NombreUsuario: {
+                        required: true,
+                        minlength: 2,
+                        normalizer: function (value) {
+                            return $.trim(value);
+                        }
+                    },
+                    Correo: {
+                        required: true,
+                        email: true,
+                        normalizer: function (value) {
+                            return $.trim(value);
+                        }
+                    },
+                    IdRol: {
+                        required: true
+                    }
+                },
+                messages: {
+                    Nombre: {
+                        required: "Por favor, ingresa tu nombre",
+                        minlength: "El nombre debe tener al menos 2 caracteres"
+                    },
+                    Apellidos: {
+                        required: "Por favor, ingresa tus apellidos",
+                        minlength: "Los apellidos deben tener al menos 2 caracteres"
+                    },
+                    NombreUsuario: {
+                        required: "Por favor, ingresa un nombre de usuario",
+                        minlength: "El nombre de usuario debe tener al menos 2 caracteres"
+                    },
+                    Correo: {
+                        required: "Por favor, ingresa tu correo electrónico",
+                        email: "Por favor, ingresa un correo electrónico válido"
+                    },
+                    IdRol: {
+                        required: "Por favor, selecciona un rol"
+                    }
+                },
+                submitHandler: function (form) {
+                    form.submit();
+                }
+            });
+        });
+    </script>
+
+    <script src="~/Scripts/VistasJS/Seguridad/Usuarios/Usuarios.js"></script>
+}

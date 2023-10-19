@@ -46,6 +46,7 @@
     <Compile Include="Seguridad\Operaciones_VM.cs" />
     <Compile Include="Seguridad\Roles_VM.cs" />
     <Compile Include="Seguridad\Usuario_VM.cs" />
+    <Compile Include="utils\DropDown.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -46,7 +46,6 @@ namespace Datos
         public string Apellidos { get; set; }
         public string NombreUsuario { get; set; }
         public string Correo { get; set; }
-        public string Cedula { get; set; }
         public Nullable<int> IdRol { get; set; }
         public bool Activo { get; set; }
         public string Contrasena { get; set; }
