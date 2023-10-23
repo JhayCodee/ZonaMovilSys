@@ -15,6 +15,7 @@ namespace Modelo.Seguridad
         public string Correo { get; set; }
         public string Contrasena { get; set; }
         public string Cedula { get; set; }
+        public string Rol { get; set; }
         public Nullable<int> IdRol { get; set; }
         public bool Activo { get; set; }
     }

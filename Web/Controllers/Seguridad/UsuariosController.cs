@@ -28,6 +28,7 @@ namespace Web.Controllers.Seguridad
 
         #region REQUESTS
 
+        [AuthorizeUser(idOperacion: 13)]
         [HttpPost]
         public JsonResult GetUsers()
         {
@@ -39,6 +40,7 @@ namespace Web.Controllers.Seguridad
             return Json(new { status, data, errorMessage });
         }
 
+        [AuthorizeUser(idOperacion: 14)]
         [HttpPost]
         public JsonResult GetRoles()
         {
@@ -48,10 +50,24 @@ namespace Web.Controllers.Seguridad
             bool status = new Roles_LN().GetRolesDropDown(ref data, ref errorMessage);
             return Json(new { status, data, errorMessage });
         }
+
+        [AuthorizeUser(idOperacion: 15)]
+        [HttpPost]
+        public JsonResult GetUserById(int userId)
+        {
+            Usuario_VM data = new Usuario_VM();
+            string errorMessage = string.Empty;
+            bool status = ln.GetUserById(userId, ref data, ref errorMessage);
+            return Json(new { status, data, errorMessage });
+        }
+
+
         #endregion
 
         #region CRUD
 
+
+        [AuthorizeUser(idOperacion: 16)]
         [HttpPost]
         public JsonResult CreateUser(Usuario_VM user)
         {
@@ -60,6 +76,7 @@ namespace Web.Controllers.Seguridad
             return Json(new { status, errorMessage });
         }
 
+        [AuthorizeUser(idOperacion: 17)]
         [HttpPost]
         public JsonResult UpdateUser(Usuario_VM user)
         {
@@ -68,11 +85,21 @@ namespace Web.Controllers.Seguridad
             return Json(new { status, errorMessage });
         }
 
+        [AuthorizeUser(idOperacion: 18)]
         [HttpPost]
         public JsonResult DeleteUser(int userId)
         {
             string errorMessage = string.Empty;
             bool status = ln.DeleteUser(userId, ref errorMessage);
+            return Json(new { status, errorMessage });
+        }
+
+        [AuthorizeUser(idOperacion: 19)]
+        [HttpPost]
+        public JsonResult ActivateUser(int userId)
+        {
+            string errorMessage = string.Empty;
+            bool status = ln.ActivateUser(userId, ref errorMessage);
             return Json(new { status, errorMessage });
         }
         #endregion

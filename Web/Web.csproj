@@ -172,6 +172,7 @@
     <Content Include="Scripts\plugins\jQueryDataTables.js" />
     <Content Include="Scripts\plugins\SweetAlert2\swal2.js" />
     <Content Include="Scripts\VistasJS\Seguridad\Roles\Roles.js" />
+    <Content Include="Scripts\VistasJS\Seguridad\Usuarios\UserRules.js" />
     <Content Include="Scripts\VistasJS\Seguridad\Usuarios\Usuarios.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

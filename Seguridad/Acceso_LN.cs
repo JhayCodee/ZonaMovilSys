@@ -66,6 +66,13 @@ namespace Seguridad
                 return null;
             }
 
+            // Se encontró el usuario pero la contraseña no coincide
+            if (usuarioEntity.Rol.Activo == false)
+            {
+                errorMsg = "No posee un rol";
+                return null;
+            }
+
             var usuarioVM = new Usuario_VM
             {
                 IdUsuario = usuarioEntity.IdUsuario,

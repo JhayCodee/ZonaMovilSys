@@ -29,9 +29,38 @@ namespace Logica.Seguridad
                     Apellidos = u.Apellidos,
                     NombreUsuario = u.NombreUsuario,
                     Correo = u.Correo,
-                    Activo = u.Activo
+                    Activo = u.Activo,
+                    Rol = u.Rol.NombreRol
                 }).ToList();
 
+                return true;
+            }
+            catch (Exception ex)
+            {
+                errorMessage = ex.Message;
+                return false;
+            }
+        }
+
+        public bool GetUserById(int userId, ref Usuario_VM data, ref string errorMessage)
+        {
+            try
+            {
+                var user = _db.Usuario.FirstOrDefault(u => u.IdUsuario == userId);
+                if (user != null)
+                {
+                    data = new Usuario_VM
+                    {
+                        IdUsuario = user.IdUsuario,
+                        Nombre = user.Nombre,
+                        Apellidos = user.Apellidos,
+                        NombreUsuario = user.NombreUsuario,
+                        Correo = user.Correo,
+                        Activo = user.Activo,
+                        IdRol = user.IdRol,
+                        Contrasena = user.Contrasena
+                    };
+                }
                 return true;
             }
             catch (Exception ex)
@@ -56,6 +85,7 @@ namespace Logica.Seguridad
                 return false;
             }
         }
+
         public bool UpdateUser(Usuario_VM user, ref string errorMessage)
         {
             try
@@ -71,6 +101,7 @@ namespace Logica.Seguridad
                 return false;
             }
         }
+        
         public bool DeleteUser(int userId, ref string errorMessage)
         {
             try
@@ -79,6 +110,28 @@ namespace Logica.Seguridad
                 _db.sp_Usuario_Delete(userId, isSuccessParam);
 
                 return (int)isSuccessParam.Value == 1;
+            }
+            catch (Exception ex)
+            {
+                errorMessage = ex.Message;
+                return false;
+            }
+        }
+        
+        public bool ActivateUser(int userId, ref string errorMessage)
+        {
+            try
+            {
+                var user = _db.Usuario.Find(userId);
+                if (user == null)
+                {
+                    errorMessage = "Usuario no encontrado";
+                    return false;
+                }
+                user.Activo = true;
+                _db.SaveChanges();
+
+                return true;
             }
             catch (Exception ex)
             {
