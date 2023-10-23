@@ -1,4 +1,5 @@
 ﻿using Datos;
+using Logica.Seguridad;
 using Modelo.Seguridad;
 using System;
 using System.Collections.Generic;
@@ -50,7 +51,7 @@ namespace Seguridad
         {
             errorMsg = null;
 
-            var usuarioEntity = _db.Usuario.Where(u => u.Activo).FirstOrDefault(u => u.NombreUsuario == email);
+            var usuarioEntity = _db.Usuario.FirstOrDefault(u => u.NombreUsuario == email);
 
             // No se encontró el usuario
             if (usuarioEntity == null)
@@ -59,14 +60,24 @@ namespace Seguridad
                 return null;
             }
 
+            // Instancia de la clase PasswordManager
+            PasswordManager pwdManager = new PasswordManager();
+
             // Se encontró el usuario pero la contraseña no coincide
-            if (usuarioEntity.Contrasena != password.Trim())
+            if (!pwdManager.VerifyPassword(password.Trim(), usuarioEntity.Contrasena))
             {
                 errorMsg = "Contraseña incorrecta.";
                 return null;
             }
 
-            // Se encontró el usuario pero la contraseña no coincide
+            // Verifica si el usuario está activo
+            if (!usuarioEntity.Activo)
+            {
+                errorMsg = "El usuario no está activo.";
+                return null;
+            }
+
+            // Se encontró el usuario pero no tiene un rol activo
             if (usuarioEntity.Rol.Activo == false)
             {
                 errorMsg = "No posee un rol";
@@ -86,6 +97,8 @@ namespace Seguridad
 
             return usuarioVM;
         }
+
+
 
     }
 }

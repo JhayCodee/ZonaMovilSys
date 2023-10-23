@@ -60,6 +60,10 @@
       <Project>{f2d975bf-578d-4495-a668-84ca856619fd}</Project>
       <Name>Datos</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logica\Logica.csproj">
+      <Project>{5FE8FFFA-E876-4025-BF00-C11720FBC6B2}</Project>
+      <Name>Logica</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Modelo\Modelo.csproj">
       <Project>{caa2539c-0605-40c0-88c3-a1e91de3d182}</Project>
       <Name>Modelo</Name>

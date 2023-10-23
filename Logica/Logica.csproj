@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Seguridad\Controlador_LN.cs" />
+    <Compile Include="Seguridad\PasswordManager.cs" />
     <Compile Include="Seguridad\Roles_LN.cs" />
     <Compile Include="Seguridad\Usuarios_LN.cs" />
   </ItemGroup>

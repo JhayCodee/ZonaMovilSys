@@ -74,8 +74,9 @@ namespace Logica.Seguridad
         {
             try
             {
+                var hash = new PasswordManager().HashPassword(user.Contrasena);
                 ObjectParameter isSuccessParam = new ObjectParameter("IsSuccess", typeof(int));
-                _db.sp_Usuario_Create(user.Nombre, user.Apellidos, user.NombreUsuario, user.Correo, user.IdRol, user.Activo, user.Contrasena, isSuccessParam);
+                _db.sp_Usuario_Create(user.Nombre, user.Apellidos, user.NombreUsuario, user.Correo, user.IdRol, user.Activo, hash, isSuccessParam);
 
                 return (int)isSuccessParam.Value == 1;
             }
@@ -90,8 +91,10 @@ namespace Logica.Seguridad
         {
             try
             {
+                var hash = new PasswordManager().HashPassword(user.Contrasena);
+
                 ObjectParameter isSuccessParam = new ObjectParameter("IsSuccess", typeof(int));
-                _db.sp_Usuario_Update(user.IdUsuario, user.Nombre, user.Apellidos, user.NombreUsuario, user.Correo, user.Contrasena, user.IdRol, user.Activo, isSuccessParam);
+                _db.sp_Usuario_Update(user.IdUsuario, user.Nombre, user.Apellidos, user.NombreUsuario, user.Correo, hash, user.IdRol, user.Activo, isSuccessParam);
 
                 return (int)isSuccessParam.Value == 1;
             }
