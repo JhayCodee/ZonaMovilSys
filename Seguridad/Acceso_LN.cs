@@ -70,6 +70,12 @@ namespace Seguridad
                 return null;
             }
 
+            //if (usuarioEntity.Contrasena != password.Trim())
+            //{
+            //    errorMsg = "Contraseña incorrecta.";
+            //    return null;
+            //}
+
             // Verifica si el usuario está activo
             if (!usuarioEntity.Activo)
             {

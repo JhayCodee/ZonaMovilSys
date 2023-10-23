@@ -660,6 +660,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Usuario__IdRol__1AD3FDA4">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="IdRol" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="IdRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Usuario__IdRol__267ABA7A">
           <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
@@ -681,6 +693,7 @@
           <Parameter Name="Activo" Type="bit" Mode="In" />
           <Parameter Name="Contrasena" Type="nvarchar" Mode="In" />
           <Parameter Name="IsSuccess" Type="int" Mode="InOut" />
+          <Parameter Name="ErrorMsg" Type="nvarchar" Mode="InOut" />
         </Function>
         <Function Name="sp_Usuario_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Seguridad">
           <Parameter Name="IdUsuario" Type="int" Mode="In" />
@@ -692,10 +705,10 @@
           <Parameter Name="Apellidos" Type="nvarchar" Mode="In" />
           <Parameter Name="NombreUsuario" Type="nvarchar" Mode="In" />
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
-          <Parameter Name="Contrasena" Type="nvarchar" Mode="In" />
           <Parameter Name="IdRol" Type="int" Mode="In" />
           <Parameter Name="Activo" Type="bit" Mode="In" />
           <Parameter Name="IsSuccess" Type="int" Mode="InOut" />
+          <Parameter Name="ErrorMsg" Type="nvarchar" Mode="InOut" />
         </Function>
         <EntityContainer Name="ContextoZMStoreContainer">
           <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="Catalogo" store:Type="Tables" />
@@ -858,6 +871,10 @@
           <AssociationSet Name="FK__RolOperac__IdRol__34C8D9D1" Association="Self.FK__RolOperac__IdRol__34C8D9D1">
             <End Role="Rol" EntitySet="Rol" />
             <End Role="RolOperacion" EntitySet="RolOperacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Usuario__IdRol__1AD3FDA4" Association="Self.FK__Usuario__IdRol__1AD3FDA4">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
           <AssociationSet Name="FK__Usuario__IdRol__267ABA7A" Association="Self.FK__Usuario__IdRol__267ABA7A">
             <End Role="Rol" EntitySet="Rol" />
@@ -1784,6 +1801,7 @@
             <Parameter Name="Activo" Mode="In" Type="Boolean" />
             <Parameter Name="Contrasena" Mode="In" Type="String" />
             <Parameter Name="IsSuccess" Mode="InOut" Type="Int32" />
+            <Parameter Name="ErrorMsg" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_Usuario_Delete">
             <Parameter Name="IdUsuario" Mode="In" Type="Int32" />
@@ -1795,10 +1813,10 @@
             <Parameter Name="Apellidos" Mode="In" Type="String" />
             <Parameter Name="NombreUsuario" Mode="In" Type="String" />
             <Parameter Name="Correo" Mode="In" Type="String" />
-            <Parameter Name="Contrasena" Mode="In" Type="String" />
             <Parameter Name="IdRol" Mode="In" Type="Int32" />
             <Parameter Name="Activo" Mode="In" Type="Boolean" />
             <Parameter Name="IsSuccess" Mode="InOut" Type="Int32" />
+            <Parameter Name="ErrorMsg" Mode="InOut" Type="String" />
           </FunctionImport>
         </EntityContainer>
       </Schema>

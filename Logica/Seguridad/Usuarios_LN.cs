@@ -3,6 +3,7 @@ using Modelo.Seguridad;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -75,10 +76,19 @@ namespace Logica.Seguridad
             try
             {
                 var hash = new PasswordManager().HashPassword(user.Contrasena);
-                ObjectParameter isSuccessParam = new ObjectParameter("IsSuccess", typeof(int));
-                _db.sp_Usuario_Create(user.Nombre, user.Apellidos, user.NombreUsuario, user.Correo, user.IdRol, user.Activo, hash, isSuccessParam);
 
-                return (int)isSuccessParam.Value == 1;
+                ObjectParameter isSuccessParam = new ObjectParameter("IsSuccess", typeof(int));
+                ObjectParameter errorMsgParam = new ObjectParameter("ErrorMsg", typeof(string));
+
+                _db.sp_Usuario_Create(user.Nombre, user.Apellidos, user.NombreUsuario, user.Correo, user.IdRol, user.Activo, hash, isSuccessParam, errorMsgParam);
+
+                if ((int)isSuccessParam.Value == 0)
+                {
+                    errorMessage = errorMsgParam.Value.ToString();
+                    return false;
+                }
+
+                return true;
             }
             catch (Exception ex)
             {
@@ -86,17 +96,24 @@ namespace Logica.Seguridad
                 return false;
             }
         }
+
 
         public bool UpdateUser(Usuario_VM user, ref string errorMessage)
         {
             try
             {
-                var hash = new PasswordManager().HashPassword(user.Contrasena);
-
                 ObjectParameter isSuccessParam = new ObjectParameter("IsSuccess", typeof(int));
-                _db.sp_Usuario_Update(user.IdUsuario, user.Nombre, user.Apellidos, user.NombreUsuario, user.Correo, hash, user.IdRol, user.Activo, isSuccessParam);
+                ObjectParameter errorMsgParam = new ObjectParameter("ErrorMsg", typeof(string));
 
-                return (int)isSuccessParam.Value == 1;
+                _db.sp_Usuario_Update(user.IdUsuario, user.Nombre, user.Apellidos, user.NombreUsuario, user.Correo, user.IdRol, user.Activo, isSuccessParam, errorMsgParam);
+
+                if ((int)isSuccessParam.Value == 0)
+                {
+                    errorMessage = errorMsgParam.Value.ToString();
+                    return false;
+                }
+
+                return true;
             }
             catch (Exception ex)
             {
@@ -104,7 +121,8 @@ namespace Logica.Seguridad
                 return false;
             }
         }
-        
+
+
         public bool DeleteUser(int userId, ref string errorMessage)
         {
             try

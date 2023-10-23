@@ -18,6 +18,9 @@
             let userId = $(this).data('id');
             activeValue = $(this).data("activo");
             isUpdate = true;
+            $('#Contrasena').hide();
+            $('#lblPass').hide();
+
 
             $.ajax({
                 type: "POST",
@@ -213,6 +216,8 @@
                     action: function (e, dt, node, config) {
                         UsersContainer.Index.hide();
                         UsersContainer.Form.show();
+                        $('#Contrasena').show();
+                        $('#lblPass').show();
                         $('#IdRol').val(null).trigger('change');
                         isUpdate = false;
                     }
