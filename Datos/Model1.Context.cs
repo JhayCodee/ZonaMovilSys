@@ -119,5 +119,144 @@ namespace Datos
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Usuario_Update", idUsuarioParameter, nombreParameter, apellidosParameter, nombreUsuarioParameter, correoParameter, idRolParameter, activoParameter, isSuccess, errorMsg);
         }
+    
+        public virtual int sp_Producto_Create(string nombre, string modelo, string descripcion, Nullable<int> stock, Nullable<decimal> precioCompra, Nullable<decimal> precioVenta, string almacenamiento, Nullable<int> garantiaMeses, string rAM, Nullable<bool> activo, Nullable<int> idMarca, Nullable<int> idCategoria, Nullable<int> idColor, Nullable<int> creadoPor, ObjectParameter isSuccess, ObjectParameter errorMsg)
+        {
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var modeloParameter = modelo != null ?
+                new ObjectParameter("Modelo", modelo) :
+                new ObjectParameter("Modelo", typeof(string));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("Descripcion", descripcion) :
+                new ObjectParameter("Descripcion", typeof(string));
+    
+            var stockParameter = stock.HasValue ?
+                new ObjectParameter("Stock", stock) :
+                new ObjectParameter("Stock", typeof(int));
+    
+            var precioCompraParameter = precioCompra.HasValue ?
+                new ObjectParameter("PrecioCompra", precioCompra) :
+                new ObjectParameter("PrecioCompra", typeof(decimal));
+    
+            var precioVentaParameter = precioVenta.HasValue ?
+                new ObjectParameter("PrecioVenta", precioVenta) :
+                new ObjectParameter("PrecioVenta", typeof(decimal));
+    
+            var almacenamientoParameter = almacenamiento != null ?
+                new ObjectParameter("Almacenamiento", almacenamiento) :
+                new ObjectParameter("Almacenamiento", typeof(string));
+    
+            var garantiaMesesParameter = garantiaMeses.HasValue ?
+                new ObjectParameter("GarantiaMeses", garantiaMeses) :
+                new ObjectParameter("GarantiaMeses", typeof(int));
+    
+            var rAMParameter = rAM != null ?
+                new ObjectParameter("RAM", rAM) :
+                new ObjectParameter("RAM", typeof(string));
+    
+            var activoParameter = activo.HasValue ?
+                new ObjectParameter("Activo", activo) :
+                new ObjectParameter("Activo", typeof(bool));
+    
+            var idMarcaParameter = idMarca.HasValue ?
+                new ObjectParameter("IdMarca", idMarca) :
+                new ObjectParameter("IdMarca", typeof(int));
+    
+            var idCategoriaParameter = idCategoria.HasValue ?
+                new ObjectParameter("IdCategoria", idCategoria) :
+                new ObjectParameter("IdCategoria", typeof(int));
+    
+            var idColorParameter = idColor.HasValue ?
+                new ObjectParameter("IdColor", idColor) :
+                new ObjectParameter("IdColor", typeof(int));
+    
+            var creadoPorParameter = creadoPor.HasValue ?
+                new ObjectParameter("CreadoPor", creadoPor) :
+                new ObjectParameter("CreadoPor", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Producto_Create", nombreParameter, modeloParameter, descripcionParameter, stockParameter, precioCompraParameter, precioVentaParameter, almacenamientoParameter, garantiaMesesParameter, rAMParameter, activoParameter, idMarcaParameter, idCategoriaParameter, idColorParameter, creadoPorParameter, isSuccess, errorMsg);
+        }
+    
+        public virtual int sp_Producto_Delete(Nullable<int> idProducto, Nullable<int> eliminadoPor, ObjectParameter isSuccess, ObjectParameter errorMsg)
+        {
+            var idProductoParameter = idProducto.HasValue ?
+                new ObjectParameter("IdProducto", idProducto) :
+                new ObjectParameter("IdProducto", typeof(int));
+    
+            var eliminadoPorParameter = eliminadoPor.HasValue ?
+                new ObjectParameter("EliminadoPor", eliminadoPor) :
+                new ObjectParameter("EliminadoPor", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Producto_Delete", idProductoParameter, eliminadoPorParameter, isSuccess, errorMsg);
+        }
+    
+        public virtual int sp_Producto_Update(Nullable<int> idProducto, string nombre, string modelo, string descripcion, Nullable<int> stock, Nullable<decimal> precioCompra, Nullable<decimal> precioVenta, string almacenamiento, Nullable<int> garantiaMeses, string rAM, Nullable<bool> activo, Nullable<int> idMarca, Nullable<int> idCategoria, Nullable<int> idColor, Nullable<int> editadoPor, ObjectParameter isSuccess, ObjectParameter errorMsg)
+        {
+            var idProductoParameter = idProducto.HasValue ?
+                new ObjectParameter("IdProducto", idProducto) :
+                new ObjectParameter("IdProducto", typeof(int));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var modeloParameter = modelo != null ?
+                new ObjectParameter("Modelo", modelo) :
+                new ObjectParameter("Modelo", typeof(string));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("Descripcion", descripcion) :
+                new ObjectParameter("Descripcion", typeof(string));
+    
+            var stockParameter = stock.HasValue ?
+                new ObjectParameter("Stock", stock) :
+                new ObjectParameter("Stock", typeof(int));
+    
+            var precioCompraParameter = precioCompra.HasValue ?
+                new ObjectParameter("PrecioCompra", precioCompra) :
+                new ObjectParameter("PrecioCompra", typeof(decimal));
+    
+            var precioVentaParameter = precioVenta.HasValue ?
+                new ObjectParameter("PrecioVenta", precioVenta) :
+                new ObjectParameter("PrecioVenta", typeof(decimal));
+    
+            var almacenamientoParameter = almacenamiento != null ?
+                new ObjectParameter("Almacenamiento", almacenamiento) :
+                new ObjectParameter("Almacenamiento", typeof(string));
+    
+            var garantiaMesesParameter = garantiaMeses.HasValue ?
+                new ObjectParameter("GarantiaMeses", garantiaMeses) :
+                new ObjectParameter("GarantiaMeses", typeof(int));
+    
+            var rAMParameter = rAM != null ?
+                new ObjectParameter("RAM", rAM) :
+                new ObjectParameter("RAM", typeof(string));
+    
+            var activoParameter = activo.HasValue ?
+                new ObjectParameter("Activo", activo) :
+                new ObjectParameter("Activo", typeof(bool));
+    
+            var idMarcaParameter = idMarca.HasValue ?
+                new ObjectParameter("IdMarca", idMarca) :
+                new ObjectParameter("IdMarca", typeof(int));
+    
+            var idCategoriaParameter = idCategoria.HasValue ?
+                new ObjectParameter("IdCategoria", idCategoria) :
+                new ObjectParameter("IdCategoria", typeof(int));
+    
+            var idColorParameter = idColor.HasValue ?
+                new ObjectParameter("IdColor", idColor) :
+                new ObjectParameter("IdColor", typeof(int));
+    
+            var editadoPorParameter = editadoPor.HasValue ?
+                new ObjectParameter("EditadoPor", editadoPor) :
+                new ObjectParameter("EditadoPor", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Producto_Update", idProductoParameter, nombreParameter, modeloParameter, descripcionParameter, stockParameter, precioCompraParameter, precioVentaParameter, almacenamientoParameter, garantiaMesesParameter, rAMParameter, activoParameter, idMarcaParameter, idCategoriaParameter, idColorParameter, editadoPorParameter, isSuccess, errorMsg);
+        }
     }
 }

@@ -10,7 +10,6 @@ namespace Web.Controllers
     [VerificaSession]
     public class DashboardController : BaseController
     {
-        [AuthorizeUser(idOperacion: 2)]
         public ActionResult Index()
         {
             return View(); 

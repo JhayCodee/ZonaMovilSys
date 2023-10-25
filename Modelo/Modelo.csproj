@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Catalogo\Producto_VM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Seguridad\Controlador_VM.cs" />
     <Compile Include="Seguridad\Operaciones_VM.cs" />

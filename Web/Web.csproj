@@ -172,6 +172,8 @@
     <Content Include="Imagenes\profile.png" />
     <Content Include="Scripts\plugins\jQueryDataTables.js" />
     <Content Include="Scripts\plugins\SweetAlert2\swal2.js" />
+    <Content Include="Scripts\VistasJS\Catalogo\Productos\Productos.js" />
+    <Content Include="Scripts\VistasJS\Catalogo\Productos\ProductosRules.js" />
     <Content Include="Scripts\VistasJS\Seguridad\Roles\Roles.js" />
     <Content Include="Scripts\VistasJS\Seguridad\Usuarios\UserRules.js" />
     <Content Include="Scripts\VistasJS\Seguridad\Usuarios\Usuarios.js" />
@@ -194,7 +196,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\Productos\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -210,6 +211,7 @@
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Roles\Index.cshtml" />
     <Content Include="Views\Usuarios\Index.cshtml" />
+    <Content Include="Views\Productos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logica\Logica.csproj">

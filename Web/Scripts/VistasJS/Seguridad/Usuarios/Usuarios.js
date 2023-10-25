@@ -21,7 +21,6 @@
             $('#Contrasena').hide();
             $('#lblPass').hide();
 
-
             $.ajax({
                 type: "POST",
                 url: UsersContainer.Url + "/GetUserById",

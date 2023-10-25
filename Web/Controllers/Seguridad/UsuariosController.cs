@@ -66,7 +66,6 @@ namespace Web.Controllers.Seguridad
 
         #region CRUD
 
-
         [AuthorizeUser(idOperacion: 16)]
         [HttpPost]
         public JsonResult CreateUser(Usuario_VM user)
