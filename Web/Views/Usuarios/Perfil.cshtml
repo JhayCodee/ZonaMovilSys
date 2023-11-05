@@ -1,0 +1,180 @@
+﻿@{
+    ViewBag.Title = "Perfil";
+}
+
+
+
+<div class="mt-5">
+    <div class="row">
+        <!-- Menú lateral -->
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <h5 class="card-header">Menú de perfil</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item btn-menu active cursor-pointer" data-target="#Form-User">Editar información personal</li>
+                    <li class="list-group-item btn-menu cursor-pointer" data-target="#Form-Password">Cambiar contraseña</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="col-md-9 mb-3">
+            <!-- Formulario de información personal -->
+            <div id="Form-User" style="display:none;">
+                <div class="card mb-4">
+                    <h5 class="card-header">Editar información personal</h5>
+                    <div class="card-body">
+                        <form id="UserForm">
+                            <input type="hidden" id="IdUsuario" name="IdUsuario" value="@ViewBag.UserId" />
+                            <input type="hidden" id="IdRol" name="IdRol" value="@ViewBag.UserdIdRol" />
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="Nombre" class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="Nombre" name="Nombre" required />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="Apellidos" class="form-label">Apellidos</label>
+                                    <input type="text" class="form-control" id="Apellidos" name="Apellidos" required />
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="NombreUsuario" class="form-label">Nombre de Usuario</label>
+                                    <input type="text" class="form-control" id="NombreUsuario" name="NombreUsuario" required />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="Correo" class="form-label">Correo</label>
+                                    <input type="email" class="form-control" id="Correo" name="Correo" required />
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-primary" id="guardarInfoPerfil">Guardar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulario para cambiar contraseña -->
+            <div id="Form-Password" style="display:none;">
+                <div class="card mb-4">
+                    <h5 class="card-header">Cambiar contraseña</h5>
+                    <div class="card-body">
+                        <form id="PasswordForm">
+                            <input type="hidden" id="IdUsuarioPass" name="IdUsuarioPass" value="@ViewBag.UserId" />
+                            <div class="mb-3">
+                                <label for="CurrentPassword" class="form-label">Contraseña actual</label>
+                                <input type="password" class="form-control" id="CurrentPassword" name="CurrentPassword" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="NewPassword" class="form-label">Nueva contraseña</label>
+                                <input type="password" class="form-control" id="NewPassword" name="NewPassword" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="ConfirmPassword" class="form-label">Confirmar nueva contraseña</label>
+                                <input type="password" class="form-control" id="ConfirmPassword" name="ConfirmPassword" required />
+                            </div>
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-primary" id="guardarPassPerfil">Guardar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+
+
+    <script>
+        $(document).ready(function () {
+
+            $("#UserForm").validate({
+                rules: {
+                    Nombre: {
+                        required: true,
+                        minlength: 2,
+                        normalizer: function (value) {
+                            return $.trim(value);
+                        }
+                    },
+                    Apellidos: {
+                        required: true,
+                        minlength: 2,
+                        normalizer: function (value) {
+                            return $.trim(value);
+                        }
+                    },
+                    NombreUsuario: {
+                        required: true,
+                        minlength: 2,
+                        normalizer: function (value) {
+                            return $.trim(value);
+                        }
+                    },
+                    Correo: {
+                        required: true,
+                        email: true
+                    }
+                },
+                messages: {
+                    Nombre: {
+                        required: "Por favor, introduce tu nombre",
+                        minlength: "El nombre debe tener al menos 2 caracteres"
+                    },
+                    Apellidos: {
+                        required: "Por favor, introduce tus apellidos",
+                        minlength: "Los apellidos deben tener al menos 2 caracteres"
+                    },
+                    NombreUsuario: {
+                        required: "Por favor, introduce tu nombre de usuario",
+                        minlength: "El nombre de usuario debe tener al menos 2 caracteres"
+                    },
+                    Correo: "Por favor, introduce un correo válido"
+                }
+            });
+
+            $("#PasswordForm").validate({
+                rules: {
+                    CurrentPassword: {
+                        required: true,
+                        minlength: 5
+                    },
+                    NewPassword: {
+                        required: true,
+                        minlength: 5
+                    },
+                    ConfirmPassword: {
+                        required: true,
+                        minlength: 5,
+                        equalTo: "#NewPassword"
+                    }
+                },
+                messages: {
+                    CurrentPassword: {
+                        required: "Por favor, introduce tu contraseña actual",
+                        minlength: "Tu contraseña debe tener al menos 5 caracteres"
+                    },
+                    NewPassword: {
+                        required: "Por favor, introduce tu nueva contraseña",
+                        minlength: "La nueva contraseña debe tener al menos 5 caracteres"
+                    },
+                    ConfirmPassword: {
+                        required: "Por favor, confirma tu nueva contraseña",
+                        minlength: "La confirmación de la contraseña debe tener al menos 5 caracteres",
+                        equalTo: "La confirmación de la contraseña no coincide con la nueva contraseña"
+                    }
+                }
+            });
+        });
+    </script>
+
+
+    <script src="~/Scripts/VistasJS/Seguridad/Usuarios/Perfil.js"></script>
+}
+
+
+

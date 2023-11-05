@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div class="row" id="Index-Categoria">
+    <div class="col-12">
+        <div class="card mb-4">
+            <h5 class="card-header">CATEGORIAS</h5>
+
+            <div class="card-body">
+                <table id="tblCategoria" class="table table-hover table-striped table-responsive" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+
+    <script src="~/Scripts/VistasJS/Catalogo/Categoria/Categoria.js"></script>
+}

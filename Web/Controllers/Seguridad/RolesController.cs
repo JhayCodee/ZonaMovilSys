@@ -75,6 +75,9 @@ namespace Web.Controllers.Seguridad
 
             bool status = ln.UpdateRol(idrol, data, rolName, ref errorMessage);
 
+            if (status)
+                Session["AllowedOperationsLoaded"] = null;
+
             return Json(new { status, data, errorMessage });
         }
     }

@@ -82,7 +82,7 @@
         <div class="layout-container">
             <!-- Menu -->
 
-            <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+            <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme mx-3 rounded shadow">
                 <div class="app-brand demo">
                     <div class="app-brand justify-content-center py-3">
                         <span class="app-brand-link gap-2">
@@ -134,7 +134,7 @@
             <div class="layout-page">
                 <!-- Navbar -->
 
-                <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+                <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme mt-3"
                      id="layout-navbar">
                     <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
                         <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
@@ -149,44 +149,21 @@
                             <!-- User -->
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                                    <div class="avatar avatar-online">
-                                        <img src="~/Imagenes/profile.png" class="w-px-40 h-auto rounded-circle" />
-                                    </div>
+                                    <span class="d-flex align-items-center">
+                                        <!-- Contenedor flex para alinear texto e icono -->
+                                        <span class="me-2">@ViewBag.UserName</span> <!-- Texto añadido aquí -->
+                                        <div class="avatar avatar-online d-flex align-items-center justify-content-center">
+                                            <i class="bx bx-cog bx-sm"></i> <!-- Icono de opciones/ajustes de Boxicons -->
+                                        </div>
+                                    </span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
-                                    @*<li>
-                                            <a class="dropdown-item" href="#">
-                                                <div class="d-flex">
-                                                    <div class="flex-shrink-0 me-3">
-                                                        <div class="avatar avatar-online">
-                                                            <img src="~/Imagenes/profile.png"  class="w-px-40 h-auto rounded-circle" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-grow-1">
-                                                        <span class="fw-semibold d-block">John Doe</span>
-                                                        <small class="text-muted">Admin</small>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>*@
-                                    @*<li>
-                                            <div class="dropdown-divider"></div>
-                                        </li>*@
-                                    @*<li>
-                                            <a class="dropdown-item" href="#">
-                                                <i class="bx bx-user me-2"></i>
-                                                <span class="align-middle">My Profile</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="#">
-                                                <i class="bx bx-cog me-2"></i>
-                                                <span class="align-middle">Settings</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <div class="dropdown-divider"></div>
-                                        </li>*@
+                                    <li>
+                                        <a class="dropdown-item" href="@Url.Action("Perfil", "Usuarios")">
+                                            <i class="bx bx-user me-2"></i>
+                                            <span class="align-middle">Ajustes</span>
+                                        </a>
+                                    </li>
                                     <li>
                                         <a class="dropdown-item" href="/Acceso/Logout">
                                             <i class="bx bx-power-off me-2"></i>
@@ -197,6 +174,7 @@
                             </li>
                             <!--/ User -->
                         </ul>
+
                     </div>
                 </nav>
 

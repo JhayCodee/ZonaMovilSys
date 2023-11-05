@@ -44,7 +44,6 @@ namespace Web.Controllers.Seguridad
             }
 
             Session["User"] = oUser;
-            ViewBag.UserName = oUser.Nombre + " " + oUser.Apellidos;
             return RedirectToAction("Index", "Dashboard");
         }
 
@@ -53,6 +52,7 @@ namespace Web.Controllers.Seguridad
         {
             Session["User"] = null;
             Session["AllowedOperationsLoaded"] = null;
+            Session["UserName"] = null;
             return RedirectToAction("Login", "Acceso"); 
         }
     }

@@ -2,6 +2,7 @@
 using Modelo.Seguridad;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Data.SqlClient;
 using System.Linq;
@@ -160,5 +161,83 @@ namespace Logica.Seguridad
                 return false;
             }
         }
+
+        public bool UpdateUserInfo(Usuario_VM user, ref string errorMessage)
+        {
+            try
+            {
+                int id = user.IdUsuario;
+                string storedHash = _db.Usuario.Where(x => x.IdUsuario == id).Select(x => x.Contrasena).FirstOrDefault();
+
+                // Usar PasswordManager para verificar la contraseña
+                PasswordManager passwordManager = new PasswordManager();
+                if (!passwordManager.VerifyPassword(user.Contrasena, storedHash))
+                {
+                    errorMessage = "La contraseña proporcionada es incorrecta.";
+                    return false;
+                }
+
+                // Si la contraseña es correcta, continuar con la actualización del usuario
+                ObjectParameter isSuccessParam = new ObjectParameter("IsSuccess", typeof(int));
+                ObjectParameter errorMsgParam = new ObjectParameter("ErrorMsg", typeof(string));
+
+                _db.sp_Usuario_Update(user.IdUsuario, user.Nombre, user.Apellidos, user.NombreUsuario, user.Correo, user.IdRol, user.Activo, isSuccessParam, errorMsgParam);
+
+                if ((int)isSuccessParam.Value == 0)
+                {
+                    errorMessage = errorMsgParam.Value.ToString();
+                    return false;
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                errorMessage = ex.Message;
+                return false;
+            }
+        }
+
+        public bool UpdateUserPassword(string currentPassword, string newPassword, string confirmNewPassword, int userId, ref string errorMessage)
+        {
+            try
+            {
+                // Verificar que las nuevas contraseñas coinciden
+                if (newPassword != confirmNewPassword)
+                {
+                    errorMessage = "Las nuevas contraseñas no coinciden.";
+                    return false;
+                }
+
+                // Obtener el hash de la contraseña almacenada
+                var user = _db.Usuario.FirstOrDefault(u => u.IdUsuario == userId);
+                if (user == null)
+                {
+                    errorMessage = "Usuario no encontrado.";
+                    return false;
+                }
+
+                // Verificar la contraseña actual
+                PasswordManager passwordManager = new PasswordManager();
+                if (!passwordManager.VerifyPassword(currentPassword, user.Contrasena))
+                {
+                    errorMessage = "La contraseña actual es incorrecta.";
+                    return false;
+                }
+
+                // Actualizar con la nueva contraseña
+                user.Contrasena = passwordManager.HashPassword(newPassword);
+                _db.Entry(user).State = EntityState.Modified;
+                _db.SaveChanges();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                errorMessage = ex.Message;
+                return false;
+            }
+        }
+
     }
 }

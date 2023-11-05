@@ -244,6 +244,7 @@ function sendSelectedControllersToServer(requestData) {
                             rolesContainer.Form.hide();
                             rolesContainer.Index.show();
                             clearRolesForm();
+                            if (RolMode === "Edit") location.reload(true);
                         });
                     } else {
                         Swal.fire({

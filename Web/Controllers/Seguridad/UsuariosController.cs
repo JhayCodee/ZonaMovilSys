@@ -20,11 +20,23 @@ namespace Web.Controllers.Seguridad
             ln = new Usuarios_LN();
         }
 
+        #region VIEWS
+
         [AuthorizeUser(idOperacion: 3)]
         public ActionResult Index()
         {
             return View();
         }
+
+        public ActionResult Perfil()
+        {
+            ViewBag.UserId = GetLoggedUser().IdUsuario; 
+            ViewBag.UserdIdRol = GetLoggedUser().IdRol;
+            return View();
+        }
+
+        #endregion
+
 
         #region REQUESTS
 
@@ -51,7 +63,6 @@ namespace Web.Controllers.Seguridad
             return Json(new { status, data, errorMessage });
         }
 
-        [AuthorizeUser(idOperacion: 15)]
         [HttpPost]
         public JsonResult GetUserById(int userId)
         {
@@ -101,6 +112,23 @@ namespace Web.Controllers.Seguridad
             bool status = ln.ActivateUser(userId, ref errorMessage);
             return Json(new { status, errorMessage });
         }
+
+        [HttpPost]
+        public JsonResult UpdateUserInfo(Usuario_VM user)
+        {
+            string errorMessage = string.Empty;
+            bool status = ln.UpdateUserInfo(user, ref errorMessage);
+            return Json(new { status, errorMessage });
+        }
+
+        [HttpPost]
+        public JsonResult UpdateUserPassword(string currentPassword, string newPassword, string confirmNewPassword, int userId)
+        {
+            string errorMessage = string.Empty;
+            bool status = ln.UpdateUserPassword(currentPassword, newPassword, confirmNewPassword, userId, ref errorMessage);
+            return Json(new { status, errorMessage });
+        }
+
         #endregion
     }
 }

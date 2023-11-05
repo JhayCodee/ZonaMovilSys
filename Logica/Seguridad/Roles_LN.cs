@@ -99,9 +99,8 @@ namespace Logica.Seguridad
 
                     // Paso 2: Recuperar las operaciones asociadas a los ID de controladores proporcionados
                     var operaciones = _db.Operacion
-                                       .Where(o => o.IdControlador.HasValue && controllers.Contains(o.IdControlador.Value))
-                                       .ToList();
-
+                                   .Where(o => o.IdControlador.HasValue && controllers.Contains(o.IdControlador.Value))
+                                   .ToList();
 
                     // Paso 3: Crear nuevas entidades RolOperacion que vinculen el nuevo rol con las operaciones recuperadas
                     foreach (var operacion in operaciones)
@@ -124,8 +123,19 @@ namespace Logica.Seguridad
                 }
                 catch (Exception ex)
                 {
+
+                    // Si la excepción es debido a una violación del constraint UNIQUE
+                    if (ex.InnerException != null && ex.InnerException.InnerException.Message.Contains("Violation of UNIQUE KEY constraint 'UQ_NombreRol'"))
+                    {
+                        errorMessage = "El nombre del rol ya existe. Por favor, elige otro nombre.";
+                    }
+                    else
+                    {
+                        errorMessage = "Ocurrió un error al intentar agregar el rol. Por favor, intenta nuevamente.";
+                    }
+
                     transaction.Rollback();
-                    errorMessage = ex.Message;
+
                     return false;
                 }
             }

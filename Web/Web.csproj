@@ -128,12 +128,20 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\Catalogos\CategoriasController.cs" />
+    <Compile Include="Controllers\Catalogos\ClientesController.cs" />
+    <Compile Include="Controllers\Catalogos\ColoresController.cs" />
+    <Compile Include="Controllers\Catalogos\MarcaController.cs" />
     <Compile Include="Controllers\Catalogos\ProductosController.cs" />
+    <Compile Include="Controllers\Catalogos\ProveedoresController.cs" />
+    <Compile Include="Controllers\Compras\ComprasController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Seguridad\AccesoController.cs" />
     <Compile Include="Controllers\Seguridad\RolesController.cs" />
     <Compile Include="Controllers\Seguridad\UsuariosController.cs" />
+    <Compile Include="Controllers\Ventas\GarantiasController.cs" />
+    <Compile Include="Controllers\Ventas\VentasController.cs" />
     <Compile Include="Filters\AuthorizeUser.cs" />
     <Compile Include="Filters\VerificaSession.cs" />
     <Compile Include="Global.asax.cs">
@@ -172,9 +180,12 @@
     <Content Include="Imagenes\profile.png" />
     <Content Include="Scripts\plugins\jQueryDataTables.js" />
     <Content Include="Scripts\plugins\SweetAlert2\swal2.js" />
+    <Content Include="Scripts\VistasJS\Catalogo\Categoria\Categoria.js" />
+    <Content Include="Scripts\VistasJS\Catalogo\Marcas\Marca.js" />
     <Content Include="Scripts\VistasJS\Catalogo\Productos\Productos.js" />
     <Content Include="Scripts\VistasJS\Catalogo\Productos\ProductosRules.js" />
     <Content Include="Scripts\VistasJS\Seguridad\Roles\Roles.js" />
+    <Content Include="Scripts\VistasJS\Seguridad\Usuarios\Perfil.js" />
     <Content Include="Scripts\VistasJS\Seguridad\Usuarios\UserRules.js" />
     <Content Include="Scripts\VistasJS\Seguridad\Usuarios\Usuarios.js" />
     <Content Include="Web.config" />
@@ -195,6 +206,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Scripts\VistasJS\Catalogo\Color\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
@@ -212,6 +224,15 @@
     <Content Include="Views\Roles\Index.cshtml" />
     <Content Include="Views\Usuarios\Index.cshtml" />
     <Content Include="Views\Productos\Index.cshtml" />
+    <Content Include="Views\Marca\Index.cshtml" />
+    <Content Include="Views\Categorias\Index.cshtml" />
+    <Content Include="Views\Usuarios\Perfil.cshtml" />
+    <Content Include="Views\Garantias\Index.cshtml" />
+    <Content Include="Views\Ventas\Index.cshtml" />
+    <Content Include="Views\Proveedores\Index.cshtml" />
+    <Content Include="Views\Clientes\Index.cshtml" />
+    <Content Include="Views\Compras\Index.cshtml" />
+    <Content Include="Views\Colores\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logica\Logica.csproj">
