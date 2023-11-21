@@ -107,7 +107,10 @@ namespace Logica.Catalogo
                         EliminadoPor = product.EliminadoPor,
                         FechaCreacion = product.FechaCreacion,
                         FechaActualizacion = product.FechaActualizacion,
-                        FechaEliminacion = product.FechaEliminacion
+                        FechaEliminacion = product.FechaEliminacion,
+                        Marca = product.Marca.Nombre,
+                        Color = product.Color.Nombre,
+                        Categoria = product.Categoria.Nombre
                     };
                 }
                 return true;

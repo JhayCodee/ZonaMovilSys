@@ -35,6 +35,7 @@
           <Property Name="FechaCreacion" Type="datetime" />
           <Property Name="FechaActualizacion" Type="datetime" />
           <Property Name="FechaEliminacion" Type="datetime" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Color">
           <Key>
@@ -684,6 +685,98 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="sp_Categoria_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Catalogo">
+          <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+          <Parameter Name="CreadoPor" Type="int" Mode="In" />
+          <Parameter Name="IsSuccess" Type="int" Mode="InOut" />
+          <Parameter Name="ErrorMsg" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <Function Name="sp_Categoria_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Catalogo">
+          <Parameter Name="IdCategoria" Type="int" Mode="In" />
+          <Parameter Name="EliminadoPor" Type="int" Mode="In" />
+          <Parameter Name="IsSuccess" Type="int" Mode="InOut" />
+          <Parameter Name="ErrorMsg" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <Function Name="sp_Categoria_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Catalogo">
+          <Parameter Name="IdCategoria" Type="int" Mode="In" />
+          <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+          <Parameter Name="EditadoPor" Type="int" Mode="In" />
+          <Parameter Name="IsSuccess" Type="int" Mode="InOut" />
+          <Parameter Name="ErrorMsg" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <Function Name="sp_Cliente_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Catalogo">
+          <Parameter Name="Nombres" Type="nvarchar" Mode="In" />
+          <Parameter Name="Apellidos" Type="nvarchar" Mode="In" />
+          <Parameter Name="Cedula" Type="nvarchar" Mode="In" />
+          <Parameter Name="Correo" Type="nvarchar" Mode="In" />
+          <Parameter Name="Telefono" Type="nvarchar" Mode="In" />
+          <Parameter Name="CreadoPor" Type="int" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+          <Parameter Name="IsSuccess" Type="int" Mode="InOut" />
+          <Parameter Name="ErrorMsg" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <Function Name="sp_Cliente_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Catalogo">
+          <Parameter Name="IdCliente" Type="int" Mode="In" />
+          <Parameter Name="EliminadoPor" Type="int" Mode="In" />
+          <Parameter Name="IsSuccess" Type="int" Mode="InOut" />
+          <Parameter Name="ErrorMsg" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <Function Name="sp_Cliente_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Catalogo">
+          <Parameter Name="IdCliente" Type="int" Mode="In" />
+          <Parameter Name="Nombres" Type="nvarchar" Mode="In" />
+          <Parameter Name="Apellidos" Type="nvarchar" Mode="In" />
+          <Parameter Name="Cedula" Type="nvarchar" Mode="In" />
+          <Parameter Name="Correo" Type="nvarchar" Mode="In" />
+          <Parameter Name="Telefono" Type="nvarchar" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+          <Parameter Name="EditadoPor" Type="int" Mode="In" />
+          <Parameter Name="IsSuccess" Type="int" Mode="InOut" />
+          <Parameter Name="ErrorMsg" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <Function Name="sp_Color_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Catalogo">
+          <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+          <Parameter Name="CreadoPor" Type="int" Mode="In" />
+          <Parameter Name="IsSuccess" Type="int" Mode="InOut" />
+          <Parameter Name="ErrorMsg" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <Function Name="sp_Color_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Catalogo">
+          <Parameter Name="IdColor" Type="int" Mode="In" />
+          <Parameter Name="EliminadoPor" Type="int" Mode="In" />
+          <Parameter Name="IsSuccess" Type="int" Mode="InOut" />
+          <Parameter Name="ErrorMsg" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <Function Name="sp_Color_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Catalogo">
+          <Parameter Name="IdColor" Type="int" Mode="In" />
+          <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+          <Parameter Name="EditadoPor" Type="int" Mode="In" />
+          <Parameter Name="IsSuccess" Type="int" Mode="InOut" />
+          <Parameter Name="ErrorMsg" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <Function Name="sp_Marca_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Catalogo">
+          <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+          <Parameter Name="CreadoPor" Type="int" Mode="In" />
+          <Parameter Name="IsSuccess" Type="int" Mode="InOut" />
+          <Parameter Name="ErrorMsg" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <Function Name="sp_Marca_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Catalogo">
+          <Parameter Name="IdMarca" Type="int" Mode="In" />
+          <Parameter Name="EliminadoPor" Type="int" Mode="In" />
+          <Parameter Name="IsSuccess" Type="int" Mode="InOut" />
+          <Parameter Name="ErrorMsg" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <Function Name="sp_Marca_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Catalogo">
+          <Parameter Name="IdMarca" Type="int" Mode="In" />
+          <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+          <Parameter Name="EditadoPor" Type="int" Mode="In" />
+          <Parameter Name="IsSuccess" Type="int" Mode="InOut" />
+          <Parameter Name="ErrorMsg" Type="nvarchar" Mode="InOut" />
+        </Function>
         <Function Name="sp_Producto_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Catalogo">
           <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
           <Parameter Name="Modelo" Type="nvarchar" Mode="In" />
@@ -750,6 +843,18 @@
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="IdRol" Type="int" Mode="In" />
           <Parameter Name="Activo" Type="bit" Mode="In" />
+          <Parameter Name="IsSuccess" Type="int" Mode="InOut" />
+          <Parameter Name="ErrorMsg" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <Function Name="sp_FacturaVenta_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Ventas">
+          <Parameter Name="NumeroFactura" Type="nvarchar" Mode="In" />
+          <Parameter Name="Fecha" Type="datetime" Mode="In" />
+          <Parameter Name="Subtotal" Type="decimal" Mode="In" />
+          <Parameter Name="Impuesto" Type="decimal" Mode="In" />
+          <Parameter Name="Total" Type="decimal" Mode="In" />
+          <Parameter Name="IdCliente" Type="int" Mode="In" />
+          <Parameter Name="CreadoPor" Type="int" Mode="In" />
+          <Parameter Name="DetalleFacturaVentaJSON" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="IsSuccess" Type="int" Mode="InOut" />
           <Parameter Name="ErrorMsg" Type="nvarchar" Mode="InOut" />
         </Function>
@@ -966,6 +1071,7 @@
           <NavigationProperty Name="Usuario1" Relationship="Self.FK__Cliente__Editado__5812160E" FromRole="Cliente" ToRole="Usuario" />
           <NavigationProperty Name="Usuario2" Relationship="Self.FK__Cliente__Elimina__59063A47" FromRole="Cliente" ToRole="Usuario" />
           <NavigationProperty Name="FacturaVenta" Relationship="Self.FK__FacturaVe__IdCli__76969D2E" FromRole="Cliente" ToRole="FacturaVenta" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Color">
           <Key>
@@ -1904,7 +2010,126 @@
             <Parameter Name="IsSuccess" Mode="InOut" Type="Int32" />
             <Parameter Name="ErrorMsg" Mode="InOut" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="sp_Categoria_Create">
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+            <Parameter Name="CreadoPor" Mode="In" Type="Int32" />
+            <Parameter Name="IsSuccess" Mode="InOut" Type="Int32" />
+            <Parameter Name="ErrorMsg" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Categoria_Delete">
+            <Parameter Name="IdCategoria" Mode="In" Type="Int32" />
+            <Parameter Name="EliminadoPor" Mode="In" Type="Int32" />
+            <Parameter Name="IsSuccess" Mode="InOut" Type="Int32" />
+            <Parameter Name="ErrorMsg" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Categoria_Update">
+            <Parameter Name="IdCategoria" Mode="In" Type="Int32" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+            <Parameter Name="EditadoPor" Mode="In" Type="Int32" />
+            <Parameter Name="IsSuccess" Mode="InOut" Type="Int32" />
+            <Parameter Name="ErrorMsg" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Cliente_Create">
+            <Parameter Name="Nombres" Mode="In" Type="String" />
+            <Parameter Name="Apellidos" Mode="In" Type="String" />
+            <Parameter Name="Cedula" Mode="In" Type="String" />
+            <Parameter Name="Correo" Mode="In" Type="String" />
+            <Parameter Name="Telefono" Mode="In" Type="String" />
+            <Parameter Name="CreadoPor" Mode="In" Type="Int32" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+            <Parameter Name="IsSuccess" Mode="InOut" Type="Int32" />
+            <Parameter Name="ErrorMsg" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Cliente_Delete">
+            <Parameter Name="IdCliente" Mode="In" Type="Int32" />
+            <Parameter Name="EliminadoPor" Mode="In" Type="Int32" />
+            <Parameter Name="IsSuccess" Mode="InOut" Type="Int32" />
+            <Parameter Name="ErrorMsg" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Cliente_Update">
+            <Parameter Name="IdCliente" Mode="In" Type="Int32" />
+            <Parameter Name="Nombres" Mode="In" Type="String" />
+            <Parameter Name="Apellidos" Mode="In" Type="String" />
+            <Parameter Name="Cedula" Mode="In" Type="String" />
+            <Parameter Name="Correo" Mode="In" Type="String" />
+            <Parameter Name="Telefono" Mode="In" Type="String" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+            <Parameter Name="EditadoPor" Mode="In" Type="Int32" />
+            <Parameter Name="IsSuccess" Mode="InOut" Type="Int32" />
+            <Parameter Name="ErrorMsg" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Color_Create">
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+            <Parameter Name="CreadoPor" Mode="In" Type="Int32" />
+            <Parameter Name="IsSuccess" Mode="InOut" Type="Int32" />
+            <Parameter Name="ErrorMsg" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Color_Delete">
+            <Parameter Name="IdColor" Mode="In" Type="Int32" />
+            <Parameter Name="EliminadoPor" Mode="In" Type="Int32" />
+            <Parameter Name="IsSuccess" Mode="InOut" Type="Int32" />
+            <Parameter Name="ErrorMsg" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Color_Update">
+            <Parameter Name="IdColor" Mode="In" Type="Int32" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+            <Parameter Name="EditadoPor" Mode="In" Type="Int32" />
+            <Parameter Name="IsSuccess" Mode="InOut" Type="Int32" />
+            <Parameter Name="ErrorMsg" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Marca_Create">
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+            <Parameter Name="CreadoPor" Mode="In" Type="Int32" />
+            <Parameter Name="IsSuccess" Mode="InOut" Type="Int32" />
+            <Parameter Name="ErrorMsg" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Marca_Delete">
+            <Parameter Name="IdMarca" Mode="In" Type="Int32" />
+            <Parameter Name="EliminadoPor" Mode="In" Type="Int32" />
+            <Parameter Name="IsSuccess" Mode="InOut" Type="Int32" />
+            <Parameter Name="ErrorMsg" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Marca_Update">
+            <Parameter Name="IdMarca" Mode="In" Type="Int32" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+            <Parameter Name="EditadoPor" Mode="In" Type="Int32" />
+            <Parameter Name="IsSuccess" Mode="InOut" Type="Int32" />
+            <Parameter Name="ErrorMsg" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_FacturaVenta_Create" ReturnType="Collection(ContextoZM.sp_FacturaVenta_Create_Result)">
+            <Parameter Name="NumeroFactura" Mode="In" Type="String" />
+            <Parameter Name="Fecha" Mode="In" Type="DateTime" />
+            <Parameter Name="Subtotal" Mode="In" Type="Decimal" />
+            <Parameter Name="Impuesto" Mode="In" Type="Decimal" />
+            <Parameter Name="Total" Mode="In" Type="Decimal" />
+            <Parameter Name="IdCliente" Mode="In" Type="Int32" />
+            <Parameter Name="CreadoPor" Mode="In" Type="Int32" />
+            <Parameter Name="DetalleFacturaVentaJSON" Mode="In" Type="String" />
+            <Parameter Name="IsSuccess" Mode="InOut" Type="Int32" />
+            <Parameter Name="ErrorMsg" Mode="InOut" Type="String" />
+          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="sp_FacturaVenta_Create_Result">
+          <Property Type="Int32" Name="IdFacturaVenta" Nullable="false" />
+          <Property Type="String" Name="NumeroFactura" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="Fecha" Nullable="false" Precision="23" />
+          <Property Type="Decimal" Name="Subtotal" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Impuesto" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Total" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Boolean" Name="Activo" Nullable="false" />
+          <Property Type="Int32" Name="IdCliente" Nullable="false" />
+          <Property Type="Int32" Name="CreadoPor" Nullable="false" />
+          <Property Type="Int32" Name="AnuladoPor" Nullable="true" />
+          <Property Type="DateTime" Name="FechaAnulacion" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="FechaCreacion" Nullable="false" Precision="23" />
+          <Property Type="String" Name="RazonAnulamiento" Nullable="true" MaxLength="255" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1929,6 +2154,7 @@
           <EntitySetMapping Name="Cliente">
             <EntityTypeMapping TypeName="ContextoZM.Cliente">
               <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
                 <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
                 <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
@@ -2157,6 +2383,37 @@
           <FunctionImportMapping FunctionImportName="sp_Producto_Create" FunctionName="ContextoZM.Store.sp_Producto_Create" />
           <FunctionImportMapping FunctionImportName="sp_Producto_Delete" FunctionName="ContextoZM.Store.sp_Producto_Delete" />
           <FunctionImportMapping FunctionImportName="sp_Producto_Update" FunctionName="ContextoZM.Store.sp_Producto_Update" />
+          <FunctionImportMapping FunctionImportName="sp_Categoria_Create" FunctionName="ContextoZM.Store.sp_Categoria_Create" />
+          <FunctionImportMapping FunctionImportName="sp_Categoria_Delete" FunctionName="ContextoZM.Store.sp_Categoria_Delete" />
+          <FunctionImportMapping FunctionImportName="sp_Categoria_Update" FunctionName="ContextoZM.Store.sp_Categoria_Update" />
+          <FunctionImportMapping FunctionImportName="sp_Cliente_Create" FunctionName="ContextoZM.Store.sp_Cliente_Create" />
+          <FunctionImportMapping FunctionImportName="sp_Cliente_Delete" FunctionName="ContextoZM.Store.sp_Cliente_Delete" />
+          <FunctionImportMapping FunctionImportName="sp_Cliente_Update" FunctionName="ContextoZM.Store.sp_Cliente_Update" />
+          <FunctionImportMapping FunctionImportName="sp_Color_Create" FunctionName="ContextoZM.Store.sp_Color_Create" />
+          <FunctionImportMapping FunctionImportName="sp_Color_Delete" FunctionName="ContextoZM.Store.sp_Color_Delete" />
+          <FunctionImportMapping FunctionImportName="sp_Color_Update" FunctionName="ContextoZM.Store.sp_Color_Update" />
+          <FunctionImportMapping FunctionImportName="sp_Marca_Create" FunctionName="ContextoZM.Store.sp_Marca_Create" />
+          <FunctionImportMapping FunctionImportName="sp_Marca_Delete" FunctionName="ContextoZM.Store.sp_Marca_Delete" />
+          <FunctionImportMapping FunctionImportName="sp_Marca_Update" FunctionName="ContextoZM.Store.sp_Marca_Update" />
+          <FunctionImportMapping FunctionImportName="sp_FacturaVenta_Create" FunctionName="ContextoZM.Store.sp_FacturaVenta_Create">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ContextoZM.sp_FacturaVenta_Create_Result">
+                <ScalarProperty Name="IdFacturaVenta" ColumnName="IdFacturaVenta" />
+                <ScalarProperty Name="NumeroFactura" ColumnName="NumeroFactura" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Subtotal" ColumnName="Subtotal" />
+                <ScalarProperty Name="Impuesto" ColumnName="Impuesto" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="CreadoPor" ColumnName="CreadoPor" />
+                <ScalarProperty Name="AnuladoPor" ColumnName="AnuladoPor" />
+                <ScalarProperty Name="FechaAnulacion" ColumnName="FechaAnulacion" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="RazonAnulamiento" ColumnName="RazonAnulamiento" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

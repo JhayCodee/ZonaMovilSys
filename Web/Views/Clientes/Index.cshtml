@@ -1,7 +1,87 @@
-﻿
-@{
-    ViewBag.Title = "Index";
+﻿@{
+    ViewBag.Title = "Clientes";
 }
 
-<h2>Index</h2>
+<div class="row" id="Index-Clientes">
+    <div class="col-12">
+        <div class="card mb-4">
+            <h5 class="card-header">CLIENTES</h5>
 
+            <div class="card-body">
+                <table id="tblClientes" class="table table-hover table-striped table-responsive" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Nombres</th>
+                            <th>Apellidos</th>
+                            <th>Cédula</th>
+                            <th>Correo</th>
+                            <th>Teléfono</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" id="Form-Clientes" style="display:none;">
+    <div class="col-12">
+        <div class="card mb-4">
+            <h5 class="card-header">REGISTRO DE CLIENTES</h5>
+            <div class="card-body">
+                <form id="frmClientes">
+                    <div class="row">
+                        <input type="hidden" class="form-control" id="idCliente" name="idCliente">
+                        <!-- Nombres y Apellidos en dos columnas -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="inputNombres" class="form-label">Nombres</label>
+                                <input type="text" class="form-control" id="inputNombres" name="inputNombres">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="inputApellidos" class="form-label">Apellidos</label>
+                                <input type="text" class="form-control" id="inputApellidos" name="inputApellidos">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cédula, Correo, y Teléfono en su propia fila -->
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="inputCedula" class="form-label">Cédula</label>
+                                <input type="text" class="form-control" id="inputCedula" name="inputCedula">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="inputCorreo" class="form-label">Correo</label>
+                                <input type="email" class="form-control" id="inputCorreo" name="inputCorreo">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="inputTelefono" class="form-label">Teléfono</label>
+                                <input type="text" class="form-control" id="inputTelefono" name="inputTelefono">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 text-end">
+                        <button type="button" class="btn btn-secondary" id="btnRegresarCliente">Regresar</button>
+                        <button type="submit" class="btn btn-primary" id="btnGuardarCliente">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/VistasJS/Catalogo/Clientes/ClientesRules.js"></script>
+    <script src="~/Scripts/VistasJS/Catalogo/Clientes/Cliente.js"></script>
+}

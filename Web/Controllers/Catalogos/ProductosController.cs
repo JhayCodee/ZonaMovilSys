@@ -34,9 +34,7 @@ namespace Web.Controllers.Catalogos
         {
             List<Producto_VM> data = new List<Producto_VM>();
             string errorMessage = string.Empty;
-
             bool status = _ln.GetProductos(ref data, ref errorMessage);
-
             return Json(new { status, data, errorMessage });
         }
 

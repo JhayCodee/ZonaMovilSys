@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Catalogo\Categoria_VM.cs" />
+    <Compile Include="Catalogo\Cliente_VM.cs" />
     <Compile Include="Catalogo\Color_VM.cs" />
     <Compile Include="Catalogo\Marca_VM.cs" />
     <Compile Include="Catalogo\Producto_VM.cs" />
@@ -51,6 +52,8 @@
     <Compile Include="Seguridad\Roles_VM.cs" />
     <Compile Include="Seguridad\Usuario_VM.cs" />
     <Compile Include="utils\DropDown.cs" />
+    <Compile Include="Ventas\DetalleFacturaVenta_VM.cs" />
+    <Compile Include="Ventas\FacturaVenta_VM.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

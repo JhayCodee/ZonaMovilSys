@@ -32,6 +32,7 @@ namespace Datos
         public Nullable<System.DateTime> FechaCreacion { get; set; }
         public Nullable<System.DateTime> FechaActualizacion { get; set; }
         public Nullable<System.DateTime> FechaEliminacion { get; set; }
+        public bool Activo { get; set; }
     
         public virtual Usuario Usuario { get; set; }
         public virtual Usuario Usuario1 { get; set; }

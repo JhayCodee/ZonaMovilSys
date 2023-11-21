@@ -258,5 +258,278 @@ namespace Datos
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Producto_Update", idProductoParameter, nombreParameter, modeloParameter, descripcionParameter, stockParameter, precioCompraParameter, precioVentaParameter, almacenamientoParameter, garantiaMesesParameter, rAMParameter, activoParameter, idMarcaParameter, idCategoriaParameter, idColorParameter, editadoPorParameter, isSuccess, errorMsg);
         }
+    
+        public virtual int sp_Categoria_Create(string nombre, Nullable<bool> activo, Nullable<int> creadoPor, ObjectParameter isSuccess, ObjectParameter errorMsg)
+        {
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var activoParameter = activo.HasValue ?
+                new ObjectParameter("Activo", activo) :
+                new ObjectParameter("Activo", typeof(bool));
+    
+            var creadoPorParameter = creadoPor.HasValue ?
+                new ObjectParameter("CreadoPor", creadoPor) :
+                new ObjectParameter("CreadoPor", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Categoria_Create", nombreParameter, activoParameter, creadoPorParameter, isSuccess, errorMsg);
+        }
+    
+        public virtual int sp_Categoria_Delete(Nullable<int> idCategoria, Nullable<int> eliminadoPor, ObjectParameter isSuccess, ObjectParameter errorMsg)
+        {
+            var idCategoriaParameter = idCategoria.HasValue ?
+                new ObjectParameter("IdCategoria", idCategoria) :
+                new ObjectParameter("IdCategoria", typeof(int));
+    
+            var eliminadoPorParameter = eliminadoPor.HasValue ?
+                new ObjectParameter("EliminadoPor", eliminadoPor) :
+                new ObjectParameter("EliminadoPor", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Categoria_Delete", idCategoriaParameter, eliminadoPorParameter, isSuccess, errorMsg);
+        }
+    
+        public virtual int sp_Categoria_Update(Nullable<int> idCategoria, string nombre, Nullable<bool> activo, Nullable<int> editadoPor, ObjectParameter isSuccess, ObjectParameter errorMsg)
+        {
+            var idCategoriaParameter = idCategoria.HasValue ?
+                new ObjectParameter("IdCategoria", idCategoria) :
+                new ObjectParameter("IdCategoria", typeof(int));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var activoParameter = activo.HasValue ?
+                new ObjectParameter("Activo", activo) :
+                new ObjectParameter("Activo", typeof(bool));
+    
+            var editadoPorParameter = editadoPor.HasValue ?
+                new ObjectParameter("EditadoPor", editadoPor) :
+                new ObjectParameter("EditadoPor", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Categoria_Update", idCategoriaParameter, nombreParameter, activoParameter, editadoPorParameter, isSuccess, errorMsg);
+        }
+    
+        public virtual int sp_Cliente_Create(string nombres, string apellidos, string cedula, string correo, string telefono, Nullable<int> creadoPor, Nullable<bool> activo, ObjectParameter isSuccess, ObjectParameter errorMsg)
+        {
+            var nombresParameter = nombres != null ?
+                new ObjectParameter("Nombres", nombres) :
+                new ObjectParameter("Nombres", typeof(string));
+    
+            var apellidosParameter = apellidos != null ?
+                new ObjectParameter("Apellidos", apellidos) :
+                new ObjectParameter("Apellidos", typeof(string));
+    
+            var cedulaParameter = cedula != null ?
+                new ObjectParameter("Cedula", cedula) :
+                new ObjectParameter("Cedula", typeof(string));
+    
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
+            var telefonoParameter = telefono != null ?
+                new ObjectParameter("Telefono", telefono) :
+                new ObjectParameter("Telefono", typeof(string));
+    
+            var creadoPorParameter = creadoPor.HasValue ?
+                new ObjectParameter("CreadoPor", creadoPor) :
+                new ObjectParameter("CreadoPor", typeof(int));
+    
+            var activoParameter = activo.HasValue ?
+                new ObjectParameter("Activo", activo) :
+                new ObjectParameter("Activo", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Cliente_Create", nombresParameter, apellidosParameter, cedulaParameter, correoParameter, telefonoParameter, creadoPorParameter, activoParameter, isSuccess, errorMsg);
+        }
+    
+        public virtual int sp_Cliente_Delete(Nullable<int> idCliente, Nullable<int> eliminadoPor, ObjectParameter isSuccess, ObjectParameter errorMsg)
+        {
+            var idClienteParameter = idCliente.HasValue ?
+                new ObjectParameter("IdCliente", idCliente) :
+                new ObjectParameter("IdCliente", typeof(int));
+    
+            var eliminadoPorParameter = eliminadoPor.HasValue ?
+                new ObjectParameter("EliminadoPor", eliminadoPor) :
+                new ObjectParameter("EliminadoPor", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Cliente_Delete", idClienteParameter, eliminadoPorParameter, isSuccess, errorMsg);
+        }
+    
+        public virtual int sp_Cliente_Update(Nullable<int> idCliente, string nombres, string apellidos, string cedula, string correo, string telefono, Nullable<bool> activo, Nullable<int> editadoPor, ObjectParameter isSuccess, ObjectParameter errorMsg)
+        {
+            var idClienteParameter = idCliente.HasValue ?
+                new ObjectParameter("IdCliente", idCliente) :
+                new ObjectParameter("IdCliente", typeof(int));
+    
+            var nombresParameter = nombres != null ?
+                new ObjectParameter("Nombres", nombres) :
+                new ObjectParameter("Nombres", typeof(string));
+    
+            var apellidosParameter = apellidos != null ?
+                new ObjectParameter("Apellidos", apellidos) :
+                new ObjectParameter("Apellidos", typeof(string));
+    
+            var cedulaParameter = cedula != null ?
+                new ObjectParameter("Cedula", cedula) :
+                new ObjectParameter("Cedula", typeof(string));
+    
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
+            var telefonoParameter = telefono != null ?
+                new ObjectParameter("Telefono", telefono) :
+                new ObjectParameter("Telefono", typeof(string));
+    
+            var activoParameter = activo.HasValue ?
+                new ObjectParameter("Activo", activo) :
+                new ObjectParameter("Activo", typeof(bool));
+    
+            var editadoPorParameter = editadoPor.HasValue ?
+                new ObjectParameter("EditadoPor", editadoPor) :
+                new ObjectParameter("EditadoPor", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Cliente_Update", idClienteParameter, nombresParameter, apellidosParameter, cedulaParameter, correoParameter, telefonoParameter, activoParameter, editadoPorParameter, isSuccess, errorMsg);
+        }
+    
+        public virtual int sp_Color_Create(string nombre, Nullable<bool> activo, Nullable<int> creadoPor, ObjectParameter isSuccess, ObjectParameter errorMsg)
+        {
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var activoParameter = activo.HasValue ?
+                new ObjectParameter("Activo", activo) :
+                new ObjectParameter("Activo", typeof(bool));
+    
+            var creadoPorParameter = creadoPor.HasValue ?
+                new ObjectParameter("CreadoPor", creadoPor) :
+                new ObjectParameter("CreadoPor", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Color_Create", nombreParameter, activoParameter, creadoPorParameter, isSuccess, errorMsg);
+        }
+    
+        public virtual int sp_Color_Delete(Nullable<int> idColor, Nullable<int> eliminadoPor, ObjectParameter isSuccess, ObjectParameter errorMsg)
+        {
+            var idColorParameter = idColor.HasValue ?
+                new ObjectParameter("IdColor", idColor) :
+                new ObjectParameter("IdColor", typeof(int));
+    
+            var eliminadoPorParameter = eliminadoPor.HasValue ?
+                new ObjectParameter("EliminadoPor", eliminadoPor) :
+                new ObjectParameter("EliminadoPor", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Color_Delete", idColorParameter, eliminadoPorParameter, isSuccess, errorMsg);
+        }
+    
+        public virtual int sp_Color_Update(Nullable<int> idColor, string nombre, Nullable<bool> activo, Nullable<int> editadoPor, ObjectParameter isSuccess, ObjectParameter errorMsg)
+        {
+            var idColorParameter = idColor.HasValue ?
+                new ObjectParameter("IdColor", idColor) :
+                new ObjectParameter("IdColor", typeof(int));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var activoParameter = activo.HasValue ?
+                new ObjectParameter("Activo", activo) :
+                new ObjectParameter("Activo", typeof(bool));
+    
+            var editadoPorParameter = editadoPor.HasValue ?
+                new ObjectParameter("EditadoPor", editadoPor) :
+                new ObjectParameter("EditadoPor", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Color_Update", idColorParameter, nombreParameter, activoParameter, editadoPorParameter, isSuccess, errorMsg);
+        }
+    
+        public virtual int sp_Marca_Create(string nombre, Nullable<bool> activo, Nullable<int> creadoPor, ObjectParameter isSuccess, ObjectParameter errorMsg)
+        {
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var activoParameter = activo.HasValue ?
+                new ObjectParameter("Activo", activo) :
+                new ObjectParameter("Activo", typeof(bool));
+    
+            var creadoPorParameter = creadoPor.HasValue ?
+                new ObjectParameter("CreadoPor", creadoPor) :
+                new ObjectParameter("CreadoPor", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Marca_Create", nombreParameter, activoParameter, creadoPorParameter, isSuccess, errorMsg);
+        }
+    
+        public virtual int sp_Marca_Delete(Nullable<int> idMarca, Nullable<int> eliminadoPor, ObjectParameter isSuccess, ObjectParameter errorMsg)
+        {
+            var idMarcaParameter = idMarca.HasValue ?
+                new ObjectParameter("IdMarca", idMarca) :
+                new ObjectParameter("IdMarca", typeof(int));
+    
+            var eliminadoPorParameter = eliminadoPor.HasValue ?
+                new ObjectParameter("EliminadoPor", eliminadoPor) :
+                new ObjectParameter("EliminadoPor", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Marca_Delete", idMarcaParameter, eliminadoPorParameter, isSuccess, errorMsg);
+        }
+    
+        public virtual int sp_Marca_Update(Nullable<int> idMarca, string nombre, Nullable<bool> activo, Nullable<int> editadoPor, ObjectParameter isSuccess, ObjectParameter errorMsg)
+        {
+            var idMarcaParameter = idMarca.HasValue ?
+                new ObjectParameter("IdMarca", idMarca) :
+                new ObjectParameter("IdMarca", typeof(int));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var activoParameter = activo.HasValue ?
+                new ObjectParameter("Activo", activo) :
+                new ObjectParameter("Activo", typeof(bool));
+    
+            var editadoPorParameter = editadoPor.HasValue ?
+                new ObjectParameter("EditadoPor", editadoPor) :
+                new ObjectParameter("EditadoPor", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Marca_Update", idMarcaParameter, nombreParameter, activoParameter, editadoPorParameter, isSuccess, errorMsg);
+        }
+    
+        public virtual ObjectResult<sp_FacturaVenta_Create_Result> sp_FacturaVenta_Create(string numeroFactura, Nullable<System.DateTime> fecha, Nullable<decimal> subtotal, Nullable<decimal> impuesto, Nullable<decimal> total, Nullable<int> idCliente, Nullable<int> creadoPor, string detalleFacturaVentaJSON, ObjectParameter isSuccess, ObjectParameter errorMsg)
+        {
+            var numeroFacturaParameter = numeroFactura != null ?
+                new ObjectParameter("NumeroFactura", numeroFactura) :
+                new ObjectParameter("NumeroFactura", typeof(string));
+    
+            var fechaParameter = fecha.HasValue ?
+                new ObjectParameter("Fecha", fecha) :
+                new ObjectParameter("Fecha", typeof(System.DateTime));
+    
+            var subtotalParameter = subtotal.HasValue ?
+                new ObjectParameter("Subtotal", subtotal) :
+                new ObjectParameter("Subtotal", typeof(decimal));
+    
+            var impuestoParameter = impuesto.HasValue ?
+                new ObjectParameter("Impuesto", impuesto) :
+                new ObjectParameter("Impuesto", typeof(decimal));
+    
+            var totalParameter = total.HasValue ?
+                new ObjectParameter("Total", total) :
+                new ObjectParameter("Total", typeof(decimal));
+    
+            var idClienteParameter = idCliente.HasValue ?
+                new ObjectParameter("IdCliente", idCliente) :
+                new ObjectParameter("IdCliente", typeof(int));
+    
+            var creadoPorParameter = creadoPor.HasValue ?
+                new ObjectParameter("CreadoPor", creadoPor) :
+                new ObjectParameter("CreadoPor", typeof(int));
+    
+            var detalleFacturaVentaJSONParameter = detalleFacturaVentaJSON != null ?
+                new ObjectParameter("DetalleFacturaVentaJSON", detalleFacturaVentaJSON) :
+                new ObjectParameter("DetalleFacturaVentaJSON", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_FacturaVenta_Create_Result>("sp_FacturaVenta_Create", numeroFacturaParameter, fechaParameter, subtotalParameter, impuestoParameter, totalParameter, idClienteParameter, creadoPorParameter, detalleFacturaVentaJSONParameter, isSuccess, errorMsg);
+        }
     }
 }

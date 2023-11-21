@@ -1,7 +1,117 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<style>
+    .btn-outline-secondary {
+        color: #007bff;
+        border-color: #007bff;
+    }
 
+        .btn-outline-secondary:hover {
+            color: white;
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+</style>
+
+<div class="row" id="Venta-Form">
+    <div class="col-12">
+        <div class="card mb-4">
+            <h5 class="card-header">VENTA DE PRODUCTOS</h5>
+            <div class="card-body">
+                <!-- Sección de Selección de Cliente y Producto -->
+                <div class="row mb-3">
+                    <div class="col-md-5 mb-3">
+                        <label for="clienteSelect" class="form-label">Seleccionar Cliente</label>
+                        <select class="form-select select2" id="clienteSelect">
+                            <option value="">Seleccione un cliente</option>
+                            @foreach (var cliente in ViewBag.Clientes as SelectList)
+                            {
+                                <option value="@cliente.Value">@cliente.Text</option>
+                            }
+                        </select>
+
+                    </div>
+                    <div class="col-md-5 mb-3">
+                        <label for="productoSelect" class="form-label">Seleccionar Producto</label>
+                        <select class="form-select select2" id="productoSelect">
+                            <option value="">Seleccione un producto</option>
+                            @foreach (var producto in ViewBag.Productos)
+                            {
+                                <option value="@producto.Value">@producto.Text</option>
+                            }
+                        </select>
+
+                    </div>
+                    <div class="col-md-2 mb-3 d-flex align-items-end">
+                        <button type="button" class="btn btn-primary" id="btnAgregarProducto">
+                            <i class="bi bi-cart-plus"></i> Agregar Producto
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Fila para Tabla de Productos y Sección de Cálculos -->
+                <div class="row">
+                    <!-- Columna para la Tabla de Productos Seleccionados -->
+                    <div class="col-md-9 mb-3">
+
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="col-md-12 mb-3">
+                                    <table id="tblProductosSeleccionados" class="table table-hover table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Descripción</th>
+                                                <th>Precio Unitario</th>
+                                                <th>Cantidad</th>
+                                                <th>IMEI</th> <!-- Nueva columna para IMEI -->
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Las filas se agregarán dinámicamente aquí -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Columna para Sección de Cálculos y Totales -->
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label class="form-label">Subtotal</label>
+                                    <input type="number" class="form-control" id="subtotalVenta" disabled>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Impuesto</label>
+                                    <input type="number" class="form-control" id="impuestoVenta" disabled>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Total</label>
+                                    <input type="number" class="form-control" id="totalVenta" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones de Acción -->
+                <div class="row">
+                    <div class="col-12 text-end mt-3">
+                        <button type="button" class="btn btn-secondary">Cancelar</button>
+                        <button type="button" id="btnFacturar" class="btn btn-success">Confirmar Venta</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/VistasJS/Ventas/FacturaVenta/Ventas.js"></script>
+}
