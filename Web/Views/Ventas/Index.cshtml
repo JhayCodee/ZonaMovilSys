@@ -13,10 +13,39 @@
             background-color: #007bff;
             border-color: #007bff;
         }
-
 </style>
 
-<div class="row" id="Venta-Form">
+
+<div class="row" id="Venta-Index">
+    <div class="col-12">
+        <div class="card mb-4">
+            <h5 class="card-header">FACTURAS DE VENTA</h5>
+            <div class="card-body">
+                <table id="tblFacturasVenta" class="table table-hover table-striped table-responsive" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Número Factura</th>
+                            <th>Fecha</th>
+                            <th>Cliente</th>
+                            <th>Subtotal</th>
+                            <th>Impuesto</th>
+                            <th>Total</th>
+                            <th>Estado</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Las filas se cargarán dinámicamente aquí -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row" id="Venta-Form" style="display: none;">
     <div class="col-12">
         <div class="card mb-4">
             <h5 class="card-header">VENTA DE PRODUCTOS</h5>
@@ -103,7 +132,7 @@
                 <!-- Botones de Acción -->
                 <div class="row">
                     <div class="col-12 text-end mt-3">
-                        <button type="button" class="btn btn-secondary">Cancelar</button>
+                        <button type="button" id="btnRegresar" class="btn btn-secondary">Cancelar</button>
                         <button type="button" id="btnFacturar" class="btn btn-success">Confirmar Venta</button>
                     </div>
                 </div>

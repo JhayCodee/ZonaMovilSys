@@ -53,6 +53,9 @@
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rotativa.1.7.3\lib\net461\Rotativa.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -178,6 +181,10 @@
     <Content Include="Imagenes\logoblue.jpg" />
     <Content Include="Imagenes\mobilebg.jpg" />
     <Content Include="Imagenes\profile.png" />
+    <Content Include="Rotativa\help-wkhtmltoimage.txt" />
+    <Content Include="Rotativa\help-wkhtmltopdf.txt" />
+    <Content Include="Rotativa\wkhtmltoimage.exe" />
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\plugins\jQueryDataTables.js" />
     <Content Include="Scripts\plugins\SweetAlert2\swal2.js" />
     <Content Include="Scripts\VistasJS\Catalogo\Categoria\Categoria.js" />
@@ -222,6 +229,7 @@
     <Content Include="Content\vendor\fonts\boxicons\boxicons.ttf" />
     <Content Include="Content\vendor\fonts\boxicons\boxicons.woff" />
     <Content Include="Content\vendor\fonts\boxicons\boxicons.woff2" />
+    <Content Include="App_Browsers\qt.browser" />
     <None Include="packages.config" />
     <Content Include="Views\Acceso\Login.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
@@ -237,6 +245,7 @@
     <Content Include="Views\Clientes\Index.cshtml" />
     <Content Include="Views\Compras\Index.cshtml" />
     <Content Include="Views\Colores\Index.cshtml" />
+    <Content Include="Views\Templates\Factura.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logica\Logica.csproj">

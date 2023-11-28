@@ -1,0 +1,159 @@
+﻿@{
+    ViewBag.Title = "Factura";
+    Layout = null;
+}
+@{
+    var primerItem = Model.Count > 0 ? Model[0] : null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Factura de ZonaMovil</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+        }
+
+        .factura-container {
+            width: 100%; /* Ajustar al 100% del ancho */
+            margin: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .header-factura, .detalles-factura {
+            width: 100%; /* Asegurar que las tablas internas también utilicen el 100% del ancho */
+            border-collapse: collapse;
+            margin-bottom: 20px; /* Espacio entre secciones */
+        }
+
+        .info-tienda, .info-factura-cliente {
+            padding: 8px;
+        }
+
+        .info-tienda {
+            text-align: left; /* Alineación del texto a la izquierda para la tienda */
+        }
+
+        .info-factura-cliente {
+            text-align: right; /* Alineación del texto a la derecha para la factura y cliente */
+        }
+
+        .detalles-factura th, .detalles-factura td {
+            border: 1px solid #ddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        .detalles-factura th {
+            background-color: #f2f2f2;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .marca-de-agua {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 100px; /* Aumentar el tamaño de la fuente */
+            color: rgba(255, 0, 0, 0.2);
+            z-index: 9999;
+            user-select: none;
+            pointer-events: none;
+            white-space: nowrap; /* Asegura que el texto no se envuelva */
+            overflow: visible; /* Asegura que el texto no se corte */
+            width: 220%; /* Aumenta el ancho para cubrir toda la hoja */
+            height: 220%; /* Aumenta la altura para cubrir toda la hoja */
+        }
+    </style>
+</head>
+
+<body>
+    @if (primerItem != null && !primerItem.Activo)
+    {
+        <div class="marca-de-agua">Anulado</div>
+    }
+    <table class="factura-container">
+        <tr>
+            <td colspan="4">
+                <table class="header-factura">
+                    <tr>
+                        <td class="info-tienda">
+                            <img src="~/Imagenes/logoblue.jpg" alt="Logo ZonaMovil" style="width:180px; height:auto;">
+                            <p>ZonaMovil</p>
+                            <p>Barrio la Esperanza</p>
+                        </td>
+                        <td class="info-factura-cliente">
+                            <h2>@primerItem.NumeroFactura</h2>
+                            <p>@primerItem.Fecha</p>
+                            <p>@primerItem.Cliente</p>
+                            @*<p>Dirección: [Dirección del Cliente]</p>*@
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <h3 style="text-align:center;">Factura de Venta</h3>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="5">
+                <table class="detalles-factura">
+                    <thead>
+                        <tr>
+                            <th>Descripción del Producto</th>
+                            <th>IMEI (si aplica)</th>
+                            <th>Cantidad</th>
+                            <th>Precio Unitario</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.NombreProducto @(!string.IsNullOrEmpty(item.Almacenamiento) ? " - " + item.Almacenamiento : "") @(!string.IsNullOrEmpty(item.RAM) ? " - " + item.RAM : "")</td>
+                                <td>@(!string.IsNullOrEmpty(item.IMEI) ? item.IMEI : "N/A")</td>
+                                <td>@item.Cantidad</td>
+                                <td>@item.PrecioUnitario.ToString("C")</td>
+                                <td>@(item.PrecioUnitario * item.Cantidad)</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4" align="right">Subtotal</td>
+                            <td>@primerItem.Subtotal</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" align="right">IVA</td>
+                            <td>@primerItem.Impuesto</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" align="right">Total</td>
+                            <td>@primerItem.Total</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <p class="footer">Gracias por su compra en ZonaMovil</p>
+                <!-- Información legal o de términos -->
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

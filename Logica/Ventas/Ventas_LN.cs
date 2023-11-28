@@ -21,15 +21,42 @@ namespace Logica.Ventas
             _db = new Contexto();
         }
 
+        public bool GetFacturas(ref List<FacturaVenta_VM> data, ref string errorMessage)
+        {
+            try
+            {
+                data = _db.FacturaVenta
+                        .Select(f => new FacturaVenta_VM
+                        {
+                            IdFacturaVenta = f.IdFacturaVenta,
+                            NumeroFactura = f.NumeroFactura,
+                            Fecha = f.Fecha,
+                            Subtotal = f.Subtotal,
+                            Impuesto = f.Impuesto,
+                            Total = f.Total,
+                            Cliente = f.Cliente.Nombres + " " + f.Cliente.Apellidos, 
+                            Activo = f.Activo
+                        })
+                        .ToList();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                errorMessage = ex.Message;
+                return false;
+            }
+        }
+
         public List<DropDown> GetClientesDropdown()
         {
             var clientes = _db.Cliente
-                 .Where(c => c.Activo) 
+                 .Where(c => c.Activo)
                  .AsNoTracking() // Mejora el rendimiento ya que no se necesita seguimiento
                  .Select(c => new DropDown
                  {
                      Id = c.IdCliente,
-                     Value = c.Nombres + " " + c.Apellidos + " - " + c.Cedula 
+                     Value = c.Nombres + " " + c.Apellidos + " - " + c.Cedula
                  })
                  .ToList();
 
@@ -54,43 +81,59 @@ namespace Logica.Ventas
             return productos;
         }
 
-        public bool CrearFacturaVentaaaaaa(FacturaVenta_VM facturaVenta, ref string errorMessage)
+        public bool GetDetalleFactura(int idFacturaVenta, ref List<DetalleFacturaPrint_VM> detalles, ref string errorMessage)
         {
             try
             {
-                // Convertir los detalles de la factura a JSON
-                string detalleFacturaVentaJSON = JsonConvert.SerializeObject(facturaVenta.Detalles);
-
-                // Parámetros para el procedimiento almacenado
-                ObjectParameter isSuccessParam = new ObjectParameter("IsSuccess", typeof(int));
-                ObjectParameter errorMsgParam = new ObjectParameter("ErrorMsg", typeof(string));
-
-                // Llamada al procedimiento almacenado
-                _db.sp_FacturaVenta_Create(
-                    facturaVenta.NumeroFactura,
-                    facturaVenta.Fecha,
-                    facturaVenta.Subtotal,
-                    facturaVenta.Impuesto,
-                    facturaVenta.Total,
-                    facturaVenta.IdCliente,
-                    facturaVenta.CreadoPor,
-                    detalleFacturaVentaJSON,
-                    isSuccessParam,
-                    errorMsgParam
-                );
-
-                // Verificar si el procedimiento se ejecutó con éxito
-                if ((int)isSuccessParam.Value == 0)
-                {
-                    errorMessage = errorMsgParam.Value.ToString();
-                    return false;
-                }
+                detalles = _db.FacturaVenta
+                            .Where(f => f.IdFacturaVenta == idFacturaVenta)
+                            .SelectMany(f => f.DetalleFacturaVenta, (f, dfv) => new { f, dfv })
+                            .Join(_db.Producto, fd => fd.dfv.IdProducto, p => p.IdProducto, (fd, p) => new { fd.f, fd.dfv, p })
+                            .Join(_db.Cliente, fpd => fpd.f.IdCliente, c => c.IdCliente, (fpd, c) => new DetalleFacturaPrint_VM
+                            {
+                                NumeroFactura = fpd.f.NumeroFactura,
+                                Cliente = c.Nombres + " " + c.Apellidos,
+                                NombreProducto = fpd.p.Nombre,
+                                Almacenamiento = fpd.p.Almacenamiento,
+                                RAM = fpd.p.RAM,
+                                IMEI = fpd.dfv.IMEI,
+                                Cantidad = fpd.dfv.Cantidad,
+                                PrecioUnitario = fpd.dfv.PrecioUnitario,
+                                Fecha = fpd.f.Fecha,
+                                Subtotal = fpd.f.Subtotal,
+                                Impuesto = fpd.f.Impuesto,
+                                Total = fpd.f.Total,
+                                Activo = fpd.f.Activo
+                            })
+                            .ToList();
 
                 return true;
             }
             catch (Exception ex)
             {
-                // Captura y devuelve el mensaje de error
+                errorMessage = ex.Message;
+                return false;
+            }
+        }
+       
+        public bool GetDetalleAnulacion (int id, ref FacturaVenta_VM facturaVenta, ref string errorMessage)
+        {
+            try
+            {
+               facturaVenta = _db.FacturaVenta
+                    .Where(f => f.IdFacturaVenta == id)
+                    .Select(f => new FacturaVenta_VM
+                    {
+                        RazonAnulamiento = f.RazonAnulamiento,
+                        FechaAnulacion = f.FechaAnulacion,
+                        Empleado = _db.Usuario.Where(x => x.IdUsuario ==  f.AnuladoPor).Select(x => x.Nombre + " " + x.Apellidos).FirstOrDefault()
+                    })
+                    .FirstOrDefault();
+
+                return facturaVenta != null;
+            }
+            catch (Exception ex)
+            {
                 errorMessage = ex.Message;
                 return false;
             }
@@ -182,6 +225,63 @@ namespace Logica.Ventas
                 return false;
             }
         }
+
+        public bool AnularFacturaVenta(int idFacturaVenta, int anuladoPor, string razonAnulamiento, ref string errorMessage)
+        {
+            try
+            {
+                using (var dbContextTransaction = _db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        var factura = _db.FacturaVenta.FirstOrDefault(f => f.IdFacturaVenta == idFacturaVenta);
+                        if (factura == null)
+                        {
+                            throw new Exception($"Factura con ID {idFacturaVenta} no encontrada.");
+                        }
+
+                        // Marcar la factura como inactiva
+                        factura.Activo = false;
+                        factura.AnuladoPor = anuladoPor;
+                        factura.FechaAnulacion = DateTime.Now;
+                        factura.RazonAnulamiento = razonAnulamiento;
+                        _db.Entry(factura).State = EntityState.Modified;
+
+                        // Obtener los detalles de la factura
+                        var detallesFactura = _db.DetalleFacturaVenta.Where(d => d.IdFacturaVenta == idFacturaVenta).ToList();
+
+                        // Procesar cada detalle para devolver el stock
+                        foreach (var detalle in detallesFactura)
+                        {
+                            var producto = _db.Producto.FirstOrDefault(p => p.IdProducto == detalle.IdProducto);
+                            if (producto != null)
+                            {
+                                // Devolver el stock del producto
+                                producto.Stock += detalle.Cantidad;
+                                _db.Entry(producto).State = EntityState.Modified;
+                            }
+                        }
+
+                        _db.SaveChanges();
+                        dbContextTransaction.Commit();
+
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        dbContextTransaction.Rollback();
+                        errorMessage = ex.Message;
+                        return false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                errorMessage = ex.Message;
+                return false;
+            }
+        }
+
 
     }
 }
