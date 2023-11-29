@@ -1,7 +1,47 @@
-﻿
-@{
-    ViewBag.Title = "Index";
+﻿@{
+    ViewBag.Title = "Gestión de Colores";
 }
 
-<h2>Index</h2>
+<div class="row" id="Index-Color">
+    <div class="col-12">
+        <div class="card mb-4">
+            <h5 class="card-header">COLORES</h5>
+            <div class="card-body">
+                <table id="tblColor" class="table table-hover table-striped table-responsive" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
+<div class="row" id="Form-Color" style="display:none;">
+    <div class="col-12">
+        <div class="card mb-4">
+            <h5 class="card-header">FORMULARIO DE COLOR</h5>
+            <div class="card-body">
+                <form id="frmColor">
+                    <input type="hidden" id="idColor">
+                    <div class="form-group">
+                        <label for="inputNombreColor">Nombre del Color</label>
+                        <input type="text" class="form-control" id="inputNombreColor">
+                    </div>
+                    <div class="mt-3 text-end">
+                        <button type="button" class="btn btn-secondary" id="btnRegresarColor">Regresar</button>
+                        <button type="submit" class="btn btn-primary" id="btnGuardarColor">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/VistasJS/Catalogo/Color/Color.js"></script>
+}

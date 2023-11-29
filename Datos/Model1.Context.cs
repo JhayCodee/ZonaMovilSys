@@ -531,5 +531,80 @@ namespace Datos
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_FacturaVenta_Create_Result>("sp_FacturaVenta_Create", numeroFacturaParameter, fechaParameter, subtotalParameter, impuestoParameter, totalParameter, idClienteParameter, creadoPorParameter, detalleFacturaVentaJSONParameter, isSuccess, errorMsg);
         }
+    
+        public virtual int sp_Proveedor_Create(string nombre, string telefono, string correo, string direccion, Nullable<bool> activo, Nullable<int> creadoPor, ObjectParameter isSuccess, ObjectParameter errorMsg)
+        {
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var telefonoParameter = telefono != null ?
+                new ObjectParameter("Telefono", telefono) :
+                new ObjectParameter("Telefono", typeof(string));
+    
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
+            var direccionParameter = direccion != null ?
+                new ObjectParameter("Direccion", direccion) :
+                new ObjectParameter("Direccion", typeof(string));
+    
+            var activoParameter = activo.HasValue ?
+                new ObjectParameter("Activo", activo) :
+                new ObjectParameter("Activo", typeof(bool));
+    
+            var creadoPorParameter = creadoPor.HasValue ?
+                new ObjectParameter("CreadoPor", creadoPor) :
+                new ObjectParameter("CreadoPor", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Proveedor_Create", nombreParameter, telefonoParameter, correoParameter, direccionParameter, activoParameter, creadoPorParameter, isSuccess, errorMsg);
+        }
+    
+        public virtual int sp_Proveedor_Delete(Nullable<int> idProveedor, Nullable<int> eliminadoPor, ObjectParameter isSuccess, ObjectParameter errorMsg)
+        {
+            var idProveedorParameter = idProveedor.HasValue ?
+                new ObjectParameter("IdProveedor", idProveedor) :
+                new ObjectParameter("IdProveedor", typeof(int));
+    
+            var eliminadoPorParameter = eliminadoPor.HasValue ?
+                new ObjectParameter("EliminadoPor", eliminadoPor) :
+                new ObjectParameter("EliminadoPor", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Proveedor_Delete", idProveedorParameter, eliminadoPorParameter, isSuccess, errorMsg);
+        }
+    
+        public virtual int sp_Proveedor_Update(Nullable<int> idProveedor, string nombre, string telefono, string correo, string direccion, Nullable<bool> activo, Nullable<int> editadoPor, ObjectParameter isSuccess, ObjectParameter errorMsg)
+        {
+            var idProveedorParameter = idProveedor.HasValue ?
+                new ObjectParameter("IdProveedor", idProveedor) :
+                new ObjectParameter("IdProveedor", typeof(int));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var telefonoParameter = telefono != null ?
+                new ObjectParameter("Telefono", telefono) :
+                new ObjectParameter("Telefono", typeof(string));
+    
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
+            var direccionParameter = direccion != null ?
+                new ObjectParameter("Direccion", direccion) :
+                new ObjectParameter("Direccion", typeof(string));
+    
+            var activoParameter = activo.HasValue ?
+                new ObjectParameter("Activo", activo) :
+                new ObjectParameter("Activo", typeof(bool));
+    
+            var editadoPorParameter = editadoPor.HasValue ?
+                new ObjectParameter("EditadoPor", editadoPor) :
+                new ObjectParameter("EditadoPor", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Proveedor_Update", idProveedorParameter, nombreParameter, telefonoParameter, correoParameter, direccionParameter, activoParameter, editadoPorParameter, isSuccess, errorMsg);
+        }
     }
 }

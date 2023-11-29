@@ -39,6 +39,44 @@ namespace Web.Controllers.Catalogos
             return Json(new { status, data, errorMessage });
         }
 
+        [HttpPost]
+        public JsonResult GetMarcaById(int idMarca)
+        {
+            Marca_VM marca = new Marca_VM();
+            string errorMessage = string.Empty;
 
+            bool status = _ln.GetMarcaById(idMarca, ref marca, ref errorMessage);
+
+            return Json(new { status, data = marca, errorMessage });
+        }
+
+        [HttpPost]
+        public JsonResult CreateMarca(Marca_VM marca)
+        {
+            string errorMessage = string.Empty;
+            marca.CreadoPor = GetLoggedUser().IdUsuario;
+            bool status = _ln.CreateMarca(marca, ref errorMessage);
+
+            return Json(new { status, errorMessage });
+        }
+
+        [HttpPost]
+        public JsonResult UpdateMarca(Marca_VM marca)
+        {
+            string errorMessage = string.Empty;
+            marca.EditadoPor = GetLoggedUser().IdUsuario;
+            bool status = _ln.UpdateMarca(marca, ref errorMessage);
+
+            return Json(new { status, errorMessage });
+        }
+
+        [HttpPost]
+        public JsonResult DeleteMarca(int idMarca)
+        {
+            string errorMessage = string.Empty;
+            bool status = _ln.DeleteMarca(idMarca, GetLoggedUser().IdUsuario, ref errorMessage);
+
+            return Json(new { status, errorMessage });
+        }
     }
 }

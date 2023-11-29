@@ -820,6 +820,33 @@
           <Parameter Name="IsSuccess" Type="int" Mode="InOut" />
           <Parameter Name="ErrorMsg" Type="nvarchar" Mode="InOut" />
         </Function>
+        <Function Name="sp_Proveedor_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Catalogo">
+          <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="Telefono" Type="nvarchar" Mode="In" />
+          <Parameter Name="Correo" Type="nvarchar" Mode="In" />
+          <Parameter Name="Direccion" Type="nvarchar" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+          <Parameter Name="CreadoPor" Type="int" Mode="In" />
+          <Parameter Name="IsSuccess" Type="int" Mode="InOut" />
+          <Parameter Name="ErrorMsg" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <Function Name="sp_Proveedor_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Catalogo">
+          <Parameter Name="IdProveedor" Type="int" Mode="In" />
+          <Parameter Name="EliminadoPor" Type="int" Mode="In" />
+          <Parameter Name="IsSuccess" Type="int" Mode="InOut" />
+          <Parameter Name="ErrorMsg" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <Function Name="sp_Proveedor_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Catalogo">
+          <Parameter Name="IdProveedor" Type="int" Mode="In" />
+          <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="Telefono" Type="nvarchar" Mode="In" />
+          <Parameter Name="Correo" Type="nvarchar" Mode="In" />
+          <Parameter Name="Direccion" Type="nvarchar" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+          <Parameter Name="EditadoPor" Type="int" Mode="In" />
+          <Parameter Name="IsSuccess" Type="int" Mode="InOut" />
+          <Parameter Name="ErrorMsg" Type="nvarchar" Mode="InOut" />
+        </Function>
         <Function Name="sp_Usuario_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Seguridad">
           <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
           <Parameter Name="Apellidos" Type="nvarchar" Mode="In" />
@@ -2114,6 +2141,33 @@
             <Parameter Name="IsSuccess" Mode="InOut" Type="Int32" />
             <Parameter Name="ErrorMsg" Mode="InOut" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="sp_Proveedor_Create">
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Telefono" Mode="In" Type="String" />
+            <Parameter Name="Correo" Mode="In" Type="String" />
+            <Parameter Name="Direccion" Mode="In" Type="String" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+            <Parameter Name="CreadoPor" Mode="In" Type="Int32" />
+            <Parameter Name="IsSuccess" Mode="InOut" Type="Int32" />
+            <Parameter Name="ErrorMsg" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Proveedor_Delete">
+            <Parameter Name="IdProveedor" Mode="In" Type="Int32" />
+            <Parameter Name="EliminadoPor" Mode="In" Type="Int32" />
+            <Parameter Name="IsSuccess" Mode="InOut" Type="Int32" />
+            <Parameter Name="ErrorMsg" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Proveedor_Update">
+            <Parameter Name="IdProveedor" Mode="In" Type="Int32" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Telefono" Mode="In" Type="String" />
+            <Parameter Name="Correo" Mode="In" Type="String" />
+            <Parameter Name="Direccion" Mode="In" Type="String" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+            <Parameter Name="EditadoPor" Mode="In" Type="Int32" />
+            <Parameter Name="IsSuccess" Mode="InOut" Type="Int32" />
+            <Parameter Name="ErrorMsg" Mode="InOut" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_FacturaVenta_Create_Result">
           <Property Type="Int32" Name="IdFacturaVenta" Nullable="false" />
@@ -2414,6 +2468,9 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_Proveedor_Create" FunctionName="ContextoZM.Store.sp_Proveedor_Create" />
+          <FunctionImportMapping FunctionImportName="sp_Proveedor_Delete" FunctionName="ContextoZM.Store.sp_Proveedor_Delete" />
+          <FunctionImportMapping FunctionImportName="sp_Proveedor_Update" FunctionName="ContextoZM.Store.sp_Proveedor_Update" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

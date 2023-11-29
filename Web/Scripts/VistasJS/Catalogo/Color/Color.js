@@ -1,41 +1,37 @@
 ﻿(function ($) {
 
-    // Configuración inicial
-    const CategoriaContainer = {
-        Url: '/Categorias',
-        Index: $('#Index-Categoria'),
-        Form: $('#Form-Categoria')
+    const ColorContainer = {
+        Url: '/Colores',
+        Index: $('#Index-Color'),
+        Form: $('#Form-Color'),
+        Table: $('#tblColor')
     };
 
     $(function () {
-        // Cargar DataTable al iniciar
-        loadCategoriasDataTable();
+        loadColoresDataTable();
 
-        // Eventos de botones
-        $("#btnGuardarCategoria").click(guardarCategoria);
-        $("#btnRegresarCategoria").click(ocultarFormulario);
+        $("#btnGuardarColor").click(guardarColor);
+        $("#btnRegresarColor").click(ocultarFormulario);
 
-        $('#tblCategoria').on('click', '.edit-button', function () {
+        ColorContainer.Table.on('click', '.edit-button', function () {
             const id = $(this).data("id");
-            cargarCategoria(id);
+            cargarColor(id);
         });
 
-        $('#tblCategoria').on('click', '.delete-button', function () {
+        ColorContainer.Table.on('click', '.delete-button', function () {
             const id = $(this).data("id");
-            eliminarCategoria(id);
+            eliminarColor(id);
         });
     });
 
-    function loadCategoriasDataTable() {
-        var $tblCategoria = $('#tblCategoria');
-
-        if ($.fn.DataTable.isDataTable($tblCategoria)) {
-            $tblCategoria.DataTable().destroy();
+    function loadColoresDataTable() {
+        if ($.fn.DataTable.isDataTable(ColorContainer.Table)) {
+            ColorContainer.Table.DataTable().destroy();
         }
 
-        $tblCategoria.DataTable({
+        ColorContainer.Table.DataTable({
             ajax: {
-                url: CategoriaContainer.Url + "/GetCategoria",
+                url: ColorContainer.Url + "/GetColores",
                 type: 'POST',
                 datatype: 'json',
                 dataSrc: function (json) {
@@ -46,7 +42,7 @@
                     return json.data;
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    Swal.fire('Error', 'Error al cargar las categorías', 'error');
+                    Swal.fire('Error', 'Error al cargar los colores', 'error');
                 }
             },
             columns: [
@@ -57,13 +53,13 @@
                         return `
                             <div class="d-flex justify-content-center gap-2">
                                 <button class="btn btn-warning btn-sm edit-button" 
-                                        data-id="${row.IdCategoria}"
-                                        title="Editar Categoría">
+                                        data-id="${row.IdColor}"
+                                        title="Editar Color">
                                     <i class='bx bx-edit'></i>
                                 </button>
                                 <button class="btn btn-danger btn-sm delete-button" 
-                                        data-id="${row.IdCategoria}"
-                                        title="Eliminar Categoría">
+                                        data-id="${row.IdColor}"
+                                        title="Eliminar Color">
                                     <i class='bx bx-trash'></i>
                                 </button>
                             </div>`;
@@ -75,66 +71,63 @@
                     text: 'Nuevo',
                     className: 'btn btn-primary',
                     action: function (e, dt, node, config) {
-                        CategoriaContainer.Index.hide();
                         limpiarFormulario();
-                        CategoriaContainer.Form.show();
+                        mostrarFormulario();
                     }
                 }
-            ]
+            ],
         });
     }
 
     function mostrarFormulario() {
-        CategoriaContainer.Index.hide();
-        CategoriaContainer.Form.show();
+        ColorContainer.Index.hide();
+        ColorContainer.Form.show();
     }
 
     function ocultarFormulario() {
         limpiarFormulario();
-        CategoriaContainer.Form.hide();
-        CategoriaContainer.Index.show();
+        ColorContainer.Form.hide();
+        ColorContainer.Index.show();
     }
 
-    function cargarCategoria(id) {
+    function cargarColor(id) {
         $.ajax({
-            url: CategoriaContainer.Url + '/GetCategoriaById',
+            url: ColorContainer.Url + '/GetColorById',
             type: 'POST',
-            data: { idCategoria: id },
+            data: { idColor: id },
             success: function (response) {
                 if (response.status) {
-                    $('#idCategoria').val(response.data.IdCategoria);
-                    $('#inputNombre').val(response.data.Nombre);
+                    console.log(response.data);
+                    $('#idColor').val(response.data.IdColor);
+                    $('#inputNombreColor').val(response.data.Nombre);
                     mostrarFormulario();
                 } else {
                     Swal.fire('Error', response.errorMessage, 'error');
                 }
             },
             error: function () {
-                Swal.fire('Error', 'Error al cargar la categoría', 'error');
+                Swal.fire('Error', 'Error al cargar el color', 'error');
             }
         });
     }
 
-    function guardarCategoria(e) {
+    function guardarColor(e) {
         e.preventDefault();
 
-        var nombreCategoria = $.trim($('#inputNombre').val()); // Eliminando espacios en blanco al inicio y final
-
-        // Validación del nombre de la categoría
-        if (nombreCategoria.length < 3) {
-            Swal.fire('Error', 'El nombre de la categoría debe tener al menos 3 caracteres.', 'error');
+        var nombreColor = $.trim($('#inputNombreColor').val());
+        if (nombreColor.length < 3) {
+            Swal.fire('Error', 'El nombre del color debe tener al menos 3 caracteres.', 'error');
             return;
         }
 
-        var categoria = {
-            IdCategoria: $('#idCategoria').val(),
-            Nombre: nombreCategoria
+        var color = {
+            IdColor: $('#idColor').val(),
+            Nombre: nombreColor
         };
 
-        var esNuevaCategoria = !categoria.IdCategoria;
-        var url = CategoriaContainer.Url + (esNuevaCategoria ? '/CreateCategoria' : '/UpdateCategoria');
+        var esNuevoColor = !color.IdColor;
+        var url = ColorContainer.Url + (esNuevoColor ? '/CreateColor' : '/UpdateColor');
 
-        // Diálogo de confirmación antes de guardar
         Swal.fire({
             title: '¿Estás seguro?',
             text: "Confirma para guardar los cambios.",
@@ -148,28 +141,28 @@
                     url: url,
                     type: 'POST',
                     contentType: 'application/json',
-                    data: JSON.stringify(categoria),
+                    data: JSON.stringify(color),
                     success: function (response) {
                         if (response.status) {
-                            Swal.fire('Guardado', 'Categoría guardada exitosamente.', 'success');
+                            Swal.fire('Guardado', 'Color guardado exitosamente.', 'success');
                             ocultarFormulario();
-                            loadCategoriasDataTable();
+                            loadColoresDataTable();
                         } else {
                             Swal.fire('Error', response.errorMessage, 'error');
                         }
                     },
                     error: function () {
-                        Swal.fire('Error', 'Error al guardar la categoría', 'error');
+                        Swal.fire('Error', 'Error al guardar el color', 'error');
                     }
                 });
             }
         });
     }
 
-    function eliminarCategoria(id) {
+    function eliminarColor(id) {
         Swal.fire({
             title: '¿Estás seguro?',
-            text: "¿Deseas eliminar esta categoría?",
+            text: "¿Deseas eliminar este color?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Sí, eliminar',
@@ -177,19 +170,19 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: CategoriaContainer.Url + '/DeleteCategoria',
+                    url: ColorContainer.Url + '/DeleteColor',
                     type: 'POST',
-                    data: { idCategoria: id },
+                    data: { idColor: id },
                     success: function (response) {
                         if (response.status) {
-                            Swal.fire('Eliminado', 'Categoría eliminada exitosamente.', 'success');
-                            loadCategoriasDataTable();
+                            Swal.fire('Eliminado', 'Color eliminado exitosamente.', 'success');
+                            loadColoresDataTable();
                         } else {
                             Swal.fire('Error', response.errorMessage, 'error');
                         }
                     },
                     error: function () {
-                        Swal.fire('Error', 'Error al eliminar la categoría', 'error');
+                        Swal.fire('Error', 'Error al eliminar el color', 'error');
                     }
                 });
             }
@@ -197,8 +190,8 @@
     }
 
     function limpiarFormulario() {
-        $('#frmCategoria')[0].reset();
-        $('#idCategoria').val('');
+        $('#frmColor')[0].reset();
+        $('#idColor').val('');
     }
 
 })(jQuery);

@@ -36,5 +36,44 @@ namespace Web.Controllers.Catalogos
 
             return Json(new { status, data, errorMessage });
         }
+
+        [HttpPost]
+        public JsonResult GetColorById(int idColor)
+        {
+            Color_VM data = new Color_VM();
+            string errorMessage = string.Empty;
+
+            bool status = _ln.GetColoraById(idColor, ref data, ref errorMessage);
+
+            return Json(new { status, data, errorMessage });
+        }
+
+        [HttpPost]
+        public JsonResult CreateColor(Color_VM col)
+        {
+            string errorMessage = string.Empty;
+            col.CreadoPor = GetLoggedUser().IdUsuario;
+            bool status = _ln.CreateColor(col, ref errorMessage);
+
+            return Json(new { status, errorMessage });
+        }
+
+        [HttpPost]
+        public JsonResult UpdateColor(Color_VM col)
+        {
+            string errorMessage = string.Empty;
+            col.EditadoPor = GetLoggedUser().IdUsuario;
+            bool status = _ln.UpdateColor(col, ref errorMessage);
+
+            return Json(new { status, errorMessage });
+        }
+
+        [HttpPost]
+        public JsonResult DeleteColor(int idColor)
+        {
+            string errorMessage = string.Empty;
+            bool status = _ln.DeleteColor(idColor, GetLoggedUser().IdUsuario, ref errorMessage);
+            return Json(new { status, errorMessage });
+        }
     }
 }

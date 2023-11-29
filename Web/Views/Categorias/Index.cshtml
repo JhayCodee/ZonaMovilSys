@@ -25,7 +25,32 @@
 </div>
 
 
-@section scripts {
+<div class="row" id="Form-Categoria" style="display:none;">
+    <div class="col-12">
+        <div class="card mb-4">
+            <h5 class="card-header">REGISTRO DE CATEGORÍAS</h5>
+            <div class="card-body">
+                <form id="frmCategoria">
+                    <div class="row">
+                        <input type="hidden" class="form-control" id="idCategoria" name="idCategoria">
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label for="inputNombre" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="inputNombre" name="inputNombre">
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="mt-3 text-end">
+                        <button type="button" class="btn btn-secondary" id="btnRegresarCategoria">Regresar</button>
+                        <button type="submit" class="btn btn-primary" id="btnGuardarCategoria">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
     <script src="~/Scripts/VistasJS/Catalogo/Categoria/Categoria.js"></script>
 }

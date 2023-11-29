@@ -139,6 +139,7 @@
     <Compile Include="Controllers\Catalogos\ProveedoresController.cs" />
     <Compile Include="Controllers\Compras\ComprasController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Seguridad\AccesoController.cs" />
     <Compile Include="Controllers\Seguridad\RolesController.cs" />
@@ -190,9 +191,11 @@
     <Content Include="Scripts\VistasJS\Catalogo\Categoria\Categoria.js" />
     <Content Include="Scripts\VistasJS\Catalogo\Clientes\Cliente.js" />
     <Content Include="Scripts\VistasJS\Catalogo\Clientes\ClientesRules.js" />
+    <Content Include="Scripts\VistasJS\Catalogo\Color\Color.js" />
     <Content Include="Scripts\VistasJS\Catalogo\Marcas\Marca.js" />
     <Content Include="Scripts\VistasJS\Catalogo\Productos\Productos.js" />
     <Content Include="Scripts\VistasJS\Catalogo\Productos\ProductosRules.js" />
+    <Content Include="Scripts\VistasJS\Catalogo\Proveedores\Proveedor.js" />
     <Content Include="Scripts\VistasJS\Seguridad\Roles\Roles.js" />
     <Content Include="Scripts\VistasJS\Seguridad\Usuarios\Perfil.js" />
     <Content Include="Scripts\VistasJS\Seguridad\Usuarios\UserRules.js" />
@@ -216,7 +219,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Scripts\VistasJS\Catalogo\Color\" />
     <Folder Include="Scripts\VistasJS\Compras\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
@@ -246,6 +248,7 @@
     <Content Include="Views\Compras\Index.cshtml" />
     <Content Include="Views\Colores\Index.cshtml" />
     <Content Include="Views\Templates\Factura.cshtml" />
+    <Content Include="Views\Error\UnauthorizedOperation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logica\Logica.csproj">

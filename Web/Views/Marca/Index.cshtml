@@ -4,11 +4,11 @@
 }
 
 
+
 <div class="row" id="Index-Marca">
     <div class="col-12">
         <div class="card mb-4">
             <h5 class="card-header">MARCAS</h5>
-
             <div class="card-body">
                 <table id="tblMarca" class="table table-hover table-striped table-responsive" style="width:100%">
                     <thead>
@@ -19,6 +19,27 @@
                     </thead>
                     <tbody></tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" id="Form-Marca" style="display:none;">
+    <div class="col-12">
+        <div class="card mb-4">
+            <h5 class="card-header">FORMULARIO DE MARCA</h5>
+            <div class="card-body">
+                <form id="frmMarca">
+                    <input type="hidden" id="idMarca">
+                    <div class="form-group">
+                        <label for="inputNombreMarca">Nombre de la Marca</label>
+                        <input type="text" class="form-control" id="inputNombreMarca">
+                    </div>
+                    <div class="mt-3 text-end">
+                        <button type="button" class="btn btn-secondary" id="btnRegresarMarca">Regresar</button>
+                        <button type="submit" class="btn btn-primary" id="btnGuardarMarca">Guardar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

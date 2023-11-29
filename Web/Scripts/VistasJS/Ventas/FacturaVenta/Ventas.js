@@ -77,7 +77,8 @@
                     limpiarFormularioVenta();
                 }
             }
-        ]
+        ],
+        order: [[0, 'desc']]
     });
 
     $('#tblFacturasVenta').on('click', '.print-button', function () {
@@ -397,7 +398,7 @@
     // Obtiene la información del producto y lo agrega a la tabla
     function obtenerInfoProducto(productId) {
         $.ajax({
-            url: '/Ventas/GetProductsById', // Asegúrate de que esta URL sea correcta
+            url: '/Ventas/GetProductsById', 
             type: 'POST',
             dataType: 'json',
             data: { productId: productId },

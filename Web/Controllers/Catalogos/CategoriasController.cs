@@ -36,5 +36,45 @@ namespace Web.Controllers.Catalogos
 
             return Json(new { status, data, errorMessage });
         }
+
+        [HttpPost]
+        public JsonResult GetCategoriaById(int idCategoria)
+        {
+            Categoria_VM data = new Categoria_VM();
+            string errorMessage = string.Empty;
+
+            bool status = _ln.GetCategoriaById(idCategoria, ref data, ref errorMessage);
+
+            return Json(new { status, data , errorMessage });
+        }
+
+        [HttpPost]
+        public JsonResult CreateCategoria(Categoria_VM categoria)
+        {
+            string errorMessage = string.Empty;
+            categoria.CreadoPor = GetLoggedUser().IdUsuario;
+            bool status = _ln.CreateCategoria(categoria, ref errorMessage);
+
+            return Json(new { status, errorMessage });
+        }
+
+        [HttpPost]
+        public JsonResult UpdateCategoria(Categoria_VM categoria)
+        {
+            string errorMessage = string.Empty;
+            categoria.EditadoPor = GetLoggedUser().IdUsuario;
+            bool status = _ln.UpdateCategoria(categoria, ref errorMessage);
+
+            return Json(new { status, errorMessage });
+        }
+
+        [HttpPost]
+        public JsonResult DeleteCategoria(int idCategoria)
+        {
+            string errorMessage = string.Empty;
+            bool status = _ln.DeleteCategoria(idCategoria, GetLoggedUser().IdUsuario, ref errorMessage);
+            return Json(new { status, errorMessage });
+        }
+
     }
 }

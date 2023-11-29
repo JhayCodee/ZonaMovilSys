@@ -9,25 +9,28 @@ using System.Threading.Tasks;
 
 namespace Logica.Catalogo
 {
-    public class Categoria_LN
+    public class Proveedor_LN
     {
         private readonly Contexto _db;
 
-        public Categoria_LN()
+        public Proveedor_LN()
         {
             _db = new Contexto();
         }
 
-        public bool GetCategorias(ref List<Categoria_VM> data, ref string errorMessage)
+        public bool GetProveedores(ref List<Proveedor_VM> data, ref string errorMessage)
         {
             try
             {
-                data = _db.Categoria
+                data = _db.Proveedor
                         .Where(x => x.Activo)
-                        .Select(x => new Categoria_VM
+                        .Select(x => new Proveedor_VM
                         {
-                            IdCategoria = x.IdCategoria,
-                            Nombre = x.Nombre
+                            IdProveedor = x.IdProveedor,
+                            Nombre = x.Nombre,
+                            Telefono = x.Telefono,
+                            Correo = x.Correo,
+                            Direccion = x.Direccion
                         }).ToList();
 
                 return true;
@@ -39,22 +42,25 @@ namespace Logica.Catalogo
             }
         }
 
-        public bool GetCategoriaById(int idCategoria, ref Categoria_VM cat, ref string errorMessage)
+        public bool GetProveedorById(int idProveedor, ref Proveedor_VM proveedor, ref string errorMessage)
         {
             try
             {
-                cat = _db.Categoria
-                    .Where(c => c.IdCategoria == idCategoria && c.Activo)
-                    .Select(c => new Categoria_VM
+                proveedor = _db.Proveedor
+                    .Where(p => p.IdProveedor == idProveedor && p.Activo)
+                    .Select(p => new Proveedor_VM
                     {
-                       IdCategoria = c.IdCategoria,
-                       Nombre = c.Nombre
+                        IdProveedor = p.IdProveedor,
+                        Nombre = p.Nombre,
+                        Telefono = p.Telefono,
+                        Correo = p.Correo,
+                        Direccion = p.Direccion
                     })
                     .FirstOrDefault();
 
-                if (cat == null)
+                if (proveedor == null)
                 {
-                    errorMessage = "No se encontró la categoria o no está activo.";
+                    errorMessage = "No se encontró el proveedor o no está activo.";
                     return false;
                 }
 
@@ -62,23 +68,26 @@ namespace Logica.Catalogo
             }
             catch (Exception ex)
             {
-                cat = null;
-                errorMessage = $"Error al buscar la Categoria: {ex.Message}";
+                proveedor = null;
+                errorMessage = $"Error al buscar el proveedor: {ex.Message}";
                 return false;
             }
         }
 
-        public bool CreateCategoria(Categoria_VM cat, ref string errorMessage)
+        public bool CreateProveedor(Proveedor_VM proveedor, ref string errorMessage)
         {
             try
             {
                 ObjectParameter isSuccessParam = new ObjectParameter("IsSuccess", typeof(int));
                 ObjectParameter errorMsgParam = new ObjectParameter("ErrorMsg", typeof(string));
 
-                _db.sp_Categoria_Create(
-                    cat.Nombre,
+                _db.sp_Proveedor_Create(
+                    proveedor.Nombre,
+                    proveedor.Telefono,
+                    proveedor.Correo,
+                    proveedor.Direccion,
                     true,
-                    cat.CreadoPor,
+                    proveedor.CreadoPor,
                     isSuccessParam,
                     errorMsgParam
                 );
@@ -98,18 +107,21 @@ namespace Logica.Catalogo
             }
         }
 
-        public bool UpdateCategoria(Categoria_VM cat, ref string errorMessage)
+        public bool UpdateProveedor(Proveedor_VM proveedor, ref string errorMessage)
         {
             try
             {
                 ObjectParameter isSuccessParam = new ObjectParameter("IsSuccess", typeof(int));
                 ObjectParameter errorMsgParam = new ObjectParameter("ErrorMsg", typeof(string));
 
-                _db.sp_Categoria_Update(
-                    cat.IdCategoria,
-                    cat.Nombre,
+                _db.sp_Proveedor_Update(
+                    proveedor.IdProveedor,
+                    proveedor.Nombre,
+                    proveedor.Telefono,
+                    proveedor.Correo,
+                    proveedor.Direccion,
                     true,
-                    cat.EditadoPor,
+                    proveedor.EditadoPor,
                     isSuccessParam,
                     errorMsgParam
                 );
@@ -129,14 +141,14 @@ namespace Logica.Catalogo
             }
         }
 
-        public bool DeleteCategoria(int IdCategoria, int eliminadoPor, ref string errorMessage)
+        public bool DeleteProveedor(int idProveedor, int eliminadoPor, ref string errorMessage)
         {
             try
             {
                 ObjectParameter isSuccessParam = new ObjectParameter("IsSuccess", typeof(int));
                 ObjectParameter errorMsgParam = new ObjectParameter("ErrorMsg", typeof(string));
 
-                _db.sp_Categoria_Delete(IdCategoria, eliminadoPor, isSuccessParam, errorMsgParam);
+                _db.sp_Proveedor_Delete(idProveedor, eliminadoPor, isSuccessParam, errorMsgParam);
 
                 if ((int)isSuccessParam.Value == 0)
                 {
