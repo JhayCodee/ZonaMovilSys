@@ -19,6 +19,9 @@ namespace Datos
         public System.DateTime FechaInicio { get; set; }
         public System.DateTime FechaFin { get; set; }
         public int Estado { get; set; }
+        public string RazonReclamo { get; set; }
+        public Nullable<System.DateTime> FechaReclamo { get; set; }
+        public Nullable<System.DateTime> FechaEstimadaEntrega { get; set; }
     
         public virtual DetalleFacturaVenta DetalleFacturaVenta { get; set; }
     }

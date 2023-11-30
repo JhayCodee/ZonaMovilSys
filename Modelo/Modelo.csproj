@@ -55,6 +55,7 @@
     <Compile Include="utils\DropDown.cs" />
     <Compile Include="Ventas\DetalleFacturaVenta_VM.cs" />
     <Compile Include="Ventas\FacturaVenta_VM.cs" />
+    <Compile Include="Ventas\Garantia_VM.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -65,6 +65,7 @@
     <Compile Include="Seguridad\PasswordManager.cs" />
     <Compile Include="Seguridad\Roles_LN.cs" />
     <Compile Include="Seguridad\Usuarios_LN.cs" />
+    <Compile Include="Ventas\Garantia_LN.cs" />
     <Compile Include="Ventas\Ventas_LN.cs" />
   </ItemGroup>
   <ItemGroup>

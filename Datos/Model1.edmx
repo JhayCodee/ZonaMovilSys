@@ -228,6 +228,9 @@
           <Property Name="FechaInicio" Type="datetime" Nullable="false" />
           <Property Name="FechaFin" Type="datetime" Nullable="false" />
           <Property Name="Estado" Type="int" Nullable="false" />
+          <Property Name="RazonReclamo" Type="nvarchar" MaxLength="255" />
+          <Property Name="FechaReclamo" Type="datetime" />
+          <Property Name="FechaEstimadaEntrega" Type="datetime" />
         </EntityType>
         <Association Name="FK__Categoria__Cread__3E52440B">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
@@ -1357,6 +1360,9 @@
           <Property Name="FechaFin" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Estado" Type="Int32" Nullable="false" />
           <NavigationProperty Name="DetalleFacturaVenta" Relationship="Self.FK__Garantia__IdDeta__06CD04F7" FromRole="Garantia" ToRole="DetalleFacturaVenta" />
+          <Property Name="RazonReclamo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="FechaReclamo" Type="DateTime" Precision="3" />
+          <Property Name="FechaEstimadaEntrega" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK__Categoria__Cread__3E52440B">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
@@ -2423,6 +2429,9 @@
           <EntitySetMapping Name="Garantia">
             <EntityTypeMapping TypeName="ContextoZM.Garantia">
               <MappingFragment StoreEntitySet="Garantia">
+                <ScalarProperty Name="FechaEstimadaEntrega" ColumnName="FechaEstimadaEntrega" />
+                <ScalarProperty Name="FechaReclamo" ColumnName="FechaReclamo" />
+                <ScalarProperty Name="RazonReclamo" ColumnName="RazonReclamo" />
                 <ScalarProperty Name="IdGarantia" ColumnName="IdGarantia" />
                 <ScalarProperty Name="IdDetalleFacturaVenta" ColumnName="IdDetalleFacturaVenta" />
                 <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />

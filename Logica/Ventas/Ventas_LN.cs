@@ -200,6 +200,21 @@ namespace Logica.Ventas
                             };
 
                             _db.DetalleFacturaVenta.Add(detalleFactura);
+                            _db.SaveChanges();
+
+                            // Validar y crear registro de garantía si es aplicable
+                            if (producto.GarantiaMeses.HasValue && producto.GarantiaMeses > 0)
+                            {
+                                var garantia = new Garantia
+                                {
+                                    IdDetalleFacturaVenta = detalleFactura.IdDetalleFacturaVenta,
+                                    FechaInicio = factura.Fecha,
+                                    FechaFin = factura.Fecha.AddMonths(producto.GarantiaMeses.Value),
+                                    Estado = 1 
+                                };
+
+                                _db.Garantia.Add(garantia);
+                            }
 
                             // Actualizar el stock del producto
                             producto.Stock -= detalle.Cantidad;
@@ -247,16 +262,20 @@ namespace Logica.Ventas
                         factura.RazonAnulamiento = razonAnulamiento;
                         _db.Entry(factura).State = EntityState.Modified;
 
-                        // Obtener los detalles de la factura
+                        // Obtener y eliminar las garantías asociadas con la factura
                         var detallesFactura = _db.DetalleFacturaVenta.Where(d => d.IdFacturaVenta == idFacturaVenta).ToList();
-
-                        // Procesar cada detalle para devolver el stock
                         foreach (var detalle in detallesFactura)
                         {
+                            var garantias = _db.Garantia.Where(g => g.IdDetalleFacturaVenta == detalle.IdDetalleFacturaVenta).ToList();
+                            foreach (var garantia in garantias)
+                            {
+                                _db.Garantia.Remove(garantia); // Eliminar el registro de garantía
+                            }
+
+                            // Devolver el stock del producto si es necesario
                             var producto = _db.Producto.FirstOrDefault(p => p.IdProducto == detalle.IdProducto);
                             if (producto != null)
                             {
-                                // Devolver el stock del producto
                                 producto.Stock += detalle.Cantidad;
                                 _db.Entry(producto).State = EntityState.Modified;
                             }

@@ -1,7 +1,62 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Garantias";
 }
+<div class="row" id="Index-Garantia">
+    <div class="col-12">
+        <div class="card mb-4">
+            <h5 class="card-header">GARANTIAS</h5>
 
-<h2>Index</h2>
+            <div class="card-body">
+                <table id="tblGarantia" class="table table-hover table-striped table-responsive" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Numero de Factura</th>
+                            <th>Cliente</th>
+                            <th>Producto</th>
+                            <th>IMEI</th>
+                            <th>Fin Garantia</th>
+                            <th>Estado</th>
+                            <th>Fecha Estimada Entrega</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
+<!-- Modal para Reclamar Garantía -->
+<div class="modal fade" id="reclamarGarantiaModal" tabindex="-1" aria-labelledby="reclamarGarantiaModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reclamarGarantiaModalLabel">Reclamar Garantía</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="razonReclamo" class="form-label">Razón del Reclamo</label>
+                    <textarea class="form-control" id="razonReclamo" rows="3"></textarea>
+                    <span id="errorRazonReclamo" class="text-danger" style="display: none;"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="fechaEstimadaEntrega" class="form-label">Fecha Estimada de Entrega</label>
+                    <input type="date" class="form-control" id="fechaEstimadaEntrega">
+                    <span id="errorFechaEstimadaEntrega" class="text-danger" style="display: none;"></span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="btnReclamarGarantia">Reclamar Garantía</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script src="~/Scripts/VistasJS/Ventas/Garantia/Garantia.js"></script>
+}

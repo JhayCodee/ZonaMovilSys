@@ -201,6 +201,7 @@
     <Content Include="Scripts\VistasJS\Seguridad\Usuarios\UserRules.js" />
     <Content Include="Scripts\VistasJS\Seguridad\Usuarios\Usuarios.js" />
     <Content Include="Scripts\VistasJS\Ventas\FacturaVenta\Ventas.js" />
+    <Content Include="Scripts\VistasJS\Ventas\Garantia\Garantia.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
