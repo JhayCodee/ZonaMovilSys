@@ -53,6 +53,7 @@
     <Compile Include="Seguridad\Roles_VM.cs" />
     <Compile Include="Seguridad\Usuario_VM.cs" />
     <Compile Include="utils\DropDown.cs" />
+    <Compile Include="utils\Reportes.cs" />
     <Compile Include="Ventas\DetalleFacturaVenta_VM.cs" />
     <Compile Include="Ventas\FacturaVenta_VM.cs" />
     <Compile Include="Ventas\Garantia_VM.cs" />

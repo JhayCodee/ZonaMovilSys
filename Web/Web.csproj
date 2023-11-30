@@ -179,9 +179,14 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Imagenes\bg2.jpg" />
+    <Content Include="Imagenes\cc-primary.png" />
+    <Content Include="Imagenes\chart-success.png" />
+    <Content Include="Imagenes\chart.png" />
     <Content Include="Imagenes\logoblue.jpg" />
+    <Content Include="Imagenes\man-with-laptop-light.png" />
     <Content Include="Imagenes\mobilebg.jpg" />
     <Content Include="Imagenes\profile.png" />
+    <Content Include="Imagenes\wallet-info.png" />
     <Content Include="Rotativa\help-wkhtmltoimage.txt" />
     <Content Include="Rotativa\help-wkhtmltopdf.txt" />
     <Content Include="Rotativa\wkhtmltoimage.exe" />

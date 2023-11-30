@@ -60,6 +60,7 @@
     <Compile Include="Catalogo\Marca_LN.cs" />
     <Compile Include="Catalogo\Productos_LN.cs" />
     <Compile Include="Catalogo\Proveedor_LN.cs" />
+    <Compile Include="Dashboard_LN.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Seguridad\Controlador_LN.cs" />
     <Compile Include="Seguridad\PasswordManager.cs" />

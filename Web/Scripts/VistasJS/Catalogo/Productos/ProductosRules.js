@@ -1,4 +1,11 @@
 ﻿$(document).ready(function () {
+
+    $.validator.addMethod("precioVentaMayorQueCompra", function (value, element) {
+        var precioCompra = parseFloat($('#inputPrecioCompra').val());
+        var precioVenta = parseFloat(value);
+        return precioVenta > precioCompra;
+    }, "El precio de venta debe ser mayor que el precio de compra.");
+
     $("#frmProductos").validate({
         rules: {
             inputNombre: {
@@ -32,7 +39,8 @@
             inputPrecioVenta: {
                 required: true,
                 min: 0,  // Establece el mínimo según tus necesidades.
-                max: 5000  // Establece el máximo según tus necesidades.
+                max: 5000,  // Establece el máximo según tus necesidades.
+                precioVentaMayorQueCompra: true  // Añadir tu regla personalizada aquí
             },
             inputColor: "required",
             inputMarca: "required",
@@ -64,7 +72,8 @@
             inputPrecioVenta: {
                 required: "El precio de venta es obligatorio.",
                 min: "El precio de venta no puede ser menor a 0.",
-                max: "El precio de venta no puede ser mayor a 5,000."
+                max: "El precio de venta no puede ser mayor a 5,000.",
+                precioVentaMayorQueCompra: "El precio de venta debe ser mayor que el precio de compra."
             },
             inputColor: {
                 required: "Debe seleccionar un color."

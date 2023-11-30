@@ -54,29 +54,35 @@ namespace Logica.Catalogo
 
         public List<DropDown> GetMarcas()
         {
-            return _db.Marca.Select(m => new DropDown
-            {
-                Id = m.IdMarca,
-                Value = m.Nombre
-            }).ToList();
+            return _db.Marca
+                .Where(m => m.Activo)
+                .Select(m => new DropDown
+                {
+                    Id = m.IdMarca,
+                    Value = m.Nombre
+                }).ToList();
         }
 
         public List<DropDown> GetColores()
         {
-            return _db.Color.Select(c => new DropDown
-            {
-                Id = c.IdColor,
-                Value = c.Nombre
-            }).ToList();
+            return _db.Color
+                .Where(c => c.Activo)
+                .Select(c => new DropDown
+                {
+                    Id = c.IdColor,
+                    Value = c.Nombre
+                }).ToList();
         }
 
         public List<DropDown> GetCategorias()
         {
-            return _db.Categoria.Select(c => new DropDown
-            {
-                Id = c.IdCategoria,
-                Value = c.Nombre
-            }).ToList();
+            return _db.Categoria
+                .Where(c => c.Activo)
+                .Select(c => new DropDown
+                {
+                    Id = c.IdCategoria,
+                    Value = c.Nombre
+                }).ToList();
         }
 
         public bool GetProductById(int productId, ref Producto_VM data, ref string errorMessage)
