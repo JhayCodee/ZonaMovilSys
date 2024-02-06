@@ -98,8 +98,8 @@
             ],
             buttons: [
                 {
-                    text: 'Nuevo',
-                    className: 'btn btn-primary',
+                    text: '',
+                    className: 'btn',
                     action: function (e, dt, node, config) {
                         limpiarFormulario();
                         mostrarFormulario();
@@ -219,6 +219,7 @@
                 $.post(GarantiaContainer.Url + '/EntregarGarantia', { id: idGarantia }, function (response) {
                     if (response.status) {
                         Swal.fire('Completado', 'La garantía ha sido entregada.', 'success');
+                        loadGarantiaDataTable();
                     } else {
                         Swal.fire('Error', response.errorMessage, 'error');
                     }

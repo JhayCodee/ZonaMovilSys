@@ -70,7 +70,7 @@ namespace Logica
                     CantidadVendida = group.Sum(d => d.Cantidad)
                 })
                 .OrderByDescending(x => x.CantidadVendida)
-                .Take(10)
+                .Take(5)
                 .ToList();
         }
     }

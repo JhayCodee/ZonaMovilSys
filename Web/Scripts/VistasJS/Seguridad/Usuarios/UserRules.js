@@ -33,6 +33,13 @@
             },
             IdRol: {
                 required: true
+            },
+            Contrasena: {
+                required: true,
+                minlength: 5,
+                normalizer: function (value) {
+                    return $.trim(value);
+                }
             }
         },
         messages: {
@@ -54,6 +61,10 @@
             },
             IdRol: {
                 required: "Por favor, selecciona un rol"
+            },
+            Contrasena: {
+                required: "Por favor, ingresa una contraseña",
+                minlength: "La contraseña debe tener al menos 5 caracteres" 
             }
         },
         submitHandler: function (form) {
