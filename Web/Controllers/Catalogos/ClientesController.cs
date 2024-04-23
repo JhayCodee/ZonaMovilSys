@@ -22,6 +22,7 @@ namespace Web.Controllers.Catalogos
         [AuthorizeUser(idOperacion: 6)]
         public ActionResult Index()
         {
+            ViewBag.Departamentos = _ln.GetDepartamentosDropDown();
             return View();
         }
 

@@ -18,7 +18,6 @@ namespace Datos
         public Producto()
         {
             this.DetalleFacturaVenta = new HashSet<DetalleFacturaVenta>();
-            this.DetalleFacturaCompra = new HashSet<DetalleFacturaCompra>();
         }
     
         public int IdProducto { get; set; }
@@ -41,16 +40,21 @@ namespace Datos
         public System.DateTime FechaCreacion { get; set; }
         public Nullable<System.DateTime> FechaActualizacion { get; set; }
         public Nullable<System.DateTime> FechaEliminacion { get; set; }
+        public Nullable<int> Bateria { get; set; }
+        public Nullable<bool> Nuevo { get; set; }
+        public Nullable<bool> eSim { get; set; }
+        public Nullable<int> IdProveedor { get; set; }
+        public string IMEI { get; set; }
+        public string CodigoBarra { get; set; }
     
         public virtual Categoria Categoria { get; set; }
         public virtual Color Color { get; set; }
         public virtual Marca Marca { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DetalleFacturaVenta> DetalleFacturaVenta { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DetalleFacturaCompra> DetalleFacturaCompra { get; set; }
         public virtual Usuario Usuario { get; set; }
         public virtual Usuario Usuario1 { get; set; }
         public virtual Usuario Usuario2 { get; set; }
+        public virtual Proveedor Proveedor { get; set; }
     }
 }

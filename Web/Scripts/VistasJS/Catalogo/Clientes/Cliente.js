@@ -151,7 +151,8 @@
             Apellidos: $.trim($("#inputApellidos").val()),
             Cedula: $.trim($("#inputCedula").val()),
             Correo: $.trim($("#inputCorreo").val()),
-            Telefono: $.trim($("#inputTelefono").val())
+            Telefono: $.trim($("#inputTelefono").val()),
+            IdDepartamento: $("#inputDepartamento").val()
         };
 
         var url = '/Clientes/' + (isEditing ? 'UpdateCliente' : 'CreateCliente');

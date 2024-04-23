@@ -36,6 +36,7 @@
           <Property Name="FechaActualizacion" Type="datetime" />
           <Property Name="FechaEliminacion" Type="datetime" />
           <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="IdDepartamento" Type="int" />
         </EntityType>
         <EntityType Name="Color">
           <Key>
@@ -50,6 +51,13 @@
           <Property Name="FechaCreacion" Type="datetime" />
           <Property Name="FechaActualizacion" Type="datetime" />
           <Property Name="FechaEliminacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Departamento">
+          <Key>
+            <PropertyRef Name="IdDepartamento" />
+          </Key>
+          <Property Name="IdDepartamento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Marca">
           <Key>
@@ -89,6 +97,12 @@
           <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
           <Property Name="FechaActualizacion" Type="datetime" />
           <Property Name="FechaEliminacion" Type="datetime" />
+          <Property Name="Bateria" Type="int" />
+          <Property Name="Nuevo" Type="bit" />
+          <Property Name="eSim" Type="bit" />
+          <Property Name="IdProveedor" Type="int" />
+          <Property Name="IMEI" Type="nvarchar" MaxLength="50" />
+          <Property Name="CodigoBarra" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Proveedor">
           <Key>
@@ -106,34 +120,6 @@
           <Property Name="FechaCreacion" Type="datetime" />
           <Property Name="FechaActualizacion" Type="datetime" />
           <Property Name="FechaEliminacion" Type="datetime" />
-        </EntityType>
-        <EntityType Name="DetalleFacturaCompra">
-          <Key>
-            <PropertyRef Name="IdDetalleFacturaCompra" />
-          </Key>
-          <Property Name="IdDetalleFacturaCompra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdFacturaCompra" Type="int" Nullable="false" />
-          <Property Name="IdProducto" Type="int" Nullable="false" />
-          <Property Name="Cantidad" Type="int" Nullable="false" />
-          <Property Name="PrecioUnitario" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-        </EntityType>
-        <EntityType Name="FacturaCompra">
-          <Key>
-            <PropertyRef Name="IdFacturaCompra" />
-          </Key>
-          <Property Name="IdFacturaCompra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="NumeroFactura" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Fecha" Type="datetime" Nullable="false" />
-          <Property Name="Subtotal" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="Impuesto" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="Total" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="Activo" Type="bit" Nullable="false" />
-          <Property Name="IdProveedor" Type="int" Nullable="false" />
-          <Property Name="CreadoPor" Type="int" Nullable="false" />
-          <Property Name="AnuladoPor" Type="int" />
-          <Property Name="FechaAnulacion" Type="datetime" />
-          <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
-          <Property Name="RazonAnulamiento" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="Controlador">
           <Key>
@@ -201,6 +187,16 @@
           <Property Name="PrecioUnitario" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="IMEI" Type="nvarchar" MaxLength="15" />
         </EntityType>
+        <EntityType Name="EventosGarantia">
+          <Key>
+            <PropertyRef Name="IdEvento" />
+          </Key>
+          <Property Name="IdEvento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdGarantia" Type="int" Nullable="false" />
+          <Property Name="FechaEvento" Type="datetime" Nullable="false" />
+          <Property Name="NuevaFechaFin" Type="datetime" />
+          <Property Name="DescripcionEvento" Type="nvarchar" MaxLength="255" />
+        </EntityType>
         <EntityType Name="FacturaVenta">
           <Key>
             <PropertyRef Name="IdFacturaVenta" />
@@ -228,9 +224,6 @@
           <Property Name="FechaInicio" Type="datetime" Nullable="false" />
           <Property Name="FechaFin" Type="datetime" Nullable="false" />
           <Property Name="Estado" Type="int" Nullable="false" />
-          <Property Name="RazonReclamo" Type="nvarchar" MaxLength="255" />
-          <Property Name="FechaReclamo" Type="datetime" />
-          <Property Name="FechaEstimadaEntrega" Type="datetime" />
         </EntityType>
         <Association Name="FK__Categoria__Cread__3E52440B">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
@@ -304,6 +297,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Cliente__IdDepar__690797E6">
+          <End Role="Departamento" Type="Self.Departamento" Multiplicity="0..1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departamento">
+              <PropertyRef Name="IdDepartamento" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="IdDepartamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Color__CreadoPor__440B1D61">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
           <End Role="Color" Type="Self.Color" Multiplicity="*" />
@@ -364,18 +369,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DetalleFa__IdFac__70DDC3D8">
-          <End Role="FacturaCompra" Type="Self.FacturaCompra" Multiplicity="1" />
-          <End Role="DetalleFacturaCompra" Type="Self.DetalleFacturaCompra" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FacturaCompra">
-              <PropertyRef Name="IdFacturaCompra" />
-            </Principal>
-            <Dependent Role="DetalleFacturaCompra">
-              <PropertyRef Name="IdFacturaCompra" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__DetalleFa__IdPro__01142BA1">
           <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
           <End Role="DetalleFacturaVenta" Type="Self.DetalleFacturaVenta" Multiplicity="*" />
@@ -385,54 +378,6 @@
             </Principal>
             <Dependent Role="DetalleFacturaVenta">
               <PropertyRef Name="IdProducto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__DetalleFa__IdPro__71D1E811">
-          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
-          <End Role="DetalleFacturaCompra" Type="Self.DetalleFacturaCompra" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Producto">
-              <PropertyRef Name="IdProducto" />
-            </Principal>
-            <Dependent Role="DetalleFacturaCompra">
-              <PropertyRef Name="IdProducto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__FacturaCo__Anula__693CA210">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
-          <End Role="FacturaCompra" Type="Self.FacturaCompra" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="IdUsuario" />
-            </Principal>
-            <Dependent Role="FacturaCompra">
-              <PropertyRef Name="AnuladoPor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__FacturaCo__Cread__68487DD7">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
-          <End Role="FacturaCompra" Type="Self.FacturaCompra" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="IdUsuario" />
-            </Principal>
-            <Dependent Role="FacturaCompra">
-              <PropertyRef Name="CreadoPor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__FacturaCo__IdPro__6754599E">
-          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
-          <End Role="FacturaCompra" Type="Self.FacturaCompra" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Proveedor">
-              <PropertyRef Name="IdProveedor" />
-            </Principal>
-            <Dependent Role="FacturaCompra">
-              <PropertyRef Name="IdProveedor" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -604,6 +549,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Producto__IdProv__607251E5">
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="IdProveedor" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="IdProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Proveedor__Cread__5EBF139D">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
           <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="*" />
@@ -688,6 +645,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EventosGarantia_Garantia">
+          <End Role="Garantia" Type="Self.Garantia" Multiplicity="1" />
+          <End Role="EventosGarantia" Type="Self.EventosGarantia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Garantia">
+              <PropertyRef Name="IdGarantia" />
+            </Principal>
+            <Dependent Role="EventosGarantia">
+              <PropertyRef Name="IdGarantia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="sp_Categoria_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Catalogo">
           <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
           <Parameter Name="Activo" Type="bit" Mode="In" />
@@ -715,6 +684,7 @@
           <Parameter Name="Cedula" Type="nvarchar" Mode="In" />
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Telefono" Type="nvarchar" Mode="In" />
+          <Parameter Name="IdDepartamento" Type="int" Mode="In" />
           <Parameter Name="CreadoPor" Type="int" Mode="In" />
           <Parameter Name="Activo" Type="bit" Mode="In" />
           <Parameter Name="IsSuccess" Type="int" Mode="InOut" />
@@ -892,11 +862,10 @@
           <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="Catalogo" store:Type="Tables" />
           <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="Catalogo" store:Type="Tables" />
           <EntitySet Name="Color" EntityType="Self.Color" Schema="Catalogo" store:Type="Tables" />
+          <EntitySet Name="Departamento" EntityType="Self.Departamento" Schema="Catalogo" store:Type="Tables" />
           <EntitySet Name="Marca" EntityType="Self.Marca" Schema="Catalogo" store:Type="Tables" />
           <EntitySet Name="Producto" EntityType="Self.Producto" Schema="Catalogo" store:Type="Tables" />
           <EntitySet Name="Proveedor" EntityType="Self.Proveedor" Schema="Catalogo" store:Type="Tables" />
-          <EntitySet Name="DetalleFacturaCompra" EntityType="Self.DetalleFacturaCompra" Schema="Compras" store:Type="Tables" />
-          <EntitySet Name="FacturaCompra" EntityType="Self.FacturaCompra" Schema="Compras" store:Type="Tables" />
           <EntitySet Name="Controlador" EntityType="Self.Controlador" Schema="Seguridad" store:Type="Tables" />
           <EntitySet Name="Modulo" EntityType="Self.Modulo" Schema="Seguridad" store:Type="Tables" />
           <EntitySet Name="Operacion" EntityType="Self.Operacion" Schema="Seguridad" store:Type="Tables" />
@@ -904,6 +873,7 @@
           <EntitySet Name="RolOperacion" EntityType="Self.RolOperacion" Schema="Seguridad" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="Seguridad" store:Type="Tables" />
           <EntitySet Name="DetalleFacturaVenta" EntityType="Self.DetalleFacturaVenta" Schema="Ventas" store:Type="Tables" />
+          <EntitySet Name="EventosGarantia" EntityType="Self.EventosGarantia" Schema="Ventas" store:Type="Tables" />
           <EntitySet Name="FacturaVenta" EntityType="Self.FacturaVenta" Schema="Ventas" store:Type="Tables" />
           <EntitySet Name="Garantia" EntityType="Self.Garantia" Schema="Ventas" store:Type="Tables" />
           <AssociationSet Name="FK__Categoria__Cread__3E52440B" Association="Self.FK__Categoria__Cread__3E52440B">
@@ -930,6 +900,10 @@
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Cliente" EntitySet="Cliente" />
           </AssociationSet>
+          <AssociationSet Name="FK__Cliente__IdDepar__690797E6" Association="Self.FK__Cliente__IdDepar__690797E6">
+            <End Role="Departamento" EntitySet="Departamento" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
           <AssociationSet Name="FK__Color__CreadoPor__440B1D61" Association="Self.FK__Color__CreadoPor__440B1D61">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Color" EntitySet="Color" />
@@ -950,29 +924,9 @@
             <End Role="FacturaVenta" EntitySet="FacturaVenta" />
             <End Role="DetalleFacturaVenta" EntitySet="DetalleFacturaVenta" />
           </AssociationSet>
-          <AssociationSet Name="FK__DetalleFa__IdFac__70DDC3D8" Association="Self.FK__DetalleFa__IdFac__70DDC3D8">
-            <End Role="FacturaCompra" EntitySet="FacturaCompra" />
-            <End Role="DetalleFacturaCompra" EntitySet="DetalleFacturaCompra" />
-          </AssociationSet>
           <AssociationSet Name="FK__DetalleFa__IdPro__01142BA1" Association="Self.FK__DetalleFa__IdPro__01142BA1">
             <End Role="Producto" EntitySet="Producto" />
             <End Role="DetalleFacturaVenta" EntitySet="DetalleFacturaVenta" />
-          </AssociationSet>
-          <AssociationSet Name="FK__DetalleFa__IdPro__71D1E811" Association="Self.FK__DetalleFa__IdPro__71D1E811">
-            <End Role="Producto" EntitySet="Producto" />
-            <End Role="DetalleFacturaCompra" EntitySet="DetalleFacturaCompra" />
-          </AssociationSet>
-          <AssociationSet Name="FK__FacturaCo__Anula__693CA210" Association="Self.FK__FacturaCo__Anula__693CA210">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="FacturaCompra" EntitySet="FacturaCompra" />
-          </AssociationSet>
-          <AssociationSet Name="FK__FacturaCo__Cread__68487DD7" Association="Self.FK__FacturaCo__Cread__68487DD7">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="FacturaCompra" EntitySet="FacturaCompra" />
-          </AssociationSet>
-          <AssociationSet Name="FK__FacturaCo__IdPro__6754599E" Association="Self.FK__FacturaCo__IdPro__6754599E">
-            <End Role="Proveedor" EntitySet="Proveedor" />
-            <End Role="FacturaCompra" EntitySet="FacturaCompra" />
           </AssociationSet>
           <AssociationSet Name="FK__FacturaVe__Anula__787EE5A0" Association="Self.FK__FacturaVe__Anula__787EE5A0">
             <End Role="Usuario" EntitySet="Usuario" />
@@ -1030,6 +984,10 @@
             <End Role="Marca" EntitySet="Marca" />
             <End Role="Producto" EntitySet="Producto" />
           </AssociationSet>
+          <AssociationSet Name="FK__Producto__IdProv__607251E5" Association="Self.FK__Producto__IdProv__607251E5">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
           <AssociationSet Name="FK__Proveedor__Cread__5EBF139D" Association="Self.FK__Proveedor__Cread__5EBF139D">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Proveedor" EntitySet="Proveedor" />
@@ -1057,6 +1015,10 @@
           <AssociationSet Name="FK__Usuario__IdRol__267ABA7A" Association="Self.FK__Usuario__IdRol__267ABA7A">
             <End Role="Rol" EntitySet="Rol" />
             <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventosGarantia_Garantia" Association="Self.FK_EventosGarantia_Garantia">
+            <End Role="Garantia" EntitySet="Garantia" />
+            <End Role="EventosGarantia" EntitySet="EventosGarantia" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -1102,6 +1064,8 @@
           <NavigationProperty Name="Usuario2" Relationship="Self.FK__Cliente__Elimina__59063A47" FromRole="Cliente" ToRole="Usuario" />
           <NavigationProperty Name="FacturaVenta" Relationship="Self.FK__FacturaVe__IdCli__76969D2E" FromRole="Cliente" ToRole="FacturaVenta" />
           <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="IdDepartamento" Type="Int32" />
+          <NavigationProperty Name="Departamento" Relationship="ContextoZM.FK__Cliente__IdDepar__690797E6" FromRole="Cliente" ToRole="Departamento" />
         </EntityType>
         <EntityType Name="Color">
           <Key>
@@ -1167,10 +1131,16 @@
           <NavigationProperty Name="Color" Relationship="Self.FK__Producto__IdColo__4BAC3F29" FromRole="Producto" ToRole="Color" />
           <NavigationProperty Name="Marca" Relationship="Self.FK__Producto__IdMarc__49C3F6B7" FromRole="Producto" ToRole="Marca" />
           <NavigationProperty Name="DetalleFacturaVenta" Relationship="Self.FK__DetalleFa__IdPro__01142BA1" FromRole="Producto" ToRole="DetalleFacturaVenta" />
-          <NavigationProperty Name="DetalleFacturaCompra" Relationship="Self.FK__DetalleFa__IdPro__71D1E811" FromRole="Producto" ToRole="DetalleFacturaCompra" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK__Producto__Creado__4CA06362" FromRole="Producto" ToRole="Usuario" />
           <NavigationProperty Name="Usuario1" Relationship="Self.FK__Producto__Editad__4D94879B" FromRole="Producto" ToRole="Usuario" />
           <NavigationProperty Name="Usuario2" Relationship="Self.FK__Producto__Elimin__4E88ABD4" FromRole="Producto" ToRole="Usuario" />
+          <Property Name="Bateria" Type="Int32" />
+          <Property Name="Nuevo" Type="Boolean" />
+          <Property Name="eSim" Type="Boolean" />
+          <Property Name="IdProveedor" Type="Int32" />
+          <Property Name="IMEI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CodigoBarra" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Proveedor" Relationship="ContextoZM.FK__Producto__IdProv__607251E5" FromRole="Producto" ToRole="Proveedor" />
         </EntityType>
         <EntityType Name="Proveedor">
           <Key>
@@ -1188,44 +1158,10 @@
           <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
           <Property Name="FechaActualizacion" Type="DateTime" Precision="3" />
           <Property Name="FechaEliminacion" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="FacturaCompra" Relationship="Self.FK__FacturaCo__IdPro__6754599E" FromRole="Proveedor" ToRole="FacturaCompra" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK__Proveedor__Cread__5EBF139D" FromRole="Proveedor" ToRole="Usuario" />
           <NavigationProperty Name="Usuario1" Relationship="Self.FK__Proveedor__Edita__5FB337D6" FromRole="Proveedor" ToRole="Usuario" />
           <NavigationProperty Name="Usuario2" Relationship="Self.FK__Proveedor__Elimi__60A75C0F" FromRole="Proveedor" ToRole="Usuario" />
-        </EntityType>
-        <EntityType Name="DetalleFacturaCompra">
-          <Key>
-            <PropertyRef Name="IdDetalleFacturaCompra" />
-          </Key>
-          <Property Name="IdDetalleFacturaCompra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdFacturaCompra" Type="Int32" Nullable="false" />
-          <Property Name="IdProducto" Type="Int32" Nullable="false" />
-          <Property Name="Cantidad" Type="Int32" Nullable="false" />
-          <Property Name="PrecioUnitario" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <NavigationProperty Name="Producto" Relationship="Self.FK__DetalleFa__IdPro__71D1E811" FromRole="DetalleFacturaCompra" ToRole="Producto" />
-          <NavigationProperty Name="FacturaCompra" Relationship="Self.FK__DetalleFa__IdFac__70DDC3D8" FromRole="DetalleFacturaCompra" ToRole="FacturaCompra" />
-        </EntityType>
-        <EntityType Name="FacturaCompra">
-          <Key>
-            <PropertyRef Name="IdFacturaCompra" />
-          </Key>
-          <Property Name="IdFacturaCompra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NumeroFactura" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Subtotal" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="Impuesto" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="Total" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="Activo" Type="Boolean" Nullable="false" />
-          <Property Name="IdProveedor" Type="Int32" Nullable="false" />
-          <Property Name="CreadoPor" Type="Int32" Nullable="false" />
-          <Property Name="AnuladoPor" Type="Int32" />
-          <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
-          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RazonAnulamiento" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Proveedor" Relationship="Self.FK__FacturaCo__IdPro__6754599E" FromRole="FacturaCompra" ToRole="Proveedor" />
-          <NavigationProperty Name="DetalleFacturaCompra" Relationship="Self.FK__DetalleFa__IdFac__70DDC3D8" FromRole="FacturaCompra" ToRole="DetalleFacturaCompra" />
-          <NavigationProperty Name="Usuario" Relationship="Self.FK__FacturaCo__Anula__693CA210" FromRole="FacturaCompra" ToRole="Usuario" />
-          <NavigationProperty Name="Usuario1" Relationship="Self.FK__FacturaCo__Cread__68487DD7" FromRole="FacturaCompra" ToRole="Usuario" />
+          <NavigationProperty Name="Producto" Relationship="ContextoZM.FK__Producto__IdProv__607251E5" FromRole="Proveedor" ToRole="Producto" />
         </EntityType>
         <EntityType Name="Controlador">
           <Key>
@@ -1308,8 +1244,6 @@
           <NavigationProperty Name="Proveedor" Relationship="Self.FK__Proveedor__Cread__5EBF139D" FromRole="Usuario" ToRole="Proveedor" />
           <NavigationProperty Name="Proveedor1" Relationship="Self.FK__Proveedor__Edita__5FB337D6" FromRole="Usuario" ToRole="Proveedor" />
           <NavigationProperty Name="Proveedor2" Relationship="Self.FK__Proveedor__Elimi__60A75C0F" FromRole="Usuario" ToRole="Proveedor" />
-          <NavigationProperty Name="FacturaCompra" Relationship="Self.FK__FacturaCo__Anula__693CA210" FromRole="Usuario" ToRole="FacturaCompra" />
-          <NavigationProperty Name="FacturaCompra1" Relationship="Self.FK__FacturaCo__Cread__68487DD7" FromRole="Usuario" ToRole="FacturaCompra" />
           <NavigationProperty Name="Rol" Relationship="Self.FK__Usuario__IdRol__267ABA7A" FromRole="Usuario" ToRole="Rol" />
           <NavigationProperty Name="FacturaVenta" Relationship="Self.FK__FacturaVe__Anula__787EE5A0" FromRole="Usuario" ToRole="FacturaVenta" />
           <NavigationProperty Name="FacturaVenta1" Relationship="Self.FK__FacturaVe__Cread__778AC167" FromRole="Usuario" ToRole="FacturaVenta" />
@@ -1360,9 +1294,7 @@
           <Property Name="FechaFin" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Estado" Type="Int32" Nullable="false" />
           <NavigationProperty Name="DetalleFacturaVenta" Relationship="Self.FK__Garantia__IdDeta__06CD04F7" FromRole="Garantia" ToRole="DetalleFacturaVenta" />
-          <Property Name="RazonReclamo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="FechaReclamo" Type="DateTime" Precision="3" />
-          <Property Name="FechaEstimadaEntrega" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="EventosGarantia" Relationship="ContextoZM.FK_EventosGarantia_Garantia" FromRole="Garantia" ToRole="EventosGarantia" />
         </EntityType>
         <Association Name="FK__Categoria__Cread__3E52440B">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
@@ -1568,18 +1500,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DetalleFa__IdPro__71D1E811">
-          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
-          <End Role="DetalleFacturaCompra" Type="Self.DetalleFacturaCompra" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Producto">
-              <PropertyRef Name="IdProducto" />
-            </Principal>
-            <Dependent Role="DetalleFacturaCompra">
-              <PropertyRef Name="IdProducto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Producto__Creado__4CA06362">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
           <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
@@ -1616,18 +1536,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__FacturaCo__IdPro__6754599E">
-          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
-          <End Role="FacturaCompra" Type="Self.FacturaCompra" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Proveedor">
-              <PropertyRef Name="IdProveedor" />
-            </Principal>
-            <Dependent Role="FacturaCompra">
-              <PropertyRef Name="IdProveedor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Proveedor__Cread__5EBF139D">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
           <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="*" />
@@ -1661,42 +1569,6 @@
             </Principal>
             <Dependent Role="Proveedor">
               <PropertyRef Name="EliminadoPor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__DetalleFa__IdFac__70DDC3D8">
-          <End Role="FacturaCompra" Type="Self.FacturaCompra" Multiplicity="1" />
-          <End Role="DetalleFacturaCompra" Type="Self.DetalleFacturaCompra" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FacturaCompra">
-              <PropertyRef Name="IdFacturaCompra" />
-            </Principal>
-            <Dependent Role="DetalleFacturaCompra">
-              <PropertyRef Name="IdFacturaCompra" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__FacturaCo__Anula__693CA210">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
-          <End Role="FacturaCompra" Type="Self.FacturaCompra" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="IdUsuario" />
-            </Principal>
-            <Dependent Role="FacturaCompra">
-              <PropertyRef Name="AnuladoPor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__FacturaCo__Cread__68487DD7">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
-          <End Role="FacturaCompra" Type="Self.FacturaCompra" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="IdUsuario" />
-            </Principal>
-            <Dependent Role="FacturaCompra">
-              <PropertyRef Name="CreadoPor" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1815,8 +1687,6 @@
           <EntitySet Name="Marca" EntityType="Self.Marca" />
           <EntitySet Name="Producto" EntityType="Self.Producto" />
           <EntitySet Name="Proveedor" EntityType="Self.Proveedor" />
-          <EntitySet Name="DetalleFacturaCompra" EntityType="Self.DetalleFacturaCompra" />
-          <EntitySet Name="FacturaCompra" EntityType="Self.FacturaCompra" />
           <EntitySet Name="Controlador" EntityType="Self.Controlador" />
           <EntitySet Name="Modulo" EntityType="Self.Modulo" />
           <EntitySet Name="Operacion" EntityType="Self.Operacion" />
@@ -1894,10 +1764,6 @@
             <End Role="Producto" EntitySet="Producto" />
             <End Role="DetalleFacturaVenta" EntitySet="DetalleFacturaVenta" />
           </AssociationSet>
-          <AssociationSet Name="FK__DetalleFa__IdPro__71D1E811" Association="Self.FK__DetalleFa__IdPro__71D1E811">
-            <End Role="Producto" EntitySet="Producto" />
-            <End Role="DetalleFacturaCompra" EntitySet="DetalleFacturaCompra" />
-          </AssociationSet>
           <AssociationSet Name="FK__Producto__Creado__4CA06362" Association="Self.FK__Producto__Creado__4CA06362">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Producto" EntitySet="Producto" />
@@ -1910,10 +1776,6 @@
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Producto" EntitySet="Producto" />
           </AssociationSet>
-          <AssociationSet Name="FK__FacturaCo__IdPro__6754599E" Association="Self.FK__FacturaCo__IdPro__6754599E">
-            <End Role="Proveedor" EntitySet="Proveedor" />
-            <End Role="FacturaCompra" EntitySet="FacturaCompra" />
-          </AssociationSet>
           <AssociationSet Name="FK__Proveedor__Cread__5EBF139D" Association="Self.FK__Proveedor__Cread__5EBF139D">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Proveedor" EntitySet="Proveedor" />
@@ -1925,18 +1787,6 @@
           <AssociationSet Name="FK__Proveedor__Elimi__60A75C0F" Association="Self.FK__Proveedor__Elimi__60A75C0F">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Proveedor" EntitySet="Proveedor" />
-          </AssociationSet>
-          <AssociationSet Name="FK__DetalleFa__IdFac__70DDC3D8" Association="Self.FK__DetalleFa__IdFac__70DDC3D8">
-            <End Role="FacturaCompra" EntitySet="FacturaCompra" />
-            <End Role="DetalleFacturaCompra" EntitySet="DetalleFacturaCompra" />
-          </AssociationSet>
-          <AssociationSet Name="FK__FacturaCo__Anula__693CA210" Association="Self.FK__FacturaCo__Anula__693CA210">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="FacturaCompra" EntitySet="FacturaCompra" />
-          </AssociationSet>
-          <AssociationSet Name="FK__FacturaCo__Cread__68487DD7" Association="Self.FK__FacturaCo__Cread__68487DD7">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="FacturaCompra" EntitySet="FacturaCompra" />
           </AssociationSet>
           <AssociationSet Name="FK__Controlad__IdMod__2F10007B" Association="Self.FK__Controlad__IdMod__2F10007B">
             <End Role="Modulo" EntitySet="Modulo" />
@@ -2070,6 +1920,7 @@
             <Parameter Name="Cedula" Mode="In" Type="String" />
             <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Telefono" Mode="In" Type="String" />
+            <Parameter Name="IdDepartamento" Mode="In" Type="Int32" />
             <Parameter Name="CreadoPor" Mode="In" Type="Int32" />
             <Parameter Name="Activo" Mode="In" Type="Boolean" />
             <Parameter Name="IsSuccess" Mode="InOut" Type="Int32" />
@@ -2174,6 +2025,20 @@
             <Parameter Name="IsSuccess" Mode="InOut" Type="Int32" />
             <Parameter Name="ErrorMsg" Mode="InOut" Type="String" />
           </FunctionImport>
+          <AssociationSet Name="FK__Producto__IdProv__607251E5" Association="ContextoZM.FK__Producto__IdProv__607251E5">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <EntitySet Name="EventosGarantia" EntityType="ContextoZM.EventosGarantia" />
+          <AssociationSet Name="FK_EventosGarantia_Garantia" Association="ContextoZM.FK_EventosGarantia_Garantia">
+            <End Role="Garantia" EntitySet="Garantia" />
+            <End Role="EventosGarantia" EntitySet="EventosGarantia" />
+          </AssociationSet>
+          <EntitySet Name="Departamento" EntityType="ContextoZM.Departamento" />
+          <AssociationSet Name="FK__Cliente__IdDepar__690797E6" Association="ContextoZM.FK__Cliente__IdDepar__690797E6">
+            <End Role="Departamento" EntitySet="Departamento" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_FacturaVenta_Create_Result">
           <Property Type="Int32" Name="IdFacturaVenta" Nullable="false" />
@@ -2190,6 +2055,61 @@
           <Property Type="DateTime" Name="FechaCreacion" Nullable="false" Precision="23" />
           <Property Type="String" Name="RazonAnulamiento" Nullable="true" MaxLength="255" />
         </ComplexType>
+        <Association Name="FK__Producto__IdProv__607251E5">
+          <End Type="ContextoZM.Proveedor" Role="Proveedor" Multiplicity="0..1" />
+          <End Type="ContextoZM.Producto" Role="Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="IdProveedor" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="IdProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="EventosGarantia">
+          <Key>
+            <PropertyRef Name="IdEvento" />
+          </Key>
+          <Property Name="IdEvento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdGarantia" Type="Int32" Nullable="false" />
+          <Property Name="FechaEvento" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NuevaFechaFin" Type="DateTime" Precision="3" />
+          <Property Name="DescripcionEvento" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Garantia" Relationship="ContextoZM.FK_EventosGarantia_Garantia" FromRole="EventosGarantia" ToRole="Garantia" />
+        </EntityType>
+        <Association Name="FK_EventosGarantia_Garantia">
+          <End Type="ContextoZM.Garantia" Role="Garantia" Multiplicity="1" />
+          <End Type="ContextoZM.EventosGarantia" Role="EventosGarantia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Garantia">
+              <PropertyRef Name="IdGarantia" />
+            </Principal>
+            <Dependent Role="EventosGarantia">
+              <PropertyRef Name="IdGarantia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Departamento">
+          <Key>
+            <PropertyRef Name="IdDepartamento" />
+          </Key>
+          <Property Name="IdDepartamento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cliente" Relationship="ContextoZM.FK__Cliente__IdDepar__690797E6" FromRole="Departamento" ToRole="Cliente" />
+        </EntityType>
+        <Association Name="FK__Cliente__IdDepar__690797E6">
+          <End Type="ContextoZM.Departamento" Role="Departamento" Multiplicity="0..1" />
+          <End Type="ContextoZM.Cliente" Role="Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departamento">
+              <PropertyRef Name="IdDepartamento" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="IdDepartamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2214,6 +2134,7 @@
           <EntitySetMapping Name="Cliente">
             <EntityTypeMapping TypeName="ContextoZM.Cliente">
               <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="IdDepartamento" ColumnName="IdDepartamento" />
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
                 <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
@@ -2263,6 +2184,12 @@
           <EntitySetMapping Name="Producto">
             <EntityTypeMapping TypeName="ContextoZM.Producto">
               <MappingFragment StoreEntitySet="Producto">
+                <ScalarProperty Name="CodigoBarra" ColumnName="CodigoBarra" />
+                <ScalarProperty Name="IMEI" ColumnName="IMEI" />
+                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+                <ScalarProperty Name="eSim" ColumnName="eSim" />
+                <ScalarProperty Name="Nuevo" ColumnName="Nuevo" />
+                <ScalarProperty Name="Bateria" ColumnName="Bateria" />
                 <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Modelo" ColumnName="Modelo" />
@@ -2301,36 +2228,6 @@
                 <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
                 <ScalarProperty Name="FechaActualizacion" ColumnName="FechaActualizacion" />
                 <ScalarProperty Name="FechaEliminacion" ColumnName="FechaEliminacion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DetalleFacturaCompra">
-            <EntityTypeMapping TypeName="ContextoZM.DetalleFacturaCompra">
-              <MappingFragment StoreEntitySet="DetalleFacturaCompra">
-                <ScalarProperty Name="IdDetalleFacturaCompra" ColumnName="IdDetalleFacturaCompra" />
-                <ScalarProperty Name="IdFacturaCompra" ColumnName="IdFacturaCompra" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
-                <ScalarProperty Name="PrecioUnitario" ColumnName="PrecioUnitario" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FacturaCompra">
-            <EntityTypeMapping TypeName="ContextoZM.FacturaCompra">
-              <MappingFragment StoreEntitySet="FacturaCompra">
-                <ScalarProperty Name="IdFacturaCompra" ColumnName="IdFacturaCompra" />
-                <ScalarProperty Name="NumeroFactura" ColumnName="NumeroFactura" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="Subtotal" ColumnName="Subtotal" />
-                <ScalarProperty Name="Impuesto" ColumnName="Impuesto" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-                <ScalarProperty Name="Activo" ColumnName="Activo" />
-                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
-                <ScalarProperty Name="CreadoPor" ColumnName="CreadoPor" />
-                <ScalarProperty Name="AnuladoPor" ColumnName="AnuladoPor" />
-                <ScalarProperty Name="FechaAnulacion" ColumnName="FechaAnulacion" />
-                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
-                <ScalarProperty Name="RazonAnulamiento" ColumnName="RazonAnulamiento" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2429,9 +2326,6 @@
           <EntitySetMapping Name="Garantia">
             <EntityTypeMapping TypeName="ContextoZM.Garantia">
               <MappingFragment StoreEntitySet="Garantia">
-                <ScalarProperty Name="FechaEstimadaEntrega" ColumnName="FechaEstimadaEntrega" />
-                <ScalarProperty Name="FechaReclamo" ColumnName="FechaReclamo" />
-                <ScalarProperty Name="RazonReclamo" ColumnName="RazonReclamo" />
                 <ScalarProperty Name="IdGarantia" ColumnName="IdGarantia" />
                 <ScalarProperty Name="IdDetalleFacturaVenta" ColumnName="IdDetalleFacturaVenta" />
                 <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
@@ -2480,6 +2374,25 @@
           <FunctionImportMapping FunctionImportName="sp_Proveedor_Create" FunctionName="ContextoZM.Store.sp_Proveedor_Create" />
           <FunctionImportMapping FunctionImportName="sp_Proveedor_Delete" FunctionName="ContextoZM.Store.sp_Proveedor_Delete" />
           <FunctionImportMapping FunctionImportName="sp_Proveedor_Update" FunctionName="ContextoZM.Store.sp_Proveedor_Update" />
+          <EntitySetMapping Name="EventosGarantia">
+            <EntityTypeMapping TypeName="ContextoZM.EventosGarantia">
+              <MappingFragment StoreEntitySet="EventosGarantia">
+                <ScalarProperty Name="DescripcionEvento" ColumnName="DescripcionEvento" />
+                <ScalarProperty Name="NuevaFechaFin" ColumnName="NuevaFechaFin" />
+                <ScalarProperty Name="FechaEvento" ColumnName="FechaEvento" />
+                <ScalarProperty Name="IdGarantia" ColumnName="IdGarantia" />
+                <ScalarProperty Name="IdEvento" ColumnName="IdEvento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departamento">
+            <EntityTypeMapping TypeName="ContextoZM.Departamento">
+              <MappingFragment StoreEntitySet="Departamento">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdDepartamento" ColumnName="IdDepartamento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

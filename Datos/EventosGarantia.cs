@@ -12,15 +12,14 @@ namespace Datos
     using System;
     using System.Collections.Generic;
     
-    public partial class DetalleFacturaCompra
+    public partial class EventosGarantia
     {
-        public int IdDetalleFacturaCompra { get; set; }
-        public int IdFacturaCompra { get; set; }
-        public int IdProducto { get; set; }
-        public int Cantidad { get; set; }
-        public decimal PrecioUnitario { get; set; }
+        public int IdEvento { get; set; }
+        public int IdGarantia { get; set; }
+        public System.DateTime FechaEvento { get; set; }
+        public Nullable<System.DateTime> NuevaFechaFin { get; set; }
+        public string DescripcionEvento { get; set; }
     
-        public virtual Producto Producto { get; set; }
-        public virtual FacturaCompra FacturaCompra { get; set; }
+        public virtual Garantia Garantia { get; set; }
     }
 }

@@ -62,13 +62,13 @@
     <Compile Include="Controlador.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="DetalleFacturaCompra.cs">
+    <Compile Include="Departamento.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="DetalleFacturaVenta.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="FacturaCompra.cs">
+    <Compile Include="EventosGarantia.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="FacturaVenta.cs">

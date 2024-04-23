@@ -1,8 +1,10 @@
 ﻿using Datos;
 using Modelo.Catalogo;
+using Modelo.utils;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure.DependencyResolution;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,6 +46,27 @@ namespace Logica.Catalogo
                 return false;
             }
         }
+
+        public List<DropDown> GetDepartamentosDropDown() 
+        {
+            try
+            {
+                List<DropDown> dep = _db.Departamento
+                                .AsNoTracking()
+                                .Select(x => new DropDown
+                                {
+                                    Id = x.IdDepartamento,
+                                    Value = x.Nombre
+                                }).ToList();
+
+                return dep;
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
+        }
+
 
         public bool GetClienteById(int idCliente, ref Cliente_VM cliente, ref string errorMessage)
         {
@@ -92,6 +115,7 @@ namespace Logica.Catalogo
                     cliente.Cedula,
                     cliente.Correo,
                     cliente.Telefono,
+                    cliente.IdDepartamento,
                     cliente.CreadoPor,
                     true,
                     isSuccessParam,

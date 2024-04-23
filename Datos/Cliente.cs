@@ -33,11 +33,13 @@ namespace Datos
         public Nullable<System.DateTime> FechaActualizacion { get; set; }
         public Nullable<System.DateTime> FechaEliminacion { get; set; }
         public bool Activo { get; set; }
+        public Nullable<int> IdDepartamento { get; set; }
     
         public virtual Usuario Usuario { get; set; }
         public virtual Usuario Usuario1 { get; set; }
         public virtual Usuario Usuario2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FacturaVenta> FacturaVenta { get; set; }
+        public virtual Departamento Departamento { get; set; }
     }
 }

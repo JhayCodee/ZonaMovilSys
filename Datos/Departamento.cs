@@ -12,22 +12,18 @@ namespace Datos
     using System;
     using System.Collections.Generic;
     
-    public partial class Garantia
+    public partial class Departamento
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Garantia()
+        public Departamento()
         {
-            this.EventosGarantia = new HashSet<EventosGarantia>();
+            this.Cliente = new HashSet<Cliente>();
         }
     
-        public int IdGarantia { get; set; }
-        public int IdDetalleFacturaVenta { get; set; }
-        public System.DateTime FechaInicio { get; set; }
-        public System.DateTime FechaFin { get; set; }
-        public int Estado { get; set; }
+        public int IdDepartamento { get; set; }
+        public string Nombre { get; set; }
     
-        public virtual DetalleFacturaVenta DetalleFacturaVenta { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EventosGarantia> EventosGarantia { get; set; }
+        public virtual ICollection<Cliente> Cliente { get; set; }
     }
 }

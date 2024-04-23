@@ -34,7 +34,7 @@ namespace Logica.Ventas
                             NombreProducto = p.Nombre,
                             IMEI = dfv.IMEI,
                             FechaFin = g.FechaFin,
-                            FechaEstimadaEntrega = g.FechaEstimadaEntrega,
+                            //FechaEstimadaEntrega = g.FechaEstimadaEntrega,
                             Estado = g.Estado
                         }).ToList();
 
@@ -61,8 +61,8 @@ namespace Logica.Ventas
                     return false;
                 }
 
-                garantiaDb.RazonReclamo = garantia.RazonReclamo;
-                garantiaDb.FechaEstimadaEntrega = garantia.FechaEstimadaEntrega;
+                //garantiaDb.RazonReclamo = garantia.RazonReclamo;
+                //garantiaDb.FechaEstimadaEntrega = garantia.FechaEstimadaEntrega;
                 garantiaDb.Estado = 0; // 0 representa en reparacion
 
                 // Guarda los cambios en la base de datos

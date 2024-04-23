@@ -35,8 +35,6 @@ namespace Datos
             this.Proveedor = new HashSet<Proveedor>();
             this.Proveedor1 = new HashSet<Proveedor>();
             this.Proveedor2 = new HashSet<Proveedor>();
-            this.FacturaCompra = new HashSet<FacturaCompra>();
-            this.FacturaCompra1 = new HashSet<FacturaCompra>();
             this.FacturaVenta = new HashSet<FacturaVenta>();
             this.FacturaVenta1 = new HashSet<FacturaVenta>();
         }
@@ -86,10 +84,6 @@ namespace Datos
         public virtual ICollection<Proveedor> Proveedor1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Proveedor> Proveedor2 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FacturaCompra> FacturaCompra { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FacturaCompra> FacturaCompra1 { get; set; }
         public virtual Rol Rol { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FacturaVenta> FacturaVenta { get; set; }

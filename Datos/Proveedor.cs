@@ -17,7 +17,7 @@ namespace Datos
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Proveedor()
         {
-            this.FacturaCompra = new HashSet<FacturaCompra>();
+            this.Producto = new HashSet<Producto>();
         }
     
         public int IdProveedor { get; set; }
@@ -33,10 +33,10 @@ namespace Datos
         public Nullable<System.DateTime> FechaActualizacion { get; set; }
         public Nullable<System.DateTime> FechaEliminacion { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FacturaCompra> FacturaCompra { get; set; }
         public virtual Usuario Usuario { get; set; }
         public virtual Usuario Usuario1 { get; set; }
         public virtual Usuario Usuario2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Producto> Producto { get; set; }
     }
 }

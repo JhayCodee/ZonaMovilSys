@@ -34,29 +34,29 @@
                 <form id="frmClientes">
                     <div class="row">
                         <input type="hidden" class="form-control" id="idCliente" name="idCliente">
-                        <!-- Nombres y Apellidos en dos columnas -->
-                        <div class="col-md-6">
+                        <!-- Nombres Apellidos Cédula -->
+                        <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="inputNombres" class="form-label">Nombres</label>
                                 <input type="text" class="form-control" id="inputNombres" name="inputNombres">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="inputApellidos" class="form-label">Apellidos</label>
                                 <input type="text" class="form-control" id="inputApellidos" name="inputApellidos">
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Cédula, Correo, y Teléfono en su propia fila -->
-                    <div class="row">
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="inputCedula" class="form-label">Cédula</label>
                                 <input type="text" class="form-control" id="inputCedula" name="inputCedula">
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Correo, Telefono y Departamento en su propia fila -->
+                    <div class="row">
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="inputCorreo" class="form-label">Correo</label>
@@ -67,6 +67,19 @@
                             <div class="mb-3">
                                 <label for="inputTelefono" class="form-label">Teléfono</label>
                                 <input type="text" class="form-control" id="inputTelefono" name="inputTelefono">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="inputDepartamento" class="form-label">Departamento</label>
+                                <select class="form-control select2" id="inputDepartamento" name="inputDepartamento">
+                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    @foreach (var dep in ViewBag.Departamentos)
+                                    {
+                                        <option value="@dep.Id">@dep.Value</option>
+                                    }
+                                </select>
+
                             </div>
                         </div>
                     </div>

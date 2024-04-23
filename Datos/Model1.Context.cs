@@ -33,8 +33,6 @@ namespace Datos
         public virtual DbSet<Marca> Marca { get; set; }
         public virtual DbSet<Producto> Producto { get; set; }
         public virtual DbSet<Proveedor> Proveedor { get; set; }
-        public virtual DbSet<DetalleFacturaCompra> DetalleFacturaCompra { get; set; }
-        public virtual DbSet<FacturaCompra> FacturaCompra { get; set; }
         public virtual DbSet<Controlador> Controlador { get; set; }
         public virtual DbSet<Modulo> Modulo { get; set; }
         public virtual DbSet<Operacion> Operacion { get; set; }
@@ -44,6 +42,8 @@ namespace Datos
         public virtual DbSet<DetalleFacturaVenta> DetalleFacturaVenta { get; set; }
         public virtual DbSet<FacturaVenta> FacturaVenta { get; set; }
         public virtual DbSet<Garantia> Garantia { get; set; }
+        public virtual DbSet<EventosGarantia> EventosGarantia { get; set; }
+        public virtual DbSet<Departamento> Departamento { get; set; }
     
         public virtual int sp_Usuario_Create(string nombre, string apellidos, string nombreUsuario, string correo, Nullable<int> idRol, Nullable<bool> activo, string contrasena, ObjectParameter isSuccess, ObjectParameter errorMsg)
         {
@@ -310,7 +310,7 @@ namespace Datos
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Categoria_Update", idCategoriaParameter, nombreParameter, activoParameter, editadoPorParameter, isSuccess, errorMsg);
         }
     
-        public virtual int sp_Cliente_Create(string nombres, string apellidos, string cedula, string correo, string telefono, Nullable<int> creadoPor, Nullable<bool> activo, ObjectParameter isSuccess, ObjectParameter errorMsg)
+        public virtual int sp_Cliente_Create(string nombres, string apellidos, string cedula, string correo, string telefono, Nullable<int> idDepartamento, Nullable<int> creadoPor, Nullable<bool> activo, ObjectParameter isSuccess, ObjectParameter errorMsg)
         {
             var nombresParameter = nombres != null ?
                 new ObjectParameter("Nombres", nombres) :
@@ -332,6 +332,10 @@ namespace Datos
                 new ObjectParameter("Telefono", telefono) :
                 new ObjectParameter("Telefono", typeof(string));
     
+            var idDepartamentoParameter = idDepartamento.HasValue ?
+                new ObjectParameter("IdDepartamento", idDepartamento) :
+                new ObjectParameter("IdDepartamento", typeof(int));
+    
             var creadoPorParameter = creadoPor.HasValue ?
                 new ObjectParameter("CreadoPor", creadoPor) :
                 new ObjectParameter("CreadoPor", typeof(int));
@@ -340,7 +344,7 @@ namespace Datos
                 new ObjectParameter("Activo", activo) :
                 new ObjectParameter("Activo", typeof(bool));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Cliente_Create", nombresParameter, apellidosParameter, cedulaParameter, correoParameter, telefonoParameter, creadoPorParameter, activoParameter, isSuccess, errorMsg);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Cliente_Create", nombresParameter, apellidosParameter, cedulaParameter, correoParameter, telefonoParameter, idDepartamentoParameter, creadoPorParameter, activoParameter, isSuccess, errorMsg);
         }
     
         public virtual int sp_Cliente_Delete(Nullable<int> idCliente, Nullable<int> eliminadoPor, ObjectParameter isSuccess, ObjectParameter errorMsg)
