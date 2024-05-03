@@ -44,6 +44,8 @@ namespace Datos
         public virtual DbSet<Garantia> Garantia { get; set; }
         public virtual DbSet<EventosGarantia> EventosGarantia { get; set; }
         public virtual DbSet<Departamento> Departamento { get; set; }
+        public virtual DbSet<UnidadMedida> UnidadMedida { get; set; }
+        public virtual DbSet<ValoresUnidadMedida> ValoresUnidadMedida { get; set; }
     
         public virtual int sp_Usuario_Create(string nombre, string apellidos, string nombreUsuario, string correo, Nullable<int> idRol, Nullable<bool> activo, string contrasena, ObjectParameter isSuccess, ObjectParameter errorMsg)
         {
@@ -120,7 +122,7 @@ namespace Datos
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Usuario_Update", idUsuarioParameter, nombreParameter, apellidosParameter, nombreUsuarioParameter, correoParameter, idRolParameter, activoParameter, isSuccess, errorMsg);
         }
     
-        public virtual int sp_Producto_Create(string nombre, string modelo, string descripcion, Nullable<int> stock, Nullable<decimal> precioCompra, Nullable<decimal> precioVenta, string almacenamiento, Nullable<int> garantiaMeses, string rAM, Nullable<bool> activo, Nullable<int> idMarca, Nullable<int> idCategoria, Nullable<int> idColor, Nullable<int> creadoPor, ObjectParameter isSuccess, ObjectParameter errorMsg)
+        public virtual int sp_Producto_Create(string nombre, string modelo, string descripcion, Nullable<int> stock, Nullable<decimal> precioCompra, Nullable<decimal> precioVenta, Nullable<int> almacenamiento, Nullable<int> garantiaMeses, Nullable<int> rAM, Nullable<bool> activo, Nullable<int> idMarca, Nullable<int> idCategoria, Nullable<int> idColor, Nullable<int> bateria, Nullable<bool> nuevo, Nullable<bool> eSim, Nullable<int> idProveedor, string iMEI, string codigoBarra, Nullable<int> creadoPor, ObjectParameter isSuccess, ObjectParameter errorMsg)
         {
             var nombreParameter = nombre != null ?
                 new ObjectParameter("Nombre", nombre) :
@@ -146,17 +148,17 @@ namespace Datos
                 new ObjectParameter("PrecioVenta", precioVenta) :
                 new ObjectParameter("PrecioVenta", typeof(decimal));
     
-            var almacenamientoParameter = almacenamiento != null ?
+            var almacenamientoParameter = almacenamiento.HasValue ?
                 new ObjectParameter("Almacenamiento", almacenamiento) :
-                new ObjectParameter("Almacenamiento", typeof(string));
+                new ObjectParameter("Almacenamiento", typeof(int));
     
             var garantiaMesesParameter = garantiaMeses.HasValue ?
                 new ObjectParameter("GarantiaMeses", garantiaMeses) :
                 new ObjectParameter("GarantiaMeses", typeof(int));
     
-            var rAMParameter = rAM != null ?
+            var rAMParameter = rAM.HasValue ?
                 new ObjectParameter("RAM", rAM) :
-                new ObjectParameter("RAM", typeof(string));
+                new ObjectParameter("RAM", typeof(int));
     
             var activoParameter = activo.HasValue ?
                 new ObjectParameter("Activo", activo) :
@@ -174,11 +176,35 @@ namespace Datos
                 new ObjectParameter("IdColor", idColor) :
                 new ObjectParameter("IdColor", typeof(int));
     
+            var bateriaParameter = bateria.HasValue ?
+                new ObjectParameter("Bateria", bateria) :
+                new ObjectParameter("Bateria", typeof(int));
+    
+            var nuevoParameter = nuevo.HasValue ?
+                new ObjectParameter("Nuevo", nuevo) :
+                new ObjectParameter("Nuevo", typeof(bool));
+    
+            var eSimParameter = eSim.HasValue ?
+                new ObjectParameter("eSim", eSim) :
+                new ObjectParameter("eSim", typeof(bool));
+    
+            var idProveedorParameter = idProveedor.HasValue ?
+                new ObjectParameter("IdProveedor", idProveedor) :
+                new ObjectParameter("IdProveedor", typeof(int));
+    
+            var iMEIParameter = iMEI != null ?
+                new ObjectParameter("IMEI", iMEI) :
+                new ObjectParameter("IMEI", typeof(string));
+    
+            var codigoBarraParameter = codigoBarra != null ?
+                new ObjectParameter("CodigoBarra", codigoBarra) :
+                new ObjectParameter("CodigoBarra", typeof(string));
+    
             var creadoPorParameter = creadoPor.HasValue ?
                 new ObjectParameter("CreadoPor", creadoPor) :
                 new ObjectParameter("CreadoPor", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Producto_Create", nombreParameter, modeloParameter, descripcionParameter, stockParameter, precioCompraParameter, precioVentaParameter, almacenamientoParameter, garantiaMesesParameter, rAMParameter, activoParameter, idMarcaParameter, idCategoriaParameter, idColorParameter, creadoPorParameter, isSuccess, errorMsg);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Producto_Create", nombreParameter, modeloParameter, descripcionParameter, stockParameter, precioCompraParameter, precioVentaParameter, almacenamientoParameter, garantiaMesesParameter, rAMParameter, activoParameter, idMarcaParameter, idCategoriaParameter, idColorParameter, bateriaParameter, nuevoParameter, eSimParameter, idProveedorParameter, iMEIParameter, codigoBarraParameter, creadoPorParameter, isSuccess, errorMsg);
         }
     
         public virtual int sp_Producto_Delete(Nullable<int> idProducto, Nullable<int> eliminadoPor, ObjectParameter isSuccess, ObjectParameter errorMsg)

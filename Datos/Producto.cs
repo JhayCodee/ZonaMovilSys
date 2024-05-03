@@ -27,9 +27,9 @@ namespace Datos
         public int Stock { get; set; }
         public decimal PrecioCompra { get; set; }
         public decimal PrecioVenta { get; set; }
-        public string Almacenamiento { get; set; }
+        public Nullable<int> Almacenamiento { get; set; }
         public Nullable<int> GarantiaMeses { get; set; }
-        public string RAM { get; set; }
+        public Nullable<int> RAM { get; set; }
         public bool Activo { get; set; }
         public Nullable<int> IdMarca { get; set; }
         public Nullable<int> IdCategoria { get; set; }
@@ -56,5 +56,8 @@ namespace Datos
         public virtual Usuario Usuario1 { get; set; }
         public virtual Usuario Usuario2 { get; set; }
         public virtual Proveedor Proveedor { get; set; }
+        public virtual ValoresUnidadMedida ValoresUnidadMedida { get; set; }
+        public virtual ValoresUnidadMedida ValoresUnidadMedida1 { get; set; }
+        public virtual ValoresUnidadMedida ValoresUnidadMedida2 { get; set; }
     }
 }

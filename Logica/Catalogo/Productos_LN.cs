@@ -5,8 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
+using static System.ActivationContext;
 
 namespace Logica.Catalogo
 {
@@ -35,8 +37,8 @@ namespace Logica.Catalogo
                             PrecioVenta = x.PrecioVenta,
                             PrecioCompra = x.PrecioCompra,
                             GarantiaMeses = x.GarantiaMeses,
-                            Almacenamiento = x.Almacenamiento,
-                            RAM = x.RAM,
+                            //Almacenamiento = x.Almacenamiento,
+                            //RAM = x.RAM,
                             Activo = x.Activo,
                             Marca = x.Marca.Nombre,
                             Color = x.Color.Nombre,
@@ -85,6 +87,29 @@ namespace Logica.Catalogo
                 }).ToList();
         }
 
+        public List<DropDown> GetValoresGb()
+        {
+            return _db.ValoresUnidadMedida
+                          .Where(v => v.UnidadMedida.NombreUnidadMedida == "Gb")
+                          .Select(v => new DropDown
+                          {
+                              Id = v.IdValUniMed,
+                              Value = v.Valor.ToString() + " Gb"
+                          }).ToList();
+        }
+        
+        public List<DropDown> GetValoresMeses()
+        {
+            return _db.ValoresUnidadMedida
+                      .Where(v => v.UnidadMedida.NombreUnidadMedida == "Meses")
+                      .Select(v => new DropDown
+                      {
+                          Id = v.IdValUniMed,
+                          Value = v.Valor.ToString() + " Meses"
+                      }).ToList();
+        }
+
+
         public bool GetProductById(int productId, ref Producto_VM data, ref string errorMessage)
         {
             try
@@ -101,9 +126,9 @@ namespace Logica.Catalogo
                         Stock = product.Stock,
                         PrecioCompra = product.PrecioCompra,
                         PrecioVenta = product.PrecioVenta,
-                        Almacenamiento = product.Almacenamiento,
+                        //Almacenamiento = product.Almacenamiento,
                         GarantiaMeses = product.GarantiaMeses,
-                        RAM = product.RAM,
+                        //RAM = product.RAM,
                         Activo = product.Activo,
                         IdMarca = product.IdMarca,
                         IdCategoria = product.IdCategoria,
@@ -137,30 +162,30 @@ namespace Logica.Catalogo
                 ObjectParameter isSuccessParam = new ObjectParameter("IsSuccess", typeof(int));
                 ObjectParameter errorMsgParam = new ObjectParameter("ErrorMsg", typeof(string));
 
-                _db.sp_Producto_Create(
-                                        product.Nombre,
-                                        product.Modelo,
-                                        product.Descripcion,
-                                        product.Stock,
-                                        product.PrecioCompra,
-                                        product.PrecioVenta,
-                                        product.Almacenamiento,
-                                        product.GarantiaMeses,
-                                        product.RAM,
-                                        true,
-                                        product.IdMarca,
-                                        product.IdCategoria,
-                                        product.IdColor,
-                                        product.CreadoPor,
-                                        isSuccessParam,
-                                        errorMsgParam
-                                    );
+                //_db.sp_Producto_Create(
+                //                        product.Nombre,
+                //                        product.Modelo,
+                //                        product.Descripcion,
+                //                        product.Stock,
+                //                        product.PrecioCompra,
+                //                        product.PrecioVenta,
+                //                        product.Almacenamiento,
+                //                        product.GarantiaMeses,
+                //                        product.RAM,
+                //                        true,
+                //                        product.IdMarca,
+                //                        product.IdCategoria,
+                //                        product.IdColor,
+                //                        product.CreadoPor,
+                //                        isSuccessParam,
+                //                        errorMsgParam
+                //                    );
 
-                if ((int)isSuccessParam.Value == 0)
-                {
-                    errorMessage = errorMsgParam.Value.ToString();
-                    return false;
-                }
+                //if ((int)isSuccessParam.Value == 0)
+                //{
+                //    errorMessage = errorMsgParam.Value.ToString();
+                //    return false;
+                //}
 
                 return true;
             }

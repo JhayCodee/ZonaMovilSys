@@ -123,42 +123,30 @@
                                 <label for="inputAlmacenamiento" class="form-label">Almacenamiento</label>
                                 <select class="form-control select2" id="inputAlmacenamiento" name="inputAlmacenamiento">
                                     <option value="" selected disabled>Seleccione una opción</option>
-                                    <option value="0GB">0GB</option>
-                                    <option value="16GB">16GB</option>
-                                    <option value="32GB">32GB</option>
-                                    <option value="64GB">64GB</option>
-                                    <option value="128GB">128GB</option>
-                                    <option value="256GB">256GB</option>
-                                    <option value="512GB">512GB</option>
-                                    <option value="1024GB">1024GB</option>
-                                    <!-- ... más opciones según necesidad ... -->
+                                    @foreach (var color in ViewBag.Gb)
+                                    {
+                                        <option value="@color.Id">@color.Value</option>
+                                    }
                                 </select>
                             </div>
                             <div class="mb-3">
                                 <label for="inputGarantiaMeses" class="form-label">Meses de Garantía</label>
                                 <select class="form-control select2" id="inputGarantiaMeses" name="inputGarantiaMeses">
                                     <option value="" selected disabled>Seleccione una opción</option>
-                                    <option value="0">0</option>
-                                    <option value="6">6</option>
-                                    <option value="12">12</option>
-                                    <option value="24">24</option>
-                                    <!-- ... más opciones según necesidad ... -->
+                                    @foreach (var color in ViewBag.Meses)
+                                    {
+                                        <option value="@color.Id">@color.Value</option>
+                                    }
                                 </select>
                             </div>
                             <div class="mb-3">
                                 <label for="inputRAM" class="form-label">RAM</label>
                                 <select class="form-control select2" id="inputRAM" name="inputRAM">
                                     <option value="" selected disabled>Seleccione una opción</option>
-                                    <option value="0GB">0GB</option>
-                                    <option value="2GB">2GB</option>
-                                    <option value="4GB">4GB</option>
-                                    <option value="6GB">6GB</option>
-                                    <option value="6GB">6GB</option>
-                                    <option value="8GB">8GB</option>
-                                    <option value="12GB">12GB</option>
-                                    <option value="16GB">16GB</option>
-                                    <option value="32GB">32GB</option>
-                                    <!-- ... más opciones según necesidad ... -->
+                                    @foreach (var color in ViewBag.Gb)
+                                    {
+                                        <option value="@color.Id">@color.Value</option>
+                                    }
                                 </select>
                             </div>
                         </div>

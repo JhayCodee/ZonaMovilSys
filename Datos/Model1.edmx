@@ -84,9 +84,9 @@
           <Property Name="Stock" Type="int" Nullable="false" />
           <Property Name="PrecioCompra" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="PrecioVenta" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="Almacenamiento" Type="nvarchar" MaxLength="50" />
+          <Property Name="Almacenamiento" Type="int" />
           <Property Name="GarantiaMeses" Type="int" />
-          <Property Name="RAM" Type="nvarchar" MaxLength="50" />
+          <Property Name="RAM" Type="int" />
           <Property Name="Activo" Type="bit" Nullable="false" />
           <Property Name="IdMarca" Type="int" />
           <Property Name="IdCategoria" Type="int" />
@@ -101,8 +101,8 @@
           <Property Name="Nuevo" Type="bit" />
           <Property Name="eSim" Type="bit" />
           <Property Name="IdProveedor" Type="int" />
-          <Property Name="IMEI" Type="nvarchar" MaxLength="50" />
-          <Property Name="CodigoBarra" Type="nvarchar" MaxLength="50" />
+          <Property Name="IMEI" Type="char" MaxLength="15" />
+          <Property Name="CodigoBarra" Type="char" MaxLength="13" />
         </EntityType>
         <EntityType Name="Proveedor">
           <Key>
@@ -120,6 +120,21 @@
           <Property Name="FechaCreacion" Type="datetime" />
           <Property Name="FechaActualizacion" Type="datetime" />
           <Property Name="FechaEliminacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UnidadMedida">
+          <Key>
+            <PropertyRef Name="idUnidadMedida" />
+          </Key>
+          <Property Name="idUnidadMedida" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreUnidadMedida" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ValoresUnidadMedida">
+          <Key>
+            <PropertyRef Name="IdValUniMed" />
+          </Key>
+          <Property Name="IdValUniMed" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUnidadMedida" Type="int" Nullable="false" />
+          <Property Name="Valor" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Controlador">
           <Key>
@@ -657,6 +672,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Producto_Almacenamiento">
+          <End Role="ValoresUnidadMedida" Type="Self.ValoresUnidadMedida" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ValoresUnidadMedida">
+              <PropertyRef Name="IdValUniMed" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="Almacenamiento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_GarantiaMeses">
+          <End Role="ValoresUnidadMedida" Type="Self.ValoresUnidadMedida" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ValoresUnidadMedida">
+              <PropertyRef Name="IdValUniMed" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="GarantiaMeses" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_RAM">
+          <End Role="ValoresUnidadMedida" Type="Self.ValoresUnidadMedida" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ValoresUnidadMedida">
+              <PropertyRef Name="IdValUniMed" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="RAM" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ValoresUnidadMedida_UnidadMedida">
+          <End Role="UnidadMedida" Type="Self.UnidadMedida" Multiplicity="1" />
+          <End Role="ValoresUnidadMedida" Type="Self.ValoresUnidadMedida" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnidadMedida">
+              <PropertyRef Name="idUnidadMedida" />
+            </Principal>
+            <Dependent Role="ValoresUnidadMedida">
+              <PropertyRef Name="IdUnidadMedida" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="sp_Categoria_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Catalogo">
           <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
           <Parameter Name="Activo" Type="bit" Mode="In" />
@@ -757,13 +820,19 @@
           <Parameter Name="Stock" Type="int" Mode="In" />
           <Parameter Name="PrecioCompra" Type="decimal" Mode="In" />
           <Parameter Name="PrecioVenta" Type="decimal" Mode="In" />
-          <Parameter Name="Almacenamiento" Type="nvarchar" Mode="In" />
+          <Parameter Name="Almacenamiento" Type="int" Mode="In" />
           <Parameter Name="GarantiaMeses" Type="int" Mode="In" />
-          <Parameter Name="RAM" Type="nvarchar" Mode="In" />
+          <Parameter Name="RAM" Type="int" Mode="In" />
           <Parameter Name="Activo" Type="bit" Mode="In" />
           <Parameter Name="IdMarca" Type="int" Mode="In" />
           <Parameter Name="IdCategoria" Type="int" Mode="In" />
           <Parameter Name="IdColor" Type="int" Mode="In" />
+          <Parameter Name="Bateria" Type="int" Mode="In" />
+          <Parameter Name="Nuevo" Type="bit" Mode="In" />
+          <Parameter Name="eSim" Type="bit" Mode="In" />
+          <Parameter Name="IdProveedor" Type="int" Mode="In" />
+          <Parameter Name="IMEI" Type="char" Mode="In" />
+          <Parameter Name="CodigoBarra" Type="char" Mode="In" />
           <Parameter Name="CreadoPor" Type="int" Mode="In" />
           <Parameter Name="IsSuccess" Type="int" Mode="InOut" />
           <Parameter Name="ErrorMsg" Type="nvarchar" Mode="InOut" />
@@ -866,6 +935,8 @@
           <EntitySet Name="Marca" EntityType="Self.Marca" Schema="Catalogo" store:Type="Tables" />
           <EntitySet Name="Producto" EntityType="Self.Producto" Schema="Catalogo" store:Type="Tables" />
           <EntitySet Name="Proveedor" EntityType="Self.Proveedor" Schema="Catalogo" store:Type="Tables" />
+          <EntitySet Name="UnidadMedida" EntityType="Self.UnidadMedida" Schema="Catalogo" store:Type="Tables" />
+          <EntitySet Name="ValoresUnidadMedida" EntityType="Self.ValoresUnidadMedida" Schema="Catalogo" store:Type="Tables" />
           <EntitySet Name="Controlador" EntityType="Self.Controlador" Schema="Seguridad" store:Type="Tables" />
           <EntitySet Name="Modulo" EntityType="Self.Modulo" Schema="Seguridad" store:Type="Tables" />
           <EntitySet Name="Operacion" EntityType="Self.Operacion" Schema="Seguridad" store:Type="Tables" />
@@ -1020,6 +1091,22 @@
             <End Role="Garantia" EntitySet="Garantia" />
             <End Role="EventosGarantia" EntitySet="EventosGarantia" />
           </AssociationSet>
+          <AssociationSet Name="FK_Producto_Almacenamiento" Association="Self.FK_Producto_Almacenamiento">
+            <End Role="ValoresUnidadMedida" EntitySet="ValoresUnidadMedida" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_GarantiaMeses" Association="Self.FK_Producto_GarantiaMeses">
+            <End Role="ValoresUnidadMedida" EntitySet="ValoresUnidadMedida" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_RAM" Association="Self.FK_Producto_RAM">
+            <End Role="ValoresUnidadMedida" EntitySet="ValoresUnidadMedida" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ValoresUnidadMedida_UnidadMedida" Association="Self.FK_ValoresUnidadMedida_UnidadMedida">
+            <End Role="UnidadMedida" EntitySet="UnidadMedida" />
+            <End Role="ValoresUnidadMedida" EntitySet="ValoresUnidadMedida" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -1114,9 +1201,9 @@
           <Property Name="Stock" Type="Int32" Nullable="false" />
           <Property Name="PrecioCompra" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="PrecioVenta" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="Almacenamiento" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Almacenamiento" Type="Int32" />
           <Property Name="GarantiaMeses" Type="Int32" />
-          <Property Name="RAM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RAM" Type="Int32" />
           <Property Name="Activo" Type="Boolean" Nullable="false" />
           <Property Name="IdMarca" Type="Int32" />
           <Property Name="IdCategoria" Type="Int32" />
@@ -1138,9 +1225,12 @@
           <Property Name="Nuevo" Type="Boolean" />
           <Property Name="eSim" Type="Boolean" />
           <Property Name="IdProveedor" Type="Int32" />
-          <Property Name="IMEI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CodigoBarra" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IMEI" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="CodigoBarra" Type="String" MaxLength="13" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="Proveedor" Relationship="ContextoZM.FK__Producto__IdProv__607251E5" FromRole="Producto" ToRole="Proveedor" />
+          <NavigationProperty Name="ValoresUnidadMedida" Relationship="ContextoZM.FK_Producto_Almacenamiento" FromRole="Producto" ToRole="ValoresUnidadMedida" />
+          <NavigationProperty Name="ValoresUnidadMedida1" Relationship="ContextoZM.FK_Producto_GarantiaMeses" FromRole="Producto" ToRole="ValoresUnidadMedida" />
+          <NavigationProperty Name="ValoresUnidadMedida2" Relationship="ContextoZM.FK_Producto_RAM" FromRole="Producto" ToRole="ValoresUnidadMedida" />
         </EntityType>
         <EntityType Name="Proveedor">
           <Key>
@@ -1857,13 +1947,19 @@
             <Parameter Name="Stock" Mode="In" Type="Int32" />
             <Parameter Name="PrecioCompra" Mode="In" Type="Decimal" />
             <Parameter Name="PrecioVenta" Mode="In" Type="Decimal" />
-            <Parameter Name="Almacenamiento" Mode="In" Type="String" />
+            <Parameter Name="Almacenamiento" Mode="In" Type="Int32" />
             <Parameter Name="GarantiaMeses" Mode="In" Type="Int32" />
-            <Parameter Name="RAM" Mode="In" Type="String" />
+            <Parameter Name="RAM" Mode="In" Type="Int32" />
             <Parameter Name="Activo" Mode="In" Type="Boolean" />
             <Parameter Name="IdMarca" Mode="In" Type="Int32" />
             <Parameter Name="IdCategoria" Mode="In" Type="Int32" />
             <Parameter Name="IdColor" Mode="In" Type="Int32" />
+            <Parameter Name="Bateria" Mode="In" Type="Int32" />
+            <Parameter Name="Nuevo" Mode="In" Type="Boolean" />
+            <Parameter Name="eSim" Mode="In" Type="Boolean" />
+            <Parameter Name="IdProveedor" Mode="In" Type="Int32" />
+            <Parameter Name="IMEI" Mode="In" Type="String" />
+            <Parameter Name="CodigoBarra" Mode="In" Type="String" />
             <Parameter Name="CreadoPor" Mode="In" Type="Int32" />
             <Parameter Name="IsSuccess" Mode="InOut" Type="Int32" />
             <Parameter Name="ErrorMsg" Mode="InOut" Type="String" />
@@ -2039,6 +2135,24 @@
             <End Role="Departamento" EntitySet="Departamento" />
             <End Role="Cliente" EntitySet="Cliente" />
           </AssociationSet>
+          <EntitySet Name="UnidadMedida" EntityType="ContextoZM.UnidadMedida" />
+          <EntitySet Name="ValoresUnidadMedida" EntityType="ContextoZM.ValoresUnidadMedida" />
+          <AssociationSet Name="FK_Producto_Almacenamiento" Association="ContextoZM.FK_Producto_Almacenamiento">
+            <End Role="ValoresUnidadMedida" EntitySet="ValoresUnidadMedida" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_GarantiaMeses" Association="ContextoZM.FK_Producto_GarantiaMeses">
+            <End Role="ValoresUnidadMedida" EntitySet="ValoresUnidadMedida" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_RAM" Association="ContextoZM.FK_Producto_RAM">
+            <End Role="ValoresUnidadMedida" EntitySet="ValoresUnidadMedida" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ValoresUnidadMedida_UnidadMedida" Association="ContextoZM.FK_ValoresUnidadMedida_UnidadMedida">
+            <End Role="UnidadMedida" EntitySet="UnidadMedida" />
+            <End Role="ValoresUnidadMedida" EntitySet="ValoresUnidadMedida" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_FacturaVenta_Create_Result">
           <Property Type="Int32" Name="IdFacturaVenta" Nullable="false" />
@@ -2107,6 +2221,74 @@
             </Principal>
             <Dependent Role="Cliente">
               <PropertyRef Name="IdDepartamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UnidadMedida">
+          <Key>
+            <PropertyRef Name="idUnidadMedida" />
+          </Key>
+          <Property Name="idUnidadMedida" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreUnidadMedida" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ValoresUnidadMedida" Relationship="ContextoZM.FK_ValoresUnidadMedida_UnidadMedida" FromRole="UnidadMedida" ToRole="ValoresUnidadMedida" />
+        </EntityType>
+        <EntityType Name="ValoresUnidadMedida">
+          <Key>
+            <PropertyRef Name="IdValUniMed" />
+          </Key>
+          <Property Name="IdValUniMed" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUnidadMedida" Type="Int32" Nullable="false" />
+          <Property Name="Valor" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Producto" Relationship="ContextoZM.FK_Producto_Almacenamiento" FromRole="ValoresUnidadMedida" ToRole="Producto" />
+          <NavigationProperty Name="Producto1" Relationship="ContextoZM.FK_Producto_GarantiaMeses" FromRole="ValoresUnidadMedida" ToRole="Producto" />
+          <NavigationProperty Name="Producto2" Relationship="ContextoZM.FK_Producto_RAM" FromRole="ValoresUnidadMedida" ToRole="Producto" />
+          <NavigationProperty Name="UnidadMedida" Relationship="ContextoZM.FK_ValoresUnidadMedida_UnidadMedida" FromRole="ValoresUnidadMedida" ToRole="UnidadMedida" />
+        </EntityType>
+        <Association Name="FK_Producto_Almacenamiento">
+          <End Type="ContextoZM.ValoresUnidadMedida" Role="ValoresUnidadMedida" Multiplicity="0..1" />
+          <End Type="ContextoZM.Producto" Role="Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ValoresUnidadMedida">
+              <PropertyRef Name="IdValUniMed" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="Almacenamiento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_GarantiaMeses">
+          <End Type="ContextoZM.ValoresUnidadMedida" Role="ValoresUnidadMedida" Multiplicity="0..1" />
+          <End Type="ContextoZM.Producto" Role="Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ValoresUnidadMedida">
+              <PropertyRef Name="IdValUniMed" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="GarantiaMeses" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_RAM">
+          <End Type="ContextoZM.ValoresUnidadMedida" Role="ValoresUnidadMedida" Multiplicity="0..1" />
+          <End Type="ContextoZM.Producto" Role="Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ValoresUnidadMedida">
+              <PropertyRef Name="IdValUniMed" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="RAM" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ValoresUnidadMedida_UnidadMedida">
+          <End Type="ContextoZM.UnidadMedida" Role="UnidadMedida" Multiplicity="1" />
+          <End Type="ContextoZM.ValoresUnidadMedida" Role="ValoresUnidadMedida" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnidadMedida">
+              <PropertyRef Name="idUnidadMedida" />
+            </Principal>
+            <Dependent Role="ValoresUnidadMedida">
+              <PropertyRef Name="IdUnidadMedida" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2390,6 +2572,23 @@
               <MappingFragment StoreEntitySet="Departamento">
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="IdDepartamento" ColumnName="IdDepartamento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UnidadMedida">
+            <EntityTypeMapping TypeName="ContextoZM.UnidadMedida">
+              <MappingFragment StoreEntitySet="UnidadMedida">
+                <ScalarProperty Name="NombreUnidadMedida" ColumnName="NombreUnidadMedida" />
+                <ScalarProperty Name="idUnidadMedida" ColumnName="idUnidadMedida" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ValoresUnidadMedida">
+            <EntityTypeMapping TypeName="ContextoZM.ValoresUnidadMedida">
+              <MappingFragment StoreEntitySet="ValoresUnidadMedida">
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
+                <ScalarProperty Name="IdValUniMed" ColumnName="IdValUniMed" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
