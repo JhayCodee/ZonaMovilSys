@@ -386,7 +386,7 @@ namespace Datos
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Cliente_Delete", idClienteParameter, eliminadoPorParameter, isSuccess, errorMsg);
         }
     
-        public virtual int sp_Cliente_Update(Nullable<int> idCliente, string nombres, string apellidos, string cedula, string correo, string telefono, Nullable<bool> activo, Nullable<int> editadoPor, ObjectParameter isSuccess, ObjectParameter errorMsg)
+        public virtual int sp_Cliente_Update(Nullable<int> idCliente, string nombres, string apellidos, string cedula, string correo, string telefono, Nullable<int> idDepartamento, Nullable<bool> activo, Nullable<int> editadoPor, ObjectParameter isSuccess, ObjectParameter errorMsg)
         {
             var idClienteParameter = idCliente.HasValue ?
                 new ObjectParameter("IdCliente", idCliente) :
@@ -411,7 +411,11 @@ namespace Datos
             var telefonoParameter = telefono != null ?
                 new ObjectParameter("Telefono", telefono) :
                 new ObjectParameter("Telefono", typeof(string));
-    
+
+            var idDepartamentoParameter = idDepartamento.HasValue ?
+               new ObjectParameter("IdDepartamento", idDepartamento) :
+               new ObjectParameter("IdDepartamento", typeof(int));
+
             var activoParameter = activo.HasValue ?
                 new ObjectParameter("Activo", activo) :
                 new ObjectParameter("Activo", typeof(bool));
@@ -420,7 +424,7 @@ namespace Datos
                 new ObjectParameter("EditadoPor", editadoPor) :
                 new ObjectParameter("EditadoPor", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Cliente_Update", idClienteParameter, nombresParameter, apellidosParameter, cedulaParameter, correoParameter, telefonoParameter, activoParameter, editadoPorParameter, isSuccess, errorMsg);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Cliente_Update", idClienteParameter, nombresParameter, apellidosParameter, cedulaParameter, correoParameter, telefonoParameter, idDepartamentoParameter, activoParameter, editadoPorParameter, isSuccess, errorMsg);
         }
     
         public virtual int sp_Color_Create(string nombre, Nullable<bool> activo, Nullable<int> creadoPor, ObjectParameter isSuccess, ObjectParameter errorMsg)
