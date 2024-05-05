@@ -8,6 +8,14 @@
         placeholder: "___-______-____A"
     });
 
+    // Aplicar mascara de telefono
+    $('#inputTelefono').mask('0000-0000', {
+        translation: {
+            '0': { pattern: /[0-9]/ }
+        },
+        placeholder: "____-____"
+    });
+
     // Método personalizado para la validación de expresiones regulares
     $.validator.addMethod("regex", function (value, element, regexp) {
         var re = new RegExp(regexp);
@@ -40,15 +48,20 @@
             },
             inputCorreo: {
                 required: true,
-                email: true,
+                regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,                
                 normalizer: function (value) {
                     return $.trim(value);
                 }
             },
             inputTelefono: {
                 required: true,
-                minlength: 8,
-                digits: true,
+                regex: /^[0-9]{4}-[0-9]{4}$/,              
+                normalizer: function (value) {
+                    return $.trim(value);
+                }
+            },
+            inputDepartamento: {
+                required: true,
                 normalizer: function (value) {
                     return $.trim(value);
                 }
@@ -72,9 +85,10 @@
                 email: "Debe ser una dirección de correo válida."
             },
             inputTelefono: {
-                required: "El teléfono es obligatorio.",
-                minlength: "Debe contener al menos 8 dígitos.",
-                digits: "Sólo se permiten números."
+                required: "El teléfono es obligatorio.",                
+            },
+            InputDepartamento: {
+                required: "El departamento es obligatorio.",                
             }
         },
         errorPlacement: function (error, element) {

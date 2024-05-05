@@ -1,6 +1,7 @@
 ﻿using Datos;
 using Modelo.Catalogo;
 using Modelo.utils;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
@@ -62,7 +63,7 @@ namespace Logica.Catalogo
                 return dep;
             }
             catch(Exception ex)
-            {
+            {                
                 return null;
             }
         }
@@ -151,6 +152,7 @@ namespace Logica.Catalogo
                     cliente.Cedula,
                     cliente.Correo,
                     cliente.Telefono,
+                    cliente.IdDepartamento,
                     true,
                     cliente.EditadoPor,
                     isSuccessParam,
