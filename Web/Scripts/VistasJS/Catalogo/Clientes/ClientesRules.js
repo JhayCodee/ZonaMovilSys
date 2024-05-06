@@ -87,7 +87,7 @@
             inputTelefono: {
                 required: "El teléfono es obligatorio.",                
             },
-            InputDepartamento: {
+            inputDepartamento: {
                 required: "El departamento es obligatorio.",                
             }
         },
