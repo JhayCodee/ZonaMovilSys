@@ -15,13 +15,19 @@ namespace Modelo.Catalogo
         public int Stock { get; set; }
         public decimal PrecioCompra { get; set; }
         public decimal PrecioVenta { get; set; }
-        public string Almacenamiento { get; set; }
+        public int? Almacenamiento { get; set; }
         public Nullable<int> GarantiaMeses { get; set; }
-        public string RAM { get; set; }
+        public int? RAM { get; set; }
         public bool Activo { get; set; }
         public string Marca { get; set; }
         public string Categoria { get; set; }
         public string Color { get; set; }
+        public int? Bateria { get; set; }
+        public bool? Nuevo { get; set; }
+        public bool? Esim { get; set; }
+        public string Proveedor { get; set; }
+        public string Imei { get; set; }
+        public string CodigoBarra { get; set; }
         public int CreadoPor { get; set; }
         public Nullable<int> EditadoPor { get; set; }
         public Nullable<int> EliminadoPor { get; set; }
@@ -31,5 +37,6 @@ namespace Modelo.Catalogo
         public Nullable<int> IdMarca { get; set; }
         public Nullable<int> IdCategoria { get; set; }
         public Nullable<int> IdColor { get; set; }
+        public Nullable<int> IdProveedor { get; set; }
     }
 }

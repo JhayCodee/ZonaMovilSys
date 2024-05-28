@@ -5,6 +5,9 @@
     $(function () {
         loadProductsDataTable();
 
+      
+
+
         $("#btnGuardar").click(function (e) {
             e.preventDefault();
 
@@ -140,6 +143,7 @@
                 type: 'POST',
                 datatype: 'json',
                 dataSrc: function (json) {
+                    console.log(json);
                     if (!json.status) {
                         return [];
                     }
@@ -162,6 +166,22 @@
                 { data: "Color" },
                 { data: "Marca" },
                 { data: "Categoria" },
+                { data: "Bateria" },
+                {
+                    data: "Nuevo",
+                    render: function (data, type, row) {
+                        return data ? '<span class="badge bg-label-success">Sí</span>' : '<span class="badge bg-label-warning">No</span>';
+                    }
+                },
+                {
+                    data: "Esim",
+                    render: function (data, type, row) {
+                        return data ? '<span class="badge bg-label-success">Sí</span>' : '<span class="badge bg-label-warning">No</span>';
+                    }
+                },
+                { data: "Proveedor" },
+                { data: "Imei" },
+                { data: "CodigoBarra" },
                 {
                     data: null,
                     render: function (data, type, row) {
@@ -191,6 +211,7 @@
                         isEditing = false;
                         productsContainer.Index.hide();
                         productsContainer.Form.show();
+
                     }
                 }
             ]
@@ -212,8 +233,14 @@
             IdColor: $("#inputColor").val(),
             IdMarca: $("#inputMarca").val(),
             IdCategoria: $("#inputCategoria").val(),
+            Bateria: parseInt($("#inputBateria").val()),
+            Nuevo: $("#inputNuevo").val() === "true", // Obtener el valor del campo Nuevo como booleano
+            Esim: $("#inputEsim").val() === "true",
+            IdProveedor: $("#inputProveedores").val(),
+            Imei: $("#inputImei").val(),
+            CodigoBarra: $("#inputCodigoBarras").val()
         };
-
+        console.log("Valor de Batería:", product.Bateria);
         const url = `${productsContainer.Url}/${isEditing ? 'UpdateProduct' : 'CreateProduct'}`;
 
         Swal.fire({
@@ -281,6 +308,12 @@
         $("#inputColor").val(product.IdColor).trigger('change');
         $("#inputMarca").val(product.IdMarca).trigger('change');
         $("#inputCategoria").val(product.IdCategoria).trigger('change');
+        $("#inputBateria").val(product.Bateria);
+        $("#inputNuevo").val(product.Nuevo).trigger('change');
+        $("#inputEsim").val(product.Esim).trigger('change');
+        $("#inputProveedores").val(product.IdProveedor).trigger('change');
+        $("#inputImei").val(product.Imei);
+        $("#inputCodigoBarras").val(product.CodigoBarra);
     }
 
 
