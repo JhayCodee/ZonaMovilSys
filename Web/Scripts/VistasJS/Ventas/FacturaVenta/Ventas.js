@@ -2,6 +2,7 @@
 
     var contenedorTabla = $("#Venta-Index");
     var contenedorFormulario = $("#Venta-Form");
+    actualizarTotales();
 
     // Inicializar DataTable
     var tblFacturasVenta = $('#tblFacturasVenta').DataTable({
@@ -35,7 +36,6 @@
                 data: null,
                 render: function (data, type, row) {
                     if (row.Activo) {
-
                         return '<span class="badge bg-label-success">Activo</span>';
                     } else {
                         return '<span class="badge bg-label-danger">Anulada</span>';
@@ -46,11 +46,10 @@
                 data: null,
                 render: function (data, type, row) {
                     let printButton = `<button class="btn btn-secondary btn-sm print-button"
-                                 data-id="${row.IdFacturaVenta}"
-                                 title="Imprimir Factura">
-                          <i class='bx bx-printer'></i>
-                      </button>`;
-
+                                     data-id="${row.IdFacturaVenta}"
+                                     title="Imprimir Factura">
+                                  <i class='bx bx-printer'></i>
+                              </button>`;
                     let actionButton = row.Activo
                         ? `<button class="btn btn-danger btn-sm delete-button" 
                                   data-id="${row.IdFacturaVenta}"
@@ -62,7 +61,6 @@
                                   title="Ver Factura Anulada">
                               <i class='bx bx-info-circle'></i>
                           </button>`;
-
                     return `<div class="d-flex justify-content-center gap-2">${printButton} ${actionButton}</div>`;
                 }
             }
@@ -141,7 +139,6 @@
         });
     });
 
-
     $('#tblFacturasVenta').on('click', '.delete-button', function () {
         var facturaId = $(this).data('id');
 
@@ -189,7 +186,6 @@
         });
     });
 
-
     // Evento de clic para agregar un producto
     $('#btnAgregarProducto').click(function () {
         var productId = $('#productoSelect').val();
@@ -222,6 +218,7 @@
         actualizarTotales();
     });
 
+
     // Eventos para los botones de más y menos
     $('#tblProductosSeleccionados').on('click', '.mas-producto', function () {
         var inputCantidad = $(this).closest('tr').find('.cantidad-producto');
@@ -230,7 +227,6 @@
 
         if (cantidadActual < maxStock) {
             inputCantidad.val(cantidadActual + 1);
-            ajustarCamposIMEI($(this).closest('tr'), cantidadActual + 1);
         }
         actualizarTotales();
     });
@@ -241,7 +237,6 @@
 
         if (cantidadActual > 1) {
             inputCantidad.val(cantidadActual - 1);
-            ajustarCamposIMEI($(this).closest('tr'), cantidadActual - 1);
         }
         actualizarTotales();
     });
@@ -256,8 +251,8 @@
             return;
         }
 
-        if ($('#tblProductosSeleccionados tbody tr').length === 0 || !validarCamposIMEI()) {
-            Swal.fire('Error', 'Verifica que hayas agregado productos y que los campos IMEI sean válidos.', 'error');
+        if ($('#tblProductosSeleccionados tbody tr').length === 0) {
+            Swal.fire('Error', 'Verifica que hayas agregado productos.', 'error');
             return;
         }
 
@@ -311,77 +306,64 @@
         limpiarFormularioVenta();
     });
 
-    function ajustarCamposIMEI(fila, cantidad) {
-        var columnaIMEI = fila.find('.imei-column');
-        columnaIMEI.empty();
+    // Evento para actualizar el total cuando se cambia el descuento
+    $('#descuentoVenta').on('input', function () {
+        validarDescuento();
+    });
 
-        // Solo ajustar los campos IMEI si la categoría es 'Celular'
-        if (fila.data('producto-categoria') === 'Celular' && cantidad > 0) {
-            for (var i = 0; i < cantidad; i++) {
-                columnaIMEI.append('<input type="text" class="form-control imei-producto" placeholder="IMEI">');
-            }
+    function validarDescuento() {
+        var descuentoInput = $('#descuentoVenta');
+        var descuentoWarning = $('#descuentoWarning');
+        var descuento = parseFloat(descuentoInput.val()) || 0;
+        var subtotal = parseFloat($('#subtotalVenta').val()) || 0;
+        var valid = true;
+
+        // Validar que el descuento no sea negativo ni mayor que el subtotal
+        if (descuento < 0) {
+            descuentoWarning.text('El descuento no puede ser negativo.');
+            descuentoWarning.show();
+            valid = false;
+        } else if (descuento > subtotal * 1.15) { // considerando el impuesto del 15%
+            descuentoWarning.text('El descuento no puede ser mayor que el total con impuesto.');
+            descuentoWarning.show();
+            valid = false;
+        } else {
+            descuentoWarning.hide();
+        }
+
+        if (valid) {
+            actualizarTotales();
         }
     }
 
-    function validarIMEI(imei) {
-        // Ejemplo: Validar longitud de 15 dígitos y solo números
-        var regexIMEI = /^\d{15}$/;
-        return regexIMEI.test(imei);
-    }
-
-    function validarCamposIMEI() {
-        var todosValidos = true;
-        $('.imei-producto').each(function () {
-            if (!validarIMEI($(this).val())) {
-                todosValidos = false;
-                return false;
-            }
-        });
-        return todosValidos;
-    }
-
-    function obtenerDetallesFactura() {
-        var detalles = [];
+    function actualizarTotales() {
+        var subtotal = 0;
         $('#tblProductosSeleccionados tbody tr').each(function () {
-            var idProducto = $(this).data('producto-id');
+            var precio = parseFloat($(this).find('td:eq(1)').text());
             var cantidad = parseInt($(this).find('.cantidad-producto').val());
-            var precioUnitario = parseFloat($(this).find('td:eq(1)').text());
-            var categoria = $(this).data('producto-categoria');
-
-            if (categoria === 'Celular') {
-                $(this).find('.imei-producto').each(function () {
-                    var imei = $(this).val();
-                    detalles.push({ IdProducto: idProducto, Cantidad: 1, PrecioUnitario: precioUnitario, IMEI: imei });
-                });
-            } else {
-                detalles.push({ IdProducto: idProducto, Cantidad: cantidad, PrecioUnitario: precioUnitario, IMEI: '' });
-            }
+            subtotal += precio * cantidad;
         });
-        return detalles;
+
+        var descuento = parseFloat($('#descuentoVenta').val()) || 0;
+        var impuesto = subtotal * 0.15;
+        var total = subtotal + impuesto - descuento;
+
+        $('#subtotalVenta').val(subtotal.toFixed(2));
+        $('#impuestoVenta').val(impuesto.toFixed(2));
+        $('#totalVenta').val(total.toFixed(2));
     }
 
-    function enviarDatosFacturacion(datosFactura) {
-        $.ajax({
-            url: '/Ventas/Facturar', // URL del controlador de facturación
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(datosFactura),
-            success: function (response) {
-                if (response.status) { 
-                    Swal.fire('¡Facturado!', 'La factura ha sido creada con éxito.', 'success');
-                    contenedorFormulario.hide();
-                    contenedorTabla.show();
-                    tblFacturasVenta.ajax.reload();
-                    limpiarFormularioVenta();
-                } else {
-                    Swal.fire('Error', response.errorMessage, 'error');
-                }
-            },
-            error: function () {
-                Swal.fire('Error', 'No se pudo conectar con el servidor.', 'error');
-            }
-        });
+    function limpiarFormularioVenta() {
+        $('#tblProductosSeleccionados tbody').empty();
+        $('#clienteSelect').val('').trigger('change');
+        $('#productoSelect').val('').trigger('change');
+        $('#subtotalVenta').val('0.00');
+        $('#impuestoVenta').val('0.00');
+        $('#totalVenta').val('0.00');
+        $('#descuentoVenta').val('0'); // Resetear el campo de descuento
+        $('#descuentoWarning').hide(); // Ocultar el mensaje de advertencia
     }
+
 
     // Verifica si el producto ya ha sido agregado a la tabla
     function productoYaAgregado(productId) {
@@ -415,19 +397,19 @@
         });
     }
 
-    // Agrega el producto a la tabla
     function agregarProductoATabla(data) {
-        var fila = `<tr data-producto-id="${data.IdProducto}" data-producto-categoria="${data.Categoria}">
+        var cantidadColumna = data.Categoria === 'Accesorio' ? `
+            <div class="d-flex justify-content-center align-items-center">
+                <button class="btn btn-outline-secondary btn-sm menos-producto" type="button">-</button>
+                <input type="number" class="form-control text-center mx-1 cantidad-producto" style="width: 70px;" value="1" min="1" max="${data.Stock}" readonly>
+                <button class="btn btn-outline-secondary btn-sm mas-producto" type="button">+</button>
+            </div>` :
+            `<input type="number" class="form-control text-center mx-1 cantidad-producto" style="width: 70px;" value="1" min="1" max="${data.Stock}" readonly disabled>`;
+
+        var fila = `<tr data-producto-id="${data.IdProducto}" data-producto-categoria="${data.Categoria}" data-producto-IMEI="${data.IMEI}">
                     <td>${data.Nombre} - ${data.Modelo}</td>
                     <td>${data.PrecioVenta}</td>
-                    <td>
-                        <div class="d-flex justify-content-center align-items-center">
-                            <button class="btn btn-outline-secondary btn-sm menos-producto" type="button">-</button>
-                            <input type="number" class="form-control text-center mx-1 cantidad-producto" style="width: 70px;" value="1" min="1" max="${data.Stock}" readonly>
-                            <button class="btn btn-outline-secondary btn-sm mas-producto" type="button">+</button>
-                        </div>
-                    </td>
-                    <td class="imei-column">${data.Categoria === 'Celular' ? '<input type="text" class="form-control imei-producto" placeholder="IMEI">' : ''}</td>
+                    <td>${cantidadColumna}</td>
                     <td>
                         <button class="btn btn-danger btn-sm btn-eliminar-producto" title="Eliminar producto">
                             <i class='bx bx-trash'></i>
@@ -437,48 +419,174 @@
 
         var nuevaFila = $(fila);
         $('#tblProductosSeleccionados tbody').append(nuevaFila);
-        ajustarCamposIMEI(nuevaFila, 1);
         actualizarTotales();
     }
 
-    // Función para actualizar los totales
-    function actualizarTotales() {
-        var subtotal = 0;
+    function obtenerDetallesFactura() {
+        var detalles = [];
         $('#tblProductosSeleccionados tbody tr').each(function () {
-            var precio = parseFloat($(this).find('td:eq(1)').text());
+            var idProducto = $(this).data('producto-id');
+            var IMEI = $(this).data('producto-IMEI');
             var cantidad = parseInt($(this).find('.cantidad-producto').val());
-            subtotal += precio * cantidad;
+            var precioUnitario = parseFloat($(this).find('td:eq(1)').text());
+            //var categoria = $(this).data('producto-categoria');
+            detalles.push({ IdProducto: idProducto, Cantidad: cantidad, PrecioUnitario: precioUnitario, IMEI: IMEI });
+
+            //if (categoria === 'Celular') {
+            //    $(this).find('.imei-producto').each(function () {
+            //        var imei = $(this).val();
+            //        detalles.push({ IdProducto: idProducto, Cantidad: 1, PrecioUnitario: precioUnitario, IMEI: imei });
+            //    });
+            //} else {
+            //    detalles.push({ IdProducto: idProducto, Cantidad: cantidad, PrecioUnitario: precioUnitario, IMEI: '' });
+            //}
         });
-        $('#subtotalVenta').val(subtotal.toFixed(2));
-        // Suponiendo un impuesto del 10%
-        $('#impuestoVenta').val((subtotal * 0.10).toFixed(2));
-        $('#totalVenta').val((subtotal * 1.10).toFixed(2));
+        return detalles;
     }
 
-    // Actualiza los totales de la factura
-    function actualizarTotales() {
-        var subtotal = 0;
-        $('#tblProductosSeleccionados tbody tr').each(function () {
-            var precio = parseFloat($(this).find('td:eq(1)').text());
-            var cantidad = parseInt($(this).find('.cantidad-producto').val());
-            subtotal += precio * cantidad;
-        });
-        $('#subtotalVenta').val(subtotal.toFixed(2));
-        $('#impuestoVenta').val((subtotal * 0.15).toFixed(2));
-        $('#totalVenta').val((subtotal * 1.15).toFixed(2));
-    }
 
-    function limpiarFormularioVenta() {
-        // Limpiar la tabla de productos seleccionados
-        $('#tblProductosSeleccionados tbody').empty();
+    // MODAL CLIENTES
 
-        // Restablecer los selectores a la opción por defecto
-        $('#clienteSelect').val('').trigger('change');
-        $('#productoSelect').val('').trigger('change');
+    // Mostrar el modal para nuevo cliente
+    $('#btnNuevoCliente').on('click', function () {
+        $('#modalNuevoCliente').modal('show');
+    });
 
-        // Resetear los totales
-        $('#subtotalVenta').val('0.00');
-        $('#impuestoVenta').val('0.00');
-        $('#totalVenta').val('0.00');
-    }
+    // Aplicar la mascarada al campo de cédula
+    $('#inputCedula').mask('000-000000-0000A', {
+        translation: {
+            '0': { pattern: /[0-9]/ },
+            'A': { pattern: /[A-Za-z]/, optional: true }
+        },
+        placeholder: "___-______-____A"
+    });
+
+    // Método personalizado para la validación de expresiones regulares
+    $.validator.addMethod("regex", function (value, element, regexp) {
+        var re = new RegExp(regexp);
+        return this.optional(element) || re.test(value);
+    }, "Por favor, verifique su entrada.");
+
+    // Validación para el select
+    $.validator.addMethod("valueNotEquals", function (value, element, arg) {
+        return arg !== value;
+    }, "Seleccione una opción válida.");
+
+    // Validaciones con jQuery Validation
+    $('#frmClientes').validate({
+        rules: {
+            inputNombres: {
+                required: true,
+                minlength: 2,
+                normalizer: function (value) {
+                    return $.trim(value);
+                }
+            },
+            inputApellidos: {
+                required: true,
+                minlength: 2,
+                normalizer: function (value) {
+                    return $.trim(value);
+                }
+            },
+            inputCedula: {
+                required: true,
+                regex: /^[0-9]{3}-[0-9]{6}-[0-9]{4}[A-Za-z]$/,
+                normalizer: function (value) {
+                    return $.trim(value);
+                }
+            },
+            inputCorreo: {
+                required: true,
+                email: true,
+                normalizer: function (value) {
+                    return $.trim(value);
+                }
+            },
+            inputTelefono: {
+                required: true,
+                minlength: 8,
+                digits: true,
+                normalizer: function (value) {
+                    return $.trim(value);
+                }
+            },
+            inputDepartamento: {
+                valueNotEquals: ""
+            }
+        },
+        messages: {
+            inputNombres: {
+                required: "Los nombres son obligatorios.",
+                minlength: "Debe contener al menos 2 caracteres."
+            },
+            inputApellidos: {
+                required: "Los apellidos son obligatorios.",
+                minlength: "Debe contener al menos 2 caracteres."
+            },
+            inputCedula: {
+                required: "La cédula es obligatoria.",
+                regex: "Formato de cédula no válido."
+            },
+            inputCorreo: {
+                required: "El correo es obligatorio.",
+                email: "Debe ser una dirección de correo válida."
+            },
+            inputTelefono: {
+                required: "El teléfono es obligatorio.",
+                minlength: "Debe contener al menos 8 dígitos.",
+                digits: "Sólo se permiten números."
+            },
+            inputDepartamento: {
+                valueNotEquals: "Seleccione una opción válida."
+            }
+        },
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.mb-3').append(error);
+        },
+        highlight: function (element) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element) {
+            $(element).removeClass('is-invalid');
+        }
+    });
+
+    // Enviar el formulario de cliente
+    $('#frmClientes').on('submit', function (e) {
+        e.preventDefault();
+
+        if ($(this).valid()) {
+            var clienteData = {
+                Nombres: $('#inputNombres').val(),
+                Apellidos: $('#inputApellidos').val(),
+                Cedula: $('#inputCedula').val(),
+                Correo: $('#inputCorreo').val(),
+                Telefono: $('#inputTelefono').val(),
+                Departamento: $('#inputDepartamento').val()
+            };
+
+            $.ajax({
+                url: '/Clientes/Create',
+                type: 'POST',
+                data: JSON.stringify(clienteData),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire('Éxito', 'Cliente registrado correctamente', 'success');
+                        $('#modalNuevoCliente').modal('hide');
+                        // Actualiza el select de clientes si es necesario
+                        // $('#clienteSelect').append(new Option(clienteData.Nombres + ' ' + clienteData.Apellidos, response.idCliente));
+                    } else {
+                        Swal.fire('Error', response.message, 'error');
+                    }
+                },
+                error: function (error) {
+                    Swal.fire('Error', 'Ocurrió un error al registrar el cliente', 'error');
+                }
+            });
+        }
+    });
+
 });

@@ -69,13 +69,11 @@ namespace Logica.Ventas
             var productos = (from p in _db.Producto
                              join c in _db.Categoria on p.IdCategoria equals c.IdCategoria
                              join col in _db.Color on p.IdColor equals col.IdColor
-                             where p.Activo
+                             where p.Activo && p.Stock > 0
                              select new DropDown
                              {
                                  Id = p.IdProducto,
-                                 Value = p.Nombre + " " + p.Modelo +
-                                         (c.Nombre == "Celular" ? " - RAM: " + p.RAM + " - Almacenamiento: " + p.Almacenamiento : "") +
-                                         " - Color: " + col.Nombre
+                                 Value = p.CodigoBarra + " - " + p.Nombre
                              }).AsNoTracking().ToList();
 
             return productos;
