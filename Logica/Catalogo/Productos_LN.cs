@@ -25,31 +25,43 @@ namespace Logica.Catalogo
         {
             try
             {
-                data = _db.Producto
-                        .Where(x => x.Activo)
-                        .Select(x => new Producto_VM
-                        {
-                            IdProducto = x.IdProducto,
-                            Nombre = x.Nombre,
-                            Modelo = x.Modelo,
-                            Descripcion = x.Descripcion,
-                            Stock = x.Stock,
-                            PrecioVenta = x.PrecioVenta,
-                            PrecioCompra = x.PrecioCompra,
-                            GarantiaMeses = x.GarantiaMeses,
-                            Almacenamiento = x.Almacenamiento, //falta unidad
-                            RAM = x.RAM, //falta unidad
-                            Activo = x.Activo,
-                            Marca = x.Marca.Nombre,
-                            Color = x.Color.Nombre,
-                            Categoria = x.Categoria.Nombre,
-                            Bateria= x.Bateria,
-                            Nuevo= x.Nuevo,
-                            Esim= x.eSim,
-                            Proveedor= x.Proveedor.Nombre,//proveedor
-                            Imei=x.IMEI,
-                            CodigoBarra=x.CodigoBarra //codigo de barra
-                        }).ToList();
+                data = ( from p in _db.Producto.AsNoTracking()
+                         join vu1 in _db.ValoresUnidadMedida on p.RAM equals vu1.IdValUniMed
+                         join vu2 in _db.ValoresUnidadMedida on p.GarantiaMeses equals vu2.IdValUniMed
+                         join vu3 in _db.ValoresUnidadMedida on p.Almacenamiento equals vu3.IdValUniMed
+                         join um in _db.UnidadMedida on vu1.IdUnidadMedida equals um.idUnidadMedida
+                         join um2 in _db.UnidadMedida on vu2.IdUnidadMedida equals um2.idUnidadMedida
+                         join um3 in _db.UnidadMedida on vu3.IdUnidadMedida equals um3.idUnidadMedida
+                         select new Producto_VM
+                         {
+                            IdProducto=p.IdProducto,
+                            Nombre=p.Nombre,
+                            Modelo=p.Modelo,
+                            Descripcion=p.Descripcion,
+                            Stock=p.Stock,
+                            PrecioVenta=p.PrecioVenta,
+                            PrecioCompra=p.PrecioCompra,
+                            GarantiaMeses=vu2.Valor,
+                            Almacenamiento=vu3.Valor,
+                            RAM= vu1.Valor,
+                            Activo= p.Activo,
+                            Marca= p.Marca.Nombre,
+                            Color=p.Color.Nombre,
+                            Categoria=p.Categoria.Nombre,
+                            Bateria=p.Bateria,
+                            Nuevo=p.Nuevo,
+                            Esim=p.eSim,
+                            Proveedor=p.Proveedor.Nombre,
+                            Imei=p.IMEI,
+                            CodigoBarra=p.CodigoBarra
+
+
+
+
+                         }
+
+
+                    ).ToList();
 
                 return true;
             }
