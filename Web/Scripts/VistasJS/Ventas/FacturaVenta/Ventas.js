@@ -260,13 +260,14 @@
         var detallesFactura = obtenerDetallesFactura();
 
         var datosFactura = {
-            NumeroFactura: '12345', // Generar o asignar un número de factura adecuado
+            NumeroFactura: '', 
             Fecha: new Date(),
             Subtotal: parseFloat($('#subtotalVenta').val()),
             Impuesto: parseFloat($('#impuestoVenta').val()),
             Total: parseFloat($('#totalVenta').val()),
+            Descuento: parseFloat($('#descuentoVenta').val()),
             IdCliente: idCliente,
-            CreadoPor: 1, // Reemplazar con el ID del usuario actual
+            CreadoPor: 1, 
             Detalles: detallesFactura
         };
 
@@ -426,22 +427,34 @@
         var detalles = [];
         $('#tblProductosSeleccionados tbody tr').each(function () {
             var idProducto = $(this).data('producto-id');
-            var IMEI = $(this).data('producto-IMEI');
             var cantidad = parseInt($(this).find('.cantidad-producto').val());
             var precioUnitario = parseFloat($(this).find('td:eq(1)').text());
-            //var categoria = $(this).data('producto-categoria');
-            detalles.push({ IdProducto: idProducto, Cantidad: cantidad, PrecioUnitario: precioUnitario, IMEI: IMEI });
-
-            //if (categoria === 'Celular') {
-            //    $(this).find('.imei-producto').each(function () {
-            //        var imei = $(this).val();
-            //        detalles.push({ IdProducto: idProducto, Cantidad: 1, PrecioUnitario: precioUnitario, IMEI: imei });
-            //    });
-            //} else {
-            //    detalles.push({ IdProducto: idProducto, Cantidad: cantidad, PrecioUnitario: precioUnitario, IMEI: '' });
-            //}
+            detalles.push({ IdProducto: idProducto, Cantidad: cantidad, PrecioUnitario: precioUnitario});
         });
         return detalles;
+    }
+
+    function enviarDatosFacturacion(datosFactura) {
+        $.ajax({
+            url: '/Ventas/Facturar', 
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(datosFactura),
+            success: function (response) {
+                if (response.status) {
+                    Swal.fire('¡Facturado!', 'La factura ha sido creada con éxito.', 'success');
+                    contenedorFormulario.hide();
+                    contenedorTabla.show();
+                    tblFacturasVenta.ajax.reload();
+                    limpiarFormularioVenta();
+                } else {
+                    Swal.fire('Error', response.errorMessage, 'error');
+                }
+            },
+            error: function () {
+                Swal.fire('Error', 'No se pudo conectar con el servidor.', 'error');
+            }
+        });
     }
 
 

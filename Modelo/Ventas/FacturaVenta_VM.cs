@@ -13,6 +13,7 @@ namespace Modelo.Ventas
         public System.DateTime Fecha { get; set; }
         public decimal Subtotal { get; set; }
         public decimal Impuesto { get; set; }
+        public decimal Descuento { get; set; }
         public decimal Total { get; set; }
         public bool Activo { get; set; }
         public int IdCliente { get; set; }
@@ -40,6 +41,7 @@ namespace Modelo.Ventas
         public DateTime Fecha { get; set; }
         public decimal Subtotal { get; set; }
         public decimal Impuesto { get; set; }
+        public decimal Descuento { get; set; }
         public decimal Total { get; set; }
         public bool Activo { get; set; }
     }

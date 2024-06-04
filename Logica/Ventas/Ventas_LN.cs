@@ -94,14 +94,14 @@ namespace Logica.Ventas
                                 NombreProducto = fpd.p.Nombre,
                                 //Almacenamiento = fpd.p.Almacenamiento,
                                 //RAM = fpd.p.RAM,
-                                IMEI = fpd.dfv.IMEI,
                                 Cantidad = fpd.dfv.Cantidad,
                                 PrecioUnitario = fpd.dfv.PrecioUnitario,
                                 Fecha = fpd.f.Fecha,
                                 Subtotal = fpd.f.Subtotal,
                                 Impuesto = fpd.f.Impuesto,
                                 Total = fpd.f.Total,
-                                Activo = fpd.f.Activo
+                                Activo = fpd.f.Activo,
+                                Descuento = fpd.f.Descuento ?? 0
                             })
                             .ToList();
 
@@ -157,6 +157,7 @@ namespace Logica.Ventas
                             Fecha = facturaVenta.Fecha,
                             Subtotal = facturaVenta.Subtotal,
                             Impuesto = facturaVenta.Impuesto,
+                            Descuento = facturaVenta.Descuento,
                             Total = facturaVenta.Total,
                             IdCliente = facturaVenta.IdCliente,
                             CreadoPor = facturaVenta.CreadoPor,
@@ -181,12 +182,6 @@ namespace Logica.Ventas
                                 throw new Exception($"Stock insuficiente para el producto ID {detalle.IdProducto}.");
                             }
 
-                            // Validación para IMEI en caso de categoría "Celular"
-                            if (producto.Categoria.Nombre.Equals("Celular") && string.IsNullOrEmpty(detalle.IMEI))
-                            {
-                                throw new Exception($"IMEI requerido para el producto celular ID {detalle.IdProducto}.");
-                            }
-
                             // Crear detalle de factura
                             var detalleFactura = new DetalleFacturaVenta
                             {
@@ -194,25 +189,24 @@ namespace Logica.Ventas
                                 IdProducto = detalle.IdProducto,
                                 Cantidad = detalle.Cantidad,
                                 PrecioUnitario = detalle.PrecioUnitario,
-                                IMEI = detalle.IMEI
                             };
 
                             _db.DetalleFacturaVenta.Add(detalleFactura);
                             _db.SaveChanges();
 
-                            // Validar y crear registro de garantía si es aplicable
-                            if (producto.GarantiaMeses.HasValue && producto.GarantiaMeses > 0)
-                            {
-                                var garantia = new Garantia
-                                {
-                                    IdDetalleFacturaVenta = detalleFactura.IdDetalleFacturaVenta,
-                                    FechaInicio = factura.Fecha,
-                                    FechaFin = factura.Fecha.AddMonths(producto.GarantiaMeses.Value),
-                                    Estado = 1 
-                                };
+                            //// Validar y crear registro de garantía si es aplicable
+                            //if (producto.GarantiaMeses.HasValue && producto.GarantiaMeses > 0)
+                            //{
+                            //    var garantia = new Garantia
+                            //    {
+                            //        IdDetalleFacturaVenta = detalleFactura.IdDetalleFacturaVenta,
+                            //        FechaInicio = factura.Fecha,
+                            //        FechaFin = factura.Fecha.AddMonths(producto.GarantiaMeses.Value),
+                            //        Estado = 1 
+                            //    };
 
-                                _db.Garantia.Add(garantia);
-                            }
+                            //    _db.Garantia.Add(garantia);
+                            //}
 
                             // Actualizar el stock del producto
                             producto.Stock -= detalle.Cantidad;

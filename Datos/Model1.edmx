@@ -229,6 +229,7 @@
           <Property Name="FechaAnulacion" Type="datetime" />
           <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
           <Property Name="RazonAnulamiento" Type="nvarchar" MaxLength="255" />
+          <Property Name="Descuento" Type="decimal" Precision="10" Scale="2" />
         </EntityType>
         <EntityType Name="Garantia">
           <Key>
@@ -1347,7 +1348,6 @@
           <Property Name="IdProducto" Type="Int32" Nullable="false" />
           <Property Name="Cantidad" Type="Int32" Nullable="false" />
           <Property Name="PrecioUnitario" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="IMEI" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Producto" Relationship="Self.FK__DetalleFa__IdPro__01142BA1" FromRole="DetalleFacturaVenta" ToRole="Producto" />
           <NavigationProperty Name="FacturaVenta" Relationship="Self.FK__DetalleFa__IdFac__00200768" FromRole="DetalleFacturaVenta" ToRole="FacturaVenta" />
           <NavigationProperty Name="Garantia" Relationship="Self.FK__Garantia__IdDeta__06CD04F7" FromRole="DetalleFacturaVenta" ToRole="Garantia" />
@@ -1373,6 +1373,7 @@
           <NavigationProperty Name="Usuario" Relationship="Self.FK__FacturaVe__Anula__787EE5A0" FromRole="FacturaVenta" ToRole="Usuario" />
           <NavigationProperty Name="Usuario1" Relationship="Self.FK__FacturaVe__Cread__778AC167" FromRole="FacturaVenta" ToRole="Usuario" />
           <NavigationProperty Name="DetalleFacturaVenta" Relationship="Self.FK__DetalleFa__IdFac__00200768" FromRole="FacturaVenta" ToRole="DetalleFacturaVenta" />
+          <Property Name="Descuento" Type="Decimal" Precision="10" Scale="2" />
         </EntityType>
         <EntityType Name="Garantia">
           <Key>
@@ -2482,13 +2483,13 @@
                 <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
                 <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
                 <ScalarProperty Name="PrecioUnitario" ColumnName="PrecioUnitario" />
-                <ScalarProperty Name="IMEI" ColumnName="IMEI" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="FacturaVenta">
             <EntityTypeMapping TypeName="ContextoZM.FacturaVenta">
               <MappingFragment StoreEntitySet="FacturaVenta">
+                <ScalarProperty Name="Descuento" ColumnName="Descuento" />
                 <ScalarProperty Name="IdFacturaVenta" ColumnName="IdFacturaVenta" />
                 <ScalarProperty Name="NumeroFactura" ColumnName="NumeroFactura" />
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
