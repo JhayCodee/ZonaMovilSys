@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Modelo.Catalogo
 {
     public class Producto_VM
-    {
+    { 
         public int IdProducto { get; set; }
         public string Nombre { get; set; }
         public string Modelo { get; set; }
