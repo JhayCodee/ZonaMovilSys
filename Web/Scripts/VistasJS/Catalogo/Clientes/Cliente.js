@@ -114,6 +114,7 @@
                 { data: "Cedula" },
                 { data: "Correo" },
                 { data: "Telefono" },
+                { data: "Departamento" },
                 {
                     data: null,
                     render: function (data, type, row) {
@@ -198,6 +199,7 @@
         $("#inputCedula").val(client.Cedula);
         $("#inputCorreo").val(client.Correo);
         $("#inputTelefono").val(client.Telefono);
+        $("#inputDepartamento").val(client.IdDepartamento).trigger('change');
     }
 
     function clearFormClient() {

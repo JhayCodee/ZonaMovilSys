@@ -36,6 +36,7 @@ namespace Logica.Catalogo
                         Cedula = c.Cedula,
                         Correo = c.Correo,
                         Telefono = c.Telefono,
+                        Departamento = c.Departamento.Nombre,
                         Activo = c.Activo
                     }).ToList();
 
@@ -48,7 +49,7 @@ namespace Logica.Catalogo
             }
         }
 
-        public List<DropDown> GetDepartamentosDropDown() 
+        /*public List<DropDown> GetDepartamentosDropDown() 
         {
             try
             {
@@ -66,8 +67,16 @@ namespace Logica.Catalogo
             {                
                 return null;
             }
+        }*/
+        public List<DropDown> GetDepartamentosDropDown()
+        {
+            return _db.Departamento               
+                .Select(d => new DropDown
+                {
+                    Id = d.IdDepartamento,
+                    Value = d.Nombre
+                }).ToList();
         }
-
 
         public bool GetClienteById(int idCliente, ref Cliente_VM cliente, ref string errorMessage)
         {
@@ -83,6 +92,7 @@ namespace Logica.Catalogo
                         Cedula = c.Cedula,
                         Correo = c.Correo,
                         Telefono = c.Telefono,
+                        IdDepartamento = c.IdDepartamento,
                         Activo = c.Activo,
                     })
                     .FirstOrDefault();

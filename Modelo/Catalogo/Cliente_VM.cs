@@ -17,7 +17,8 @@ namespace Modelo.Catalogo
         public string Correo { get; set; }
         public string Telefono { get; set; }
         [Required(ErrorMessage = "Campo Requerido")]
-        public int IdDepartamento { get; set; }
+        public Nullable<int> IdDepartamento { get; set; }
+        public string Departamento { get; set; }
         public int? CreadoPor { get; set; }
         public int? EditadoPor { get; set; }
         public int? EliminadoPor { get; set; }

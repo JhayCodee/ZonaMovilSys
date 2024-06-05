@@ -9,11 +9,11 @@
     });
 
     // Aplicar mascara de telefono
-    $('#inputTelefono').mask('0000-0000', {
+    $('#inputTelefono').mask('00000000', {
         translation: {
             '0': { pattern: /[0-9]/ }
         },
-        placeholder: "____-____"
+        placeholder: "________"
     });
 
     // Método personalizado para la validación de expresiones regulares
@@ -55,7 +55,7 @@
             },
             inputTelefono: {
                 required: true,
-                regex: /^[0-9]{4}-[0-9]{4}$/,              
+                regex: /^[0-9]{8}$/,              
                 normalizer: function (value) {
                     return $.trim(value);
                 }
