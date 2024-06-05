@@ -48,7 +48,7 @@
             });
         });
 
-        $('#tblClientes').on('click', '.delete-button', function () {
+        $('#tblClientes').on('click', '.delete-button', function () { 
             const id = $(this).data("id");
 
             Swal.fire({
