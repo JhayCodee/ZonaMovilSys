@@ -405,7 +405,11 @@
                 <input type="number" class="form-control text-center mx-1 cantidad-producto" style="width: 70px;" value="1" min="1" max="${data.Stock}" readonly>
                 <button class="btn btn-outline-secondary btn-sm mas-producto" type="button">+</button>
             </div>` :
-            `<input type="number" class="form-control text-center mx-1 cantidad-producto" style="width: 70px;" value="1" min="1" max="${data.Stock}" readonly disabled>`;
+            `
+            <div class="d-flex justify-content-center align-items-center">
+               <input type="number" class="form-control text-center mx-1 cantidad-producto" style="width: 70px;" value="1" min="1" max="${data.Stock}" readonly disabled>
+            </div>`
+            //`<input type="number" class="form-control text-center mx-1 cantidad-producto" style="width: 70px;" value="1" min="1" max="${data.Stock}" readonly disabled>`;
 
         var fila = `<tr data-producto-id="${data.IdProducto}" data-producto-categoria="${data.Categoria}" data-producto-IMEI="${data.IMEI}">
                     <td>${data.Nombre} - ${data.Modelo}</td>
