@@ -13,6 +13,7 @@ namespace Modelo.Ventas
         public System.DateTime Fecha { get; set; }
         public decimal Subtotal { get; set; }
         public decimal Impuesto { get; set; }
+        public decimal Descuento { get; set; }
         public decimal Total { get; set; }
         public bool Activo { get; set; }
         public int IdCliente { get; set; }
@@ -34,12 +35,14 @@ namespace Modelo.Ventas
         public string NombreProducto { get; set; }
         public string Almacenamiento { get; set; }
         public string RAM { get; set; }
+        public string Garantia { get; set; }
         public string IMEI { get; set; }
         public int Cantidad { get; set; }
         public decimal PrecioUnitario { get; set; }
         public DateTime Fecha { get; set; }
         public decimal Subtotal { get; set; }
         public decimal Impuesto { get; set; }
+        public decimal Descuento { get; set; }
         public decimal Total { get; set; }
         public bool Activo { get; set; }
     }

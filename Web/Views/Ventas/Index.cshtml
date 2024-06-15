@@ -13,6 +13,19 @@
             background-color: #007bff;
             border-color: #007bff;
         }
+
+    .select2-container {
+        z-index: 2050; 
+    }
+
+    .select2-dropdown {
+        z-index: 2060; 
+    }
+
+    .swal2-container {
+        z-index: 3000; 
+    }
+
 </style>
 
 
@@ -43,43 +56,46 @@
     </div>
 </div>
 
-
-
 <div class="row" id="Venta-Form" style="display: none;">
     <div class="col-12">
         <div class="card mb-4">
             <h5 class="card-header">VENTA DE PRODUCTOS</h5>
             <div class="card-body">
+
                 <!-- Sección de Selección de Cliente y Producto -->
                 <div class="row mb-3">
-                    <div class="col-md-5 mb-3">
+                    <div class="col-md-6 mb-3">
                         <label for="clienteSelect" class="form-label">Seleccionar Cliente</label>
-                        <select class="form-select select2" id="clienteSelect">
-                            <option value="">Seleccione un cliente</option>
-                            @foreach (var cliente in ViewBag.Clientes as SelectList)
-                            {
-                                <option value="@cliente.Value">@cliente.Text</option>
-                            }
-                        </select>
-
+                        <div class="input-group">
+                            <select class="form-select select2" id="clienteSelect">
+                                <option value="">Seleccione un cliente</option>
+                                @foreach (var cliente in ViewBag.Clientes as SelectList)
+                                {
+                                    <option value="@cliente.Value">@cliente.Text</option>
+                                }
+                            </select>
+                            <button type="button" class="btn btn-primary" id="btnNuevoCliente">
+                                <i class="bx bx-plus-circle"></i> Nuevo
+                            </button>
+                        </div>
                     </div>
-                    <div class="col-md-5 mb-3">
+                    <div class="col-md-6 mb-3">
                         <label for="productoSelect" class="form-label">Seleccionar Producto</label>
-                        <select class="form-select select2" id="productoSelect">
-                            <option value="">Seleccione un producto</option>
-                            @foreach (var producto in ViewBag.Productos)
-                            {
-                                <option value="@producto.Value">@producto.Text</option>
-                            }
-                        </select>
-
-                    </div>
-                    <div class="col-md-2 mb-3 d-flex align-items-end">
-                        <button type="button" class="btn btn-primary" id="btnAgregarProducto">
-                            <i class="bi bi-cart-plus"></i> Agregar Producto
-                        </button>
+                        <div class="input-group">
+                            <select class="form-select select2" id="productoSelect">
+                                <option value="">Seleccione un producto</option>
+                                @foreach (var producto in ViewBag.Productos)
+                                {
+                                    <option value="@producto.Value">@producto.Text</option>
+                                }
+                            </select>
+                            <button type="button" class="btn btn-primary" id="btnAgregarProducto">
+                                <i class="bx bx-plus-circle"></i> Agregar
+                            </button>
+                        </div>
                     </div>
                 </div>
+
 
                 <!-- Fila para Tabla de Productos y Sección de Cálculos -->
                 <div class="row">
@@ -94,8 +110,7 @@
                                             <tr>
                                                 <th>Descripción</th>
                                                 <th>Precio Unitario</th>
-                                                <th>Cantidad</th>
-                                                <th>IMEI</th> <!-- Nueva columna para IMEI -->
+                                                <th class="text-center">Cantidad</th>
                                                 <th>Acciones</th>
                                             </tr>
                                         </thead>
@@ -121,6 +136,11 @@
                                     <input type="number" class="form-control" id="impuestoVenta" disabled>
                                 </div>
                                 <div class="mb-3">
+                                    <label class="form-label">Descuento</label>
+                                    <input type="number" class="form-control" id="descuentoVenta" value="0" min="0">
+                                    <small id="descuentoWarning" class="text-danger" style="display: none;"></small>
+                                </div>
+                                <div class="mb-3">
                                     <label class="form-label">Total</label>
                                     <input type="number" class="form-control" id="totalVenta" disabled>
                                 </div>
@@ -141,6 +161,56 @@
     </div>
 </div>
 
+<!-- Modal para registro de nuevo cliente -->
+<div class="modal fade" id="modalNuevoCliente" tabindex="-1" aria-labelledby="modalNuevoClienteLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalNuevoClienteLabel">Registro de Nuevo Cliente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="frmClientes">
+                    <input type="hidden" class="form-control" id="idCliente" name="idCliente">
+                    <div class="mb-3">
+                        <label for="inputNombres" class="form-label">Nombres</label>
+                        <input type="text" class="form-control" id="inputNombres" name="inputNombres">
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputApellidos" class="form-label">Apellidos</label>
+                        <input type="text" class="form-control" id="inputApellidos" name="inputApellidos">
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputCedula" class="form-label">Cédula</label>
+                        <input type="text" class="form-control" id="inputCedula" name="inputCedula">
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputCorreo" class="form-label">Correo</label>
+                        <input type="email" class="form-control" id="inputCorreo" name="inputCorreo">
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputTelefono" class="form-label">Teléfono</label>
+                        <input type="text" class="form-control" id="inputTelefono" name="inputTelefono">
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputDepartamento" class="form-label">Departamento</label>
+                        <select class="form-control select2" id="inputDepartamento" name="inputDepartamento">
+                            <option value="" selected disabled>Seleccione una opción</option>
+                            @foreach (var dep in ViewBag.Departamentos)
+                            {
+                                <option value="@dep.Value">@dep.Text</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="text-end">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" id="btnGuardarCliente">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @section scripts {
     <script src="~/Scripts/VistasJS/Ventas/FacturaVenta/Ventas.js"></script>
 }

@@ -32,7 +32,7 @@ namespace Logica.Ventas
                             NumeroFactura = fv.NumeroFactura,
                             Cliente = c.Nombres + " " + c.Apellidos,
                             NombreProducto = p.Nombre,
-                            IMEI = dfv.IMEI,
+                            //IMEI = dfv.IMEI,
                             FechaFin = g.FechaFin,
                             //FechaEstimadaEntrega = g.FechaEstimadaEntrega,
                             Estado = g.Estado

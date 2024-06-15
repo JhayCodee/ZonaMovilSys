@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
+using System.Data.Entity.SqlServer;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,7 +35,7 @@ namespace Logica.Ventas
                             Subtotal = f.Subtotal,
                             Impuesto = f.Impuesto,
                             Total = f.Total,
-                            Cliente = f.Cliente.Nombres + " " + f.Cliente.Apellidos, 
+                            Cliente = f.Cliente.Nombres + " " + f.Cliente.Apellidos,
                             Activo = f.Activo
                         })
                         .ToList();
@@ -64,18 +65,30 @@ namespace Logica.Ventas
             return clientes;
         }
 
+        public List<DropDown> GetDepartamentoDropdown()
+        {
+            var Departamento = _db.Departamento
+                 .AsNoTracking()
+                 .Select(c => new DropDown
+                 {
+                     Id = c.IdDepartamento,
+                     Value = c.Nombre
+                 })
+                 .ToList();
+
+            return Departamento;
+        }
+
         public List<DropDown> GetProductosDropdown()
         {
             var productos = (from p in _db.Producto
                              join c in _db.Categoria on p.IdCategoria equals c.IdCategoria
                              join col in _db.Color on p.IdColor equals col.IdColor
-                             where p.Activo
+                             where p.Activo && p.Stock > 0
                              select new DropDown
                              {
                                  Id = p.IdProducto,
-                                 Value = p.Nombre + " " + p.Modelo +
-                                         (c.Nombre == "Celular" ? " - RAM: " + p.RAM + " - Almacenamiento: " + p.Almacenamiento : "") +
-                                         " - Color: " + col.Nombre
+                                 Value = p.CodigoBarra + " - " + p.Nombre
                              }).AsNoTracking().ToList();
 
             return productos;
@@ -85,27 +98,26 @@ namespace Logica.Ventas
         {
             try
             {
-                detalles = _db.FacturaVenta
-                            .Where(f => f.IdFacturaVenta == idFacturaVenta)
-                            .SelectMany(f => f.DetalleFacturaVenta, (f, dfv) => new { f, dfv })
-                            .Join(_db.Producto, fd => fd.dfv.IdProducto, p => p.IdProducto, (fd, p) => new { fd.f, fd.dfv, p })
-                            .Join(_db.Cliente, fpd => fpd.f.IdCliente, c => c.IdCliente, (fpd, c) => new DetalleFacturaPrint_VM
-                            {
-                                NumeroFactura = fpd.f.NumeroFactura,
-                                Cliente = c.Nombres + " " + c.Apellidos,
-                                NombreProducto = fpd.p.Nombre,
-                                //Almacenamiento = fpd.p.Almacenamiento,
-                                //RAM = fpd.p.RAM,
-                                IMEI = fpd.dfv.IMEI,
-                                Cantidad = fpd.dfv.Cantidad,
-                                PrecioUnitario = fpd.dfv.PrecioUnitario,
-                                Fecha = fpd.f.Fecha,
-                                Subtotal = fpd.f.Subtotal,
-                                Impuesto = fpd.f.Impuesto,
-                                Total = fpd.f.Total,
-                                Activo = fpd.f.Activo
-                            })
-                            .ToList();
+                detalles = _db.GenerarFactura(idFacturaVenta)
+                          .Select(fpdc => new DetalleFacturaPrint_VM
+                          {
+                              NumeroFactura = fpdc.NumeroFactura,
+                              Cliente = fpdc.Cliente,
+                              NombreProducto = fpdc.NombreProducto,
+                              RAM = fpdc.RAM,
+                              Almacenamiento = fpdc.Almacenamiento,
+                              Garantia = fpdc.Garantia,
+                              Cantidad = fpdc.Cantidad,
+                              PrecioUnitario = fpdc.PrecioUnitario,
+                              Fecha = fpdc.Fecha,
+                              Subtotal = fpdc.Subtotal,
+                              Impuesto = fpdc.Impuesto,
+                              Total = fpdc.Total,
+                              Activo = fpdc.Activo,
+                              Descuento = fpdc.Descuento,
+                              IMEI = fpdc.IMEI
+                          })
+                          .ToList();
 
                 return true;
             }
@@ -115,20 +127,20 @@ namespace Logica.Ventas
                 return false;
             }
         }
-       
-        public bool GetDetalleAnulacion (int id, ref FacturaVenta_VM facturaVenta, ref string errorMessage)
+
+        public bool GetDetalleAnulacion(int id, ref FacturaVenta_VM facturaVenta, ref string errorMessage)
         {
             try
             {
-               facturaVenta = _db.FacturaVenta
-                    .Where(f => f.IdFacturaVenta == id)
-                    .Select(f => new FacturaVenta_VM
-                    {
-                        RazonAnulamiento = f.RazonAnulamiento,
-                        FechaAnulacion = f.FechaAnulacion,
-                        Empleado = _db.Usuario.Where(x => x.IdUsuario ==  f.AnuladoPor).Select(x => x.Nombre + " " + x.Apellidos).FirstOrDefault()
-                    })
-                    .FirstOrDefault();
+                facturaVenta = _db.FacturaVenta
+                     .Where(f => f.IdFacturaVenta == id)
+                     .Select(f => new FacturaVenta_VM
+                     {
+                         RazonAnulamiento = f.RazonAnulamiento,
+                         FechaAnulacion = f.FechaAnulacion,
+                         Empleado = _db.Usuario.Where(x => x.IdUsuario == f.AnuladoPor).Select(x => x.Nombre + " " + x.Apellidos).FirstOrDefault()
+                     })
+                     .FirstOrDefault();
 
                 return facturaVenta != null;
             }
@@ -159,6 +171,7 @@ namespace Logica.Ventas
                             Fecha = facturaVenta.Fecha,
                             Subtotal = facturaVenta.Subtotal,
                             Impuesto = facturaVenta.Impuesto,
+                            Descuento = facturaVenta.Descuento,
                             Total = facturaVenta.Total,
                             IdCliente = facturaVenta.IdCliente,
                             CreadoPor = facturaVenta.CreadoPor,
@@ -183,12 +196,6 @@ namespace Logica.Ventas
                                 throw new Exception($"Stock insuficiente para el producto ID {detalle.IdProducto}.");
                             }
 
-                            // Validación para IMEI en caso de categoría "Celular"
-                            if (producto.Categoria.Nombre.Equals("Celular") && string.IsNullOrEmpty(detalle.IMEI))
-                            {
-                                throw new Exception($"IMEI requerido para el producto celular ID {detalle.IdProducto}.");
-                            }
-
                             // Crear detalle de factura
                             var detalleFactura = new DetalleFacturaVenta
                             {
@@ -196,25 +203,24 @@ namespace Logica.Ventas
                                 IdProducto = detalle.IdProducto,
                                 Cantidad = detalle.Cantidad,
                                 PrecioUnitario = detalle.PrecioUnitario,
-                                IMEI = detalle.IMEI
                             };
 
                             _db.DetalleFacturaVenta.Add(detalleFactura);
                             _db.SaveChanges();
 
-                            // Validar y crear registro de garantía si es aplicable
-                            if (producto.GarantiaMeses.HasValue && producto.GarantiaMeses > 0)
-                            {
-                                var garantia = new Garantia
-                                {
-                                    IdDetalleFacturaVenta = detalleFactura.IdDetalleFacturaVenta,
-                                    FechaInicio = factura.Fecha,
-                                    FechaFin = factura.Fecha.AddMonths(producto.GarantiaMeses.Value),
-                                    Estado = 1 
-                                };
+                            //// Validar y crear registro de garantía si es aplicable
+                            //if (producto.GarantiaMeses.HasValue && producto.GarantiaMeses > 0)
+                            //{
+                            //    var garantia = new Garantia
+                            //    {
+                            //        IdDetalleFacturaVenta = detalleFactura.IdDetalleFacturaVenta,
+                            //        FechaInicio = factura.Fecha,
+                            //        FechaFin = factura.Fecha.AddMonths(producto.GarantiaMeses.Value),
+                            //        Estado = 1 
+                            //    };
 
-                                _db.Garantia.Add(garantia);
-                            }
+                            //    _db.Garantia.Add(garantia);
+                            //}
 
                             // Actualizar el stock del producto
                             producto.Stock -= detalle.Cantidad;

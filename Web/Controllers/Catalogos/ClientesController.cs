@@ -1,4 +1,5 @@
 ﻿using Logica.Catalogo;
+using Logica.Ventas;
 using Modelo.Catalogo;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,14 @@ namespace Web.Controllers.Catalogos
             bool status = _ln.GetClientesActivos(ref clientes, ref errorMessage);
 
             return Json(new { status, clientes, errorMessage }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult GetClientesDropdown()
+        {
+            var clientes = new Ventas_LN().GetClientesDropdown();
+            string errorMessage = string.Empty;
+            return Json(new { clientes, errorMessage }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

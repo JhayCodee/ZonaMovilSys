@@ -25,7 +25,6 @@ namespace Datos
         public int IdProducto { get; set; }
         public int Cantidad { get; set; }
         public decimal PrecioUnitario { get; set; }
-        public string IMEI { get; set; }
     
         public virtual Producto Producto { get; set; }
         public virtual FacturaVenta FacturaVenta { get; set; }

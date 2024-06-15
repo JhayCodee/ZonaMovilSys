@@ -33,6 +33,7 @@ namespace Datos
         public Nullable<System.DateTime> FechaAnulacion { get; set; }
         public System.DateTime FechaCreacion { get; set; }
         public string RazonAnulamiento { get; set; }
+        public Nullable<decimal> Descuento { get; set; }
     
         public virtual Cliente Cliente { get; set; }
         public virtual Usuario Usuario { get; set; }
