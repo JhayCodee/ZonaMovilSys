@@ -460,9 +460,27 @@
 
     // MODAL CLIENTES
 
+    // Función para limpiar el formulario y reiniciar Select2
+    function resetForm() {
+        // Limpiar valores del formulario
+        $('#frmClientes')[0].reset();
+
+        // Quitar clases de validación
+        $('#frmClientes').find('.is-invalid').removeClass('is-invalid');
+        $('#frmClientes').find('.invalid-feedback').remove();
+
+        // Resetear Select2
+        $('#frmClientes').find('select').val(null).trigger('change');
+    }
+
     // Mostrar el modal para nuevo cliente
     $('#btnNuevoCliente').on('click', function () {
         $('#modalNuevoCliente').modal('show');
+    });
+
+    // Ocultar el modal y limpiar el formulario al cerrarlo
+    $('#modalNuevoCliente').on('hidden.bs.modal', function () {
+        resetForm();
     });
 
     // Aplicar la mascarada al campo de cédula
@@ -525,6 +543,7 @@
                 }
             },
             inputDepartamento: {
+                required: true,
                 valueNotEquals: ""
             }
         },
@@ -551,6 +570,7 @@
                 digits: "Sólo se permiten números."
             },
             inputDepartamento: {
+                required: "Seleccione una opción válida.",
                 valueNotEquals: "Seleccione una opción válida."
             }
         },
@@ -566,38 +586,69 @@
         }
     });
 
-    // Enviar el formulario de cliente
+    // Función para actualizar el select de clientes
+    function updateClientesDropdown() {
+        $.ajax({
+            url: '/Clientes/GetClientesDropdown',
+            type: 'POST',
+            dataType: 'json',
+            success: function (response) {
+                if (response.clientes) {
+                    var $clienteSelect = $('#clienteSelect');
+                    $clienteSelect.empty();
+                    $clienteSelect.append('<option value="">Seleccione un cliente</option>');
+                    $.each(response.clientes, function (index, cliente) {
+                        $clienteSelect.append(new Option(cliente.Value, cliente.Id));
+                    });
+                    $clienteSelect.trigger('change');
+                }
+            },
+            error: function () {
+                Swal.fire('Error', 'No se pudo actualizar la lista de clientes.', 'error');
+            }
+        });
+    }
+
+    // Enviar el formulario de cliente con confirmación
     $('#frmClientes').on('submit', function (e) {
         e.preventDefault();
 
         if ($(this).valid()) {
-            var clienteData = {
-                Nombres: $('#inputNombres').val(),
-                Apellidos: $('#inputApellidos').val(),
-                Cedula: $('#inputCedula').val(),
-                Correo: $('#inputCorreo').val(),
-                Telefono: $('#inputTelefono').val(),
-                Departamento: $('#inputDepartamento').val()
-            };
-
-            $.ajax({
-                url: '/Clientes/Create',
-                type: 'POST',
-                data: JSON.stringify(clienteData),
-                contentType: 'application/json; charset=utf-8',
-                success: function (response) {
-                    if (response.success) {
-                        Swal.fire('Éxito', 'Cliente registrado correctamente', 'success');
-                        $('#modalNuevoCliente').modal('hide');
-                        // Actualiza el select de clientes si es necesario
-                        // $('#clienteSelect').append(new Option(clienteData.Nombres + ' ' + clienteData.Apellidos, response.idCliente));
-                    } else {
-                        Swal.fire('Error', response.message, 'error');
-                    }
+            Swal.fire({
+                title: '¿Está seguro?',
+                text: "¿Desea guardar el nuevo cliente?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, guardar',
+                cancelButtonText: 'Cancelar',
+                preConfirm: () => {
+                    var clienteData = {
+                        Nombres: $('#inputNombres').val(),
+                        Apellidos: $('#inputApellidos').val(),
+                        Cedula: $('#inputCedula').val(),
+                        Correo: $('#inputCorreo').val(),
+                        Telefono: $('#inputTelefono').val(),
+                        IdDepartamento: $('#inputDepartamento').val()
+                    };
+                    return $.ajax({
+                        url: '/Clientes/CreateCliente',
+                        type: 'POST',
+                        data: JSON.stringify(clienteData),
+                        contentType: 'application/json; charset=utf-8'
+                    }).then(response => {
+                        if (response.status) {
+                            $('#modalNuevoCliente').modal('hide');
+                            // Actualiza el select de clientes
+                            updateClientesDropdown();
+                            return Swal.fire('Éxito', 'Cliente registrado correctamente', 'success');
+                        } else {
+                            return Swal.fire('Error', response.message, 'error');
+                        }
+                    }).catch(error => {
+                        return Swal.fire('Error', 'Ocurrió un error al registrar el cliente', 'error');
+                    });
                 },
-                error: function (error) {
-                    Swal.fire('Error', 'Ocurrió un error al registrar el cliente', 'error');
-                }
+                allowOutsideClick: () => !Swal.isLoading()
             });
         }
     });

@@ -64,6 +64,20 @@ namespace Logica.Ventas
             return clientes;
         }
 
+        public List<DropDown> GetDepartamentoDropdown()
+        {
+            var Departamento = _db.Departamento
+                 .AsNoTracking() 
+                 .Select(c => new DropDown
+                 {
+                     Id = c.IdDepartamento,
+                     Value = c.Nombre
+                 })
+                 .ToList();
+
+            return Departamento;
+        }
+
         public List<DropDown> GetProductosDropdown()
         {
             var productos = (from p in _db.Producto

@@ -13,6 +13,19 @@
             background-color: #007bff;
             border-color: #007bff;
         }
+
+    .select2-container {
+        z-index: 2050; 
+    }
+
+    .select2-dropdown {
+        z-index: 2060; 
+    }
+
+    .swal2-container {
+        z-index: 3000; 
+    }
+
 </style>
 
 
@@ -134,8 +147,6 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
 
                 <!-- Botones de Acción -->
@@ -156,9 +167,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalNuevoClienteLabel">Registro de Nuevo Cliente</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="frmClientes">
@@ -187,14 +196,14 @@
                         <label for="inputDepartamento" class="form-label">Departamento</label>
                         <select class="form-control select2" id="inputDepartamento" name="inputDepartamento">
                             <option value="" selected disabled>Seleccione una opción</option>
-                            @*@foreach (var dep in ViewBag.Departamentos)
+                            @foreach (var dep in ViewBag.Departamentos)
                             {
-                                <option value="@dep.Id">@dep.Value</option>
-                            }*@
+                                <option value="@dep.Value">@dep.Text</option>
+                            }
                         </select>
                     </div>
                     <div class="text-end">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-primary" id="btnGuardarCliente">Guardar</button>
                     </div>
                 </form>
@@ -202,8 +211,6 @@
         </div>
     </div>
 </div>
-
-
 @section scripts {
     <script src="~/Scripts/VistasJS/Ventas/FacturaVenta/Ventas.js"></script>
 }

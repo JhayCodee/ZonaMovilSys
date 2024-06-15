@@ -24,8 +24,10 @@ namespace Web.Controllers.Ventas
         {
             var clientesDropdown = _ln.GetClientesDropdown();
             var productosDropdown = _ln.GetProductosDropdown();
+            var departamentosDropdown = _ln.GetDepartamentoDropdown();
             ViewBag.Clientes = new SelectList(clientesDropdown, "Id", "Value");
             ViewBag.Productos = new SelectList(productosDropdown, "Id", "Value");
+            ViewBag.Departamentos = new SelectList(departamentosDropdown, "Id", "Value");
             return View();
         }
 
