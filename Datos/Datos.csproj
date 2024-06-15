@@ -77,6 +77,9 @@
     <Compile Include="Garantia.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="GenerarFactura_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Marca.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

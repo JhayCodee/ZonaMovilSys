@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
+using System.Data.Entity.SqlServer;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,7 +35,7 @@ namespace Logica.Ventas
                             Subtotal = f.Subtotal,
                             Impuesto = f.Impuesto,
                             Total = f.Total,
-                            Cliente = f.Cliente.Nombres + " " + f.Cliente.Apellidos, 
+                            Cliente = f.Cliente.Nombres + " " + f.Cliente.Apellidos,
                             Activo = f.Activo
                         })
                         .ToList();
@@ -67,7 +68,7 @@ namespace Logica.Ventas
         public List<DropDown> GetDepartamentoDropdown()
         {
             var Departamento = _db.Departamento
-                 .AsNoTracking() 
+                 .AsNoTracking()
                  .Select(c => new DropDown
                  {
                      Id = c.IdDepartamento,
@@ -97,27 +98,26 @@ namespace Logica.Ventas
         {
             try
             {
-                detalles = _db.FacturaVenta
-                            .Where(f => f.IdFacturaVenta == idFacturaVenta)
-                            .SelectMany(f => f.DetalleFacturaVenta, (f, dfv) => new { f, dfv })
-                            .Join(_db.Producto, fd => fd.dfv.IdProducto, p => p.IdProducto, (fd, p) => new { fd.f, fd.dfv, p })
-                            .Join(_db.Cliente, fpd => fpd.f.IdCliente, c => c.IdCliente, (fpd, c) => new DetalleFacturaPrint_VM
-                            {
-                                NumeroFactura = fpd.f.NumeroFactura,
-                                Cliente = c.Nombres + " " + c.Apellidos,
-                                NombreProducto = fpd.p.Nombre,
-                                //Almacenamiento = fpd.p.Almacenamiento,
-                                //RAM = fpd.p.RAM,
-                                Cantidad = fpd.dfv.Cantidad,
-                                PrecioUnitario = fpd.dfv.PrecioUnitario,
-                                Fecha = fpd.f.Fecha,
-                                Subtotal = fpd.f.Subtotal,
-                                Impuesto = fpd.f.Impuesto,
-                                Total = fpd.f.Total,
-                                Activo = fpd.f.Activo,
-                                Descuento = fpd.f.Descuento ?? 0
-                            })
-                            .ToList();
+                detalles = _db.GenerarFactura(idFacturaVenta)
+                          .Select(fpdc => new DetalleFacturaPrint_VM
+                          {
+                              NumeroFactura = fpdc.NumeroFactura,
+                              Cliente = fpdc.Cliente,
+                              NombreProducto = fpdc.NombreProducto,
+                              RAM = fpdc.RAM,
+                              Almacenamiento = fpdc.Almacenamiento,
+                              Garantia = fpdc.Garantia,
+                              Cantidad = fpdc.Cantidad,
+                              PrecioUnitario = fpdc.PrecioUnitario,
+                              Fecha = fpdc.Fecha,
+                              Subtotal = fpdc.Subtotal,
+                              Impuesto = fpdc.Impuesto,
+                              Total = fpdc.Total,
+                              Activo = fpdc.Activo,
+                              Descuento = fpdc.Descuento,
+                              IMEI = fpdc.IMEI
+                          })
+                          .ToList();
 
                 return true;
             }
@@ -127,20 +127,20 @@ namespace Logica.Ventas
                 return false;
             }
         }
-       
-        public bool GetDetalleAnulacion (int id, ref FacturaVenta_VM facturaVenta, ref string errorMessage)
+
+        public bool GetDetalleAnulacion(int id, ref FacturaVenta_VM facturaVenta, ref string errorMessage)
         {
             try
             {
-               facturaVenta = _db.FacturaVenta
-                    .Where(f => f.IdFacturaVenta == id)
-                    .Select(f => new FacturaVenta_VM
-                    {
-                        RazonAnulamiento = f.RazonAnulamiento,
-                        FechaAnulacion = f.FechaAnulacion,
-                        Empleado = _db.Usuario.Where(x => x.IdUsuario ==  f.AnuladoPor).Select(x => x.Nombre + " " + x.Apellidos).FirstOrDefault()
-                    })
-                    .FirstOrDefault();
+                facturaVenta = _db.FacturaVenta
+                     .Where(f => f.IdFacturaVenta == id)
+                     .Select(f => new FacturaVenta_VM
+                     {
+                         RazonAnulamiento = f.RazonAnulamiento,
+                         FechaAnulacion = f.FechaAnulacion,
+                         Empleado = _db.Usuario.Where(x => x.IdUsuario == f.AnuladoPor).Select(x => x.Nombre + " " + x.Apellidos).FirstOrDefault()
+                     })
+                     .FirstOrDefault();
 
                 return facturaVenta != null;
             }

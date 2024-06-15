@@ -151,6 +151,7 @@ namespace Logica.Catalogo
                     cliente.Cedula,
                     cliente.Correo,
                     cliente.Telefono,
+                    1,
                     true,
                     cliente.EditadoPor,
                     isSuccessParam,

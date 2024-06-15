@@ -220,7 +220,7 @@ namespace Datos
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Producto_Delete", idProductoParameter, eliminadoPorParameter, isSuccess, errorMsg);
         }
     
-        public virtual int sp_Producto_Update(Nullable<int> idProducto, string nombre, string modelo, string descripcion, Nullable<int> stock, Nullable<decimal> precioCompra, Nullable<decimal> precioVenta, string almacenamiento, Nullable<int> garantiaMeses, string rAM, Nullable<bool> activo, Nullable<int> idMarca, Nullable<int> idCategoria, Nullable<int> idColor, Nullable<int> editadoPor, ObjectParameter isSuccess, ObjectParameter errorMsg)
+        public virtual int sp_Producto_Update(Nullable<int> idProducto, string nombre, string modelo, string descripcion, Nullable<int> stock, Nullable<decimal> precioCompra, Nullable<decimal> precioVenta, Nullable<int> almacenamiento, Nullable<int> garantiaMeses, Nullable<int> rAM, Nullable<bool> activo, Nullable<int> idMarca, Nullable<int> idCategoria, Nullable<int> idColor, Nullable<int> bateria, Nullable<bool> nuevo, Nullable<bool> eSim, Nullable<int> idProveedor, string iMEI, string codigoBarra, Nullable<int> editadoPor, ObjectParameter isSuccess, ObjectParameter errorMsg)
         {
             var idProductoParameter = idProducto.HasValue ?
                 new ObjectParameter("IdProducto", idProducto) :
@@ -250,17 +250,17 @@ namespace Datos
                 new ObjectParameter("PrecioVenta", precioVenta) :
                 new ObjectParameter("PrecioVenta", typeof(decimal));
     
-            var almacenamientoParameter = almacenamiento != null ?
+            var almacenamientoParameter = almacenamiento.HasValue ?
                 new ObjectParameter("Almacenamiento", almacenamiento) :
-                new ObjectParameter("Almacenamiento", typeof(string));
+                new ObjectParameter("Almacenamiento", typeof(int));
     
             var garantiaMesesParameter = garantiaMeses.HasValue ?
                 new ObjectParameter("GarantiaMeses", garantiaMeses) :
                 new ObjectParameter("GarantiaMeses", typeof(int));
     
-            var rAMParameter = rAM != null ?
+            var rAMParameter = rAM.HasValue ?
                 new ObjectParameter("RAM", rAM) :
-                new ObjectParameter("RAM", typeof(string));
+                new ObjectParameter("RAM", typeof(int));
     
             var activoParameter = activo.HasValue ?
                 new ObjectParameter("Activo", activo) :
@@ -278,11 +278,35 @@ namespace Datos
                 new ObjectParameter("IdColor", idColor) :
                 new ObjectParameter("IdColor", typeof(int));
     
+            var bateriaParameter = bateria.HasValue ?
+                new ObjectParameter("Bateria", bateria) :
+                new ObjectParameter("Bateria", typeof(int));
+    
+            var nuevoParameter = nuevo.HasValue ?
+                new ObjectParameter("Nuevo", nuevo) :
+                new ObjectParameter("Nuevo", typeof(bool));
+    
+            var eSimParameter = eSim.HasValue ?
+                new ObjectParameter("eSim", eSim) :
+                new ObjectParameter("eSim", typeof(bool));
+    
+            var idProveedorParameter = idProveedor.HasValue ?
+                new ObjectParameter("IdProveedor", idProveedor) :
+                new ObjectParameter("IdProveedor", typeof(int));
+    
+            var iMEIParameter = iMEI != null ?
+                new ObjectParameter("IMEI", iMEI) :
+                new ObjectParameter("IMEI", typeof(string));
+    
+            var codigoBarraParameter = codigoBarra != null ?
+                new ObjectParameter("CodigoBarra", codigoBarra) :
+                new ObjectParameter("CodigoBarra", typeof(string));
+    
             var editadoPorParameter = editadoPor.HasValue ?
                 new ObjectParameter("EditadoPor", editadoPor) :
                 new ObjectParameter("EditadoPor", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Producto_Update", idProductoParameter, nombreParameter, modeloParameter, descripcionParameter, stockParameter, precioCompraParameter, precioVentaParameter, almacenamientoParameter, garantiaMesesParameter, rAMParameter, activoParameter, idMarcaParameter, idCategoriaParameter, idColorParameter, editadoPorParameter, isSuccess, errorMsg);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Producto_Update", idProductoParameter, nombreParameter, modeloParameter, descripcionParameter, stockParameter, precioCompraParameter, precioVentaParameter, almacenamientoParameter, garantiaMesesParameter, rAMParameter, activoParameter, idMarcaParameter, idCategoriaParameter, idColorParameter, bateriaParameter, nuevoParameter, eSimParameter, idProveedorParameter, iMEIParameter, codigoBarraParameter, editadoPorParameter, isSuccess, errorMsg);
         }
     
         public virtual int sp_Categoria_Create(string nombre, Nullable<bool> activo, Nullable<int> creadoPor, ObjectParameter isSuccess, ObjectParameter errorMsg)
@@ -386,7 +410,7 @@ namespace Datos
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Cliente_Delete", idClienteParameter, eliminadoPorParameter, isSuccess, errorMsg);
         }
     
-        public virtual int sp_Cliente_Update(Nullable<int> idCliente, string nombres, string apellidos, string cedula, string correo, string telefono, Nullable<bool> activo, Nullable<int> editadoPor, ObjectParameter isSuccess, ObjectParameter errorMsg)
+        public virtual int sp_Cliente_Update(Nullable<int> idCliente, string nombres, string apellidos, string cedula, string correo, string telefono, Nullable<int> idDepartamento, Nullable<bool> activo, Nullable<int> editadoPor, ObjectParameter isSuccess, ObjectParameter errorMsg)
         {
             var idClienteParameter = idCliente.HasValue ?
                 new ObjectParameter("IdCliente", idCliente) :
@@ -412,6 +436,10 @@ namespace Datos
                 new ObjectParameter("Telefono", telefono) :
                 new ObjectParameter("Telefono", typeof(string));
     
+            var idDepartamentoParameter = idDepartamento.HasValue ?
+                new ObjectParameter("IdDepartamento", idDepartamento) :
+                new ObjectParameter("IdDepartamento", typeof(int));
+    
             var activoParameter = activo.HasValue ?
                 new ObjectParameter("Activo", activo) :
                 new ObjectParameter("Activo", typeof(bool));
@@ -420,7 +448,7 @@ namespace Datos
                 new ObjectParameter("EditadoPor", editadoPor) :
                 new ObjectParameter("EditadoPor", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Cliente_Update", idClienteParameter, nombresParameter, apellidosParameter, cedulaParameter, correoParameter, telefonoParameter, activoParameter, editadoPorParameter, isSuccess, errorMsg);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Cliente_Update", idClienteParameter, nombresParameter, apellidosParameter, cedulaParameter, correoParameter, telefonoParameter, idDepartamentoParameter, activoParameter, editadoPorParameter, isSuccess, errorMsg);
         }
     
         public virtual int sp_Color_Create(string nombre, Nullable<bool> activo, Nullable<int> creadoPor, ObjectParameter isSuccess, ObjectParameter errorMsg)
@@ -636,5 +664,15 @@ namespace Datos
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Proveedor_Update", idProveedorParameter, nombreParameter, telefonoParameter, correoParameter, direccionParameter, activoParameter, editadoPorParameter, isSuccess, errorMsg);
         }
+    
+        public virtual ObjectResult<GenerarFactura_Result> GenerarFactura(Nullable<int> idFacturaVenta)
+        {
+            var idFacturaVentaParameter = idFacturaVenta.HasValue ?
+                new ObjectParameter("idFacturaVenta", idFacturaVenta) :
+                new ObjectParameter("idFacturaVenta", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GenerarFactura_Result>("GenerarFactura", idFacturaVentaParameter);
+        }
+       
     }
 }

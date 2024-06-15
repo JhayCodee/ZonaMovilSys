@@ -4,6 +4,8 @@
 }
 @{
     var primerItem = Model.Count > 0 ? Model[0] : null;
+    var tipoCambioDolarCordoba = 36.5m; // Tipo de cambio como decimal
+    Func<decimal, string> formatearCordobas = (valor) => string.Format(new System.Globalization.CultureInfo("es-NI"), "{0:C}", valor);
 }
 
 <!DOCTYPE html>
@@ -71,7 +73,7 @@
             left: 50%;
             transform: translate(-50%, -50%) rotate(-45deg);
             font-size: 80px;
-            color: rgba(0, 123, 255, 0.1);
+            color: rgba(255, 0, 0, 0.2); /* Rojo transparente */
             z-index: 9999;
             user-select: none;
             pointer-events: none;
@@ -115,26 +117,26 @@
             text-align: center;
         }
 
-            .header-logo img {
-                max-width: 150px;
-                height: auto;
-            }
+        .header-logo img {
+            max-width: 150px;
+            height: auto;
+        }
 
         .header-info {
             text-align: center;
             margin-top: 10px;
         }
 
-            .header-info p {
-                margin: 0;
-                font-size: 14px;
-            }
+        .header-info p {
+            margin: 0;
+            font-size: 14px;
+        }
 
-            .header-info h1 {
-                margin: 0;
-                font-size: 24px;
-                color: #007bff;
-            }
+        .header-info h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #007bff;
+        }
     </style>
 </head>
 
@@ -154,55 +156,70 @@
         <table class="header-factura">
             <tr>
                 <td class="info-tienda">
-                    <h2>@primerItem.NumeroFactura</h2>
+                    <h2>N° @primerItem.NumeroFactura</h2>
                     <p>@primerItem.Fecha.ToString("dd/MM/yyyy")</p>
                 </td>
                 <td class="info-factura-cliente">
-                    <p>@primerItem.Cliente</p>
+                    <p>Cliente: @primerItem.Cliente</p>
                 </td>
             </tr>
         </table>
 
         <h3 style="text-align: center;">Factura de Venta</h3>
-
+        <br />
         <table class="detalles-factura">
             <thead>
                 <tr>
                     <th>Descripción del Producto</th>
                     <th>IMEI (si aplica)</th>
                     <th>Cantidad</th>
-                    <th>Precio Unitario</th>
-                    <th>Total</th>
+                    <th>Garantía</th>
+                    <th>Precio Unitario (USD)</th>
+                    <th>Precio Unitario (Córdobas)</th>
+                    <th>Total (USD)</th>
+                    <th>Total (Córdobas)</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@item.NombreProducto @(!string.IsNullOrEmpty(item.Almacenamiento) ? " - " + item.Almacenamiento : "") @(!string.IsNullOrEmpty(item.RAM) ? " - " + item.RAM : "")</td>
-                        <td>NOHAY</td>
+                        <td>
+                            @item.NombreProducto
+                            @(string.IsNullOrEmpty(item.Almacenamiento) ? "" : $" - Almacenamiento: {item.Almacenamiento}")
+
+                            @(string.IsNullOrEmpty(item.RAM) ? "" : $" - RAM: {item.RAM}")
+                        </td>
+                        <td>@item.IMEI</td>
                         <td>@item.Cantidad</td>
+                        <td>@item.Garantia</td>
                         <td>@item.PrecioUnitario.ToString("C")</td>
-                        <td>@(item.PrecioUnitario * item.Cantidad).ToString("C")</td>
+                        <td>@formatearCordobas(item.PrecioUnitario * tipoCambioDolarCordoba)</td>
+                        <td>@((item.PrecioUnitario * item.Cantidad).ToString("C"))</td>
+                        <td>@formatearCordobas(item.PrecioUnitario * item.Cantidad * tipoCambioDolarCordoba)</td>
                     </tr>
                 }
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="4" class="subtotal">Subtotal</td>
-                    <td>@(primerItem.Subtotal).ToString("C")</td>
+                    <td colspan="6" class="subtotal">Subtotal</td>
+                    <td>@primerItem.Subtotal.ToString("C")</td>
+                    <td>@formatearCordobas(primerItem.Subtotal * tipoCambioDolarCordoba)</td>
                 </tr>
                 <tr>
-                    <td colspan="4" class="impuesto">IVA</td>
+                    <td colspan="6" class="impuesto">IVA</td>
                     <td>@primerItem.Impuesto.ToString("C")</td>
+                    <td>@formatearCordobas(primerItem.Impuesto * tipoCambioDolarCordoba)</td>
                 </tr>
                 <tr>
-                    <td colspan="4" class="descuento">Descuento</td>
+                    <td colspan="6" class="descuento">Descuento</td>
                     <td>@primerItem.Descuento.ToString("C")</td>
+                    <td>@formatearCordobas(primerItem.Descuento * tipoCambioDolarCordoba)</td>
                 </tr>
                 <tr>
-                    <td colspan="4" class="total">Total</td>
+                    <td colspan="6" class="total">Total</td>
                     <td>@primerItem.Total.ToString("C")</td>
+                    <td>@formatearCordobas(primerItem.Total * tipoCambioDolarCordoba)</td>
                 </tr>
             </tfoot>
         </table>

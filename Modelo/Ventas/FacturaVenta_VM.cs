@@ -35,6 +35,7 @@ namespace Modelo.Ventas
         public string NombreProducto { get; set; }
         public string Almacenamiento { get; set; }
         public string RAM { get; set; }
+        public string Garantia { get; set; }
         public string IMEI { get; set; }
         public int Cantidad { get; set; }
         public decimal PrecioUnitario { get; set; }
