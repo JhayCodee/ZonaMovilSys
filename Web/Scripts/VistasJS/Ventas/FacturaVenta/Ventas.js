@@ -412,7 +412,7 @@
             //`<input type="number" class="form-control text-center mx-1 cantidad-producto" style="width: 70px;" value="1" min="1" max="${data.Stock}" readonly disabled>`;
 
         var fila = `<tr data-producto-id="${data.IdProducto}" data-producto-categoria="${data.Categoria}" data-producto-IMEI="${data.IMEI}">
-                    <td>${data.Nombre} - ${data.Modelo}</td>
+                    <td>${data.DetalleCelular} </td>
                     <td>${data.PrecioVenta}</td>
                     <td>${cantidadColumna}</td>
                     <td>
@@ -485,6 +485,14 @@
     // Ocultar el modal y limpiar el formulario al cerrarlo
     $('#modalNuevoCliente').on('hidden.bs.modal', function () {
         resetForm();
+    });
+
+    // Reiniciar Select2 cuando se muestra el modal
+    $('#modalNuevoCliente').on('shown.bs.modal', function () {
+        $('#inputDepartamento').select2({
+            theme: 'bootstrap-5',
+            dropdownParent: $('#modalNuevoCliente') // Asegura que el dropdown se muestre correctamente dentro del modal
+        });
     });
 
     // Aplicar la mascarada al campo de cédula

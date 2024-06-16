@@ -145,6 +145,23 @@ namespace Logica.Catalogo
                 var product = _db.Producto.FirstOrDefault(p => p.IdProducto == productId);
                 if (product != null)
                 {
+                    string esimText = product.eSim == true ? " con eSim" : "";
+                    string nuevoText = product.Nuevo == true ? " Nuevo" : "";
+                    string bateriaText = product.Bateria.HasValue ? $" Batería: {product.Bateria}%" : "";
+
+                    string detalleCelular;
+                    if (product.Categoria?.Nombre == "Accesorio")
+                    {
+                        detalleCelular = product.Nombre;
+                    }
+                    else
+                    {
+                        detalleCelular = product.Nombre +
+                                         " RAM " + (product.ValoresUnidadMedida2?.Valor.ToString() ?? "N/A") +
+                                         "Gb Almacenamiento: " + (product.ValoresUnidadMedida?.Valor.ToString() ?? "N/A") +
+                                         "Gb" + esimText + nuevoText + bateriaText;
+                    }
+
                     data = new Producto_VM
                     {
                         IdProducto = product.IdProducto,
@@ -167,15 +184,16 @@ namespace Logica.Catalogo
                         FechaCreacion = product.FechaCreacion,
                         FechaActualizacion = product.FechaActualizacion,
                         FechaEliminacion = product.FechaEliminacion,
-                        Marca = product.Marca.Nombre,
-                        Color = product.Color.Nombre,
-                        Categoria = product.Categoria.Nombre,
-                        Bateria= product.Bateria,
+                        Marca = product.Marca?.Nombre,
+                        Color = product.Color?.Nombre,
+                        Categoria = product.Categoria?.Nombre,
+                        Bateria = product.Bateria,
                         Nuevo = product.Nuevo,
-                        Esim= product.eSim,
-                        Proveedor=product.Proveedor.Nombre,
-                        Imei=product.IMEI,
-                        CodigoBarra=product.CodigoBarra
+                        Esim = product.eSim,
+                        Proveedor = product.Proveedor?.Nombre,
+                        Imei = product.IMEI,
+                        CodigoBarra = product.CodigoBarra,
+                        DetalleCelular = detalleCelular
                     };
                 }
                 return true;
@@ -186,7 +204,6 @@ namespace Logica.Catalogo
                 return false;
             }
         }
-
 
 
         public bool CreateProduct(Producto_VM product, ref string errorMessage)

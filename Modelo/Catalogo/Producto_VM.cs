@@ -38,5 +38,6 @@ namespace Modelo.Catalogo
         public Nullable<int> IdCategoria { get; set; }
         public Nullable<int> IdColor { get; set; }
         public Nullable<int> IdProveedor { get; set; }
+        public string DetalleCelular { get; set; }
     }
 }

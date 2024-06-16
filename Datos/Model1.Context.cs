@@ -673,6 +673,18 @@ namespace Datos
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GenerarFactura_Result>("GenerarFactura", idFacturaVentaParameter);
         }
-       
+    
+        public virtual int sp_AgregarGarantia(Nullable<int> idProducto, Nullable<int> idDetalleFacturaVenta)
+        {
+            var idProductoParameter = idProducto.HasValue ?
+                new ObjectParameter("IdProducto", idProducto) :
+                new ObjectParameter("IdProducto", typeof(int));
+    
+            var idDetalleFacturaVentaParameter = idDetalleFacturaVenta.HasValue ?
+                new ObjectParameter("IdDetalleFacturaVenta", idDetalleFacturaVenta) :
+                new ObjectParameter("IdDetalleFacturaVenta", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_AgregarGarantia", idProductoParameter, idDetalleFacturaVentaParameter);
+        }
     }
 }

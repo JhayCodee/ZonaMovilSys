@@ -162,7 +162,7 @@ namespace Logica.Ventas
                         // Obtener el último número de factura y generar el nuevo número
                         var ultimoNumero = _db.FacturaVenta.Max(f => f.NumeroFactura);
                         var nuevoNumero = (ultimoNumero == null ? 0 : int.Parse(ultimoNumero)) + 1;
-                        var numeroFactura = nuevoNumero.ToString().PadLeft(6, '0'); // Rellenar con ceros a la izquierda si es necesario
+                        var numeroFactura = nuevoNumero.ToString().PadLeft(6, '0'); 
 
                         // Crear el encabezado de la factura
                         var factura = new FacturaVenta
@@ -208,19 +208,11 @@ namespace Logica.Ventas
                             _db.DetalleFacturaVenta.Add(detalleFactura);
                             _db.SaveChanges();
 
-                            //// Validar y crear registro de garantía si es aplicable
-                            //if (producto.GarantiaMeses.HasValue && producto.GarantiaMeses > 0)
-                            //{
-                            //    var garantia = new Garantia
-                            //    {
-                            //        IdDetalleFacturaVenta = detalleFactura.IdDetalleFacturaVenta,
-                            //        FechaInicio = factura.Fecha,
-                            //        FechaFin = factura.Fecha.AddMonths(producto.GarantiaMeses.Value),
-                            //        Estado = 1 
-                            //    };
-
-                            //    _db.Garantia.Add(garantia);
-                            //}
+                            // Llamar al procedimiento almacenado para agregar la garantía
+                            if (producto.GarantiaMeses.HasValue)
+                            {
+                                _db.sp_AgregarGarantia(detalle.IdProducto, detalleFactura.IdDetalleFacturaVenta);
+                            }
 
                             // Actualizar el stock del producto
                             producto.Stock -= detalle.Cantidad;
