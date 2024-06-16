@@ -24,6 +24,12 @@
                             <th>Color</th>
                             <th>Marca</th>
                             <th>Categoría</th>
+                            <th>Bateria</th>
+                            <th>Nuevo</th>
+                            <th>Esim</th>
+                            <th>Proveedor</th>
+                            <th>Imei</th>
+                            <th>CodigoBarra</th>
                             <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
@@ -112,7 +118,33 @@
                                     }
                                 </select>
                             </div>
+                            <!-- BATERIA-->
+                            <div class="mb-3">
+                                <label for="inputBateria" class="form-label">Bateria</label>
+                                <input type="number" class="form-control" id="inputBateria" name="inputBateria">
+                            </div>
 
+                            <!-- NUEVO -->
+                            <div class="mb-3">
+                                <label for="inputNuevo" class="form-label">Nuevo</label>
+                                <select class="form-control" id="inputNuevo" name="inputNuevo">
+                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="true">Sí</option>
+                                    <option value="false">No</option>
+                                </select>
+                            </div>
+
+                            <!-- Imei-->
+                            <div class="mb-3">
+                                <label for="inputImei" class="form-label">Imei</label>
+                                <input type="text" class="form-control" id="inputImei" name="inputImei">
+                            </div>
+
+                            <!-- Codigo Barras-->
+                            <div class="mb-3">
+                                <label for="inputCodigoBarras" class="form-label">CodigoBarra</label>
+                                <input type="text" id="inputCodigoBarras" name="inputCodigoBarras">
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
@@ -149,6 +181,29 @@
                                     }
                                 </select>
                             </div>
+
+                             
+                            <!-- Esim -->
+                            <div class="mb-3">
+                                <label for="inputEsim" class="form-label">Esim</label>
+                                <select class="form-control" id="inputEsim" name="inputEsim">
+                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="true">Sí</option>
+                                    <option value="false">No</option>
+                                </select>
+                            </div>
+
+                            <!-- Proveedor -->
+                            <div class="mb-3">
+                                <label for="inputProveedores" class="form-label">Proveedor</label>
+                                <select class="form-control select2" id="inputProveedores" name="inputProveedores">
+                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    @foreach (var proveedor in ViewBag.Proveedores)
+                                    {
+                                        <option value="@proveedor.Id">@proveedor.Value</option>
+                                    }
+                                </select>
+                            </div>
                         </div>
                     </div>
 
@@ -169,6 +224,8 @@
 @section scripts {
     <script src="~/Scripts/VistasJS/Catalogo/Productos/ProductosRules.js"></script>
     <script src="~/Scripts/VistasJS/Catalogo/Productos/Productos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
+
 }
 
 

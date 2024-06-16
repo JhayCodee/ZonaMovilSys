@@ -25,9 +25,10 @@ namespace Web.Controllers.Catalogos
             ViewBag.Marcas = _ln.GetMarcas();
             ViewBag.Colores = _ln.GetColores();
             ViewBag.Categorias = _ln.GetCategorias();
+            ViewBag.Proveedores = _ln.GetProveedores(); //añadiendo proveedores
             ViewBag.Gb = _ln.GetValoresGb();
             ViewBag.Meses = _ln.GetValoresMeses();
-
+             
             return View();  
         }
 

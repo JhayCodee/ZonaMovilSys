@@ -25,25 +25,43 @@ namespace Logica.Catalogo
         {
             try
             {
-                data = _db.Producto
-                        .Where(x => x.Activo)
-                        .Select(x => new Producto_VM
-                        {
-                            IdProducto = x.IdProducto,
-                            Nombre = x.Nombre,
-                            Modelo = x.Modelo,
-                            Descripcion = x.Descripcion,
-                            Stock = x.Stock,
-                            PrecioVenta = x.PrecioVenta,
-                            PrecioCompra = x.PrecioCompra,
-                            GarantiaMeses = x.GarantiaMeses,
-                            //Almacenamiento = x.Almacenamiento,
-                            //RAM = x.RAM,
-                            Activo = x.Activo,
-                            Marca = x.Marca.Nombre,
-                            Color = x.Color.Nombre,
-                            Categoria = x.Categoria.Nombre
-                        }).ToList();
+                data = ( from p in _db.Producto.AsNoTracking()
+                         join vu1 in _db.ValoresUnidadMedida on p.RAM equals vu1.IdValUniMed
+                         join vu2 in _db.ValoresUnidadMedida on p.GarantiaMeses equals vu2.IdValUniMed
+                         join vu3 in _db.ValoresUnidadMedida on p.Almacenamiento equals vu3.IdValUniMed
+                         join um in _db.UnidadMedida on vu1.IdUnidadMedida equals um.idUnidadMedida
+                         join um2 in _db.UnidadMedida on vu2.IdUnidadMedida equals um2.idUnidadMedida
+                         join um3 in _db.UnidadMedida on vu3.IdUnidadMedida equals um3.idUnidadMedida
+                         select new Producto_VM
+                         {
+                            IdProducto=p.IdProducto,
+                            Nombre=p.Nombre,
+                            Modelo=p.Modelo,
+                            Descripcion=p.Descripcion,
+                            Stock=p.Stock,
+                            PrecioVenta=p.PrecioVenta,
+                            PrecioCompra=p.PrecioCompra,
+                            GarantiaMeses=vu2.Valor,
+                            Almacenamiento=vu3.Valor,
+                            RAM= vu1.Valor,
+                            Activo= p.Activo,
+                            Marca= p.Marca.Nombre,
+                            Color=p.Color.Nombre,
+                            Categoria=p.Categoria.Nombre,
+                            Bateria=p.Bateria,
+                            Nuevo=p.Nuevo,
+                            Esim=p.eSim,
+                            Proveedor=p.Proveedor.Nombre,
+                            Imei=p.IMEI,
+                            CodigoBarra=p.CodigoBarra
+
+
+
+                             
+                         }
+
+
+                    ).ToList();
 
                 return true;
             }
@@ -83,6 +101,16 @@ namespace Logica.Catalogo
                 .Select(c => new DropDown
                 {
                     Id = c.IdCategoria,
+                    Value = c.Nombre
+                }).ToList();
+        }
+        public List<DropDown> GetProveedores()
+        {
+            return _db.Proveedor
+                .Where(c => c.Activo)
+                .Select(c => new DropDown
+                {
+                    Id = c.IdProveedor,
                     Value = c.Nombre
                 }).ToList();
         }
@@ -126,9 +154,9 @@ namespace Logica.Catalogo
                         Stock = product.Stock,
                         PrecioCompra = product.PrecioCompra,
                         PrecioVenta = product.PrecioVenta,
-                        //Almacenamiento = product.Almacenamiento,
+                        Almacenamiento = product.Almacenamiento,
                         GarantiaMeses = product.GarantiaMeses,
-                        //RAM = product.RAM,
+                        RAM = product.RAM,
                         Activo = product.Activo,
                         IdMarca = product.IdMarca,
                         IdCategoria = product.IdCategoria,
@@ -141,7 +169,13 @@ namespace Logica.Catalogo
                         FechaEliminacion = product.FechaEliminacion,
                         Marca = product.Marca.Nombre,
                         Color = product.Color.Nombre,
-                        Categoria = product.Categoria.Nombre
+                        Categoria = product.Categoria.Nombre,
+                        Bateria= product.Bateria,
+                        Nuevo = product.Nuevo,
+                        Esim= product.eSim,
+                        Proveedor=product.Proveedor.Nombre,
+                        Imei=product.IMEI,
+                        CodigoBarra=product.CodigoBarra
                     };
                 }
                 return true;
@@ -161,31 +195,37 @@ namespace Logica.Catalogo
             {
                 ObjectParameter isSuccessParam = new ObjectParameter("IsSuccess", typeof(int));
                 ObjectParameter errorMsgParam = new ObjectParameter("ErrorMsg", typeof(string));
-
-                //_db.sp_Producto_Create(
-                //                        product.Nombre,
-                //                        product.Modelo,
-                //                        product.Descripcion,
-                //                        product.Stock,
-                //                        product.PrecioCompra,
-                //                        product.PrecioVenta,
-                //                        product.Almacenamiento,
-                //                        product.GarantiaMeses,
-                //                        product.RAM,
-                //                        true,
-                //                        product.IdMarca,
-                //                        product.IdCategoria,
-                //                        product.IdColor,
-                //                        product.CreadoPor,
-                //                        isSuccessParam,
-                //                        errorMsgParam
-                //                    );
-
-                //if ((int)isSuccessParam.Value == 0)
-                //{
-                //    errorMessage = errorMsgParam.Value.ToString();
-                //    return false;
-                //}
+                
+               _db.sp_Producto_Create(
+                                        product.Nombre,
+                                       product.Modelo,
+                                       product.Descripcion,
+                                       product.Stock,
+                                      product.PrecioCompra,
+                                      product.PrecioVenta,
+                                     product.Almacenamiento,
+                                       product.GarantiaMeses,
+                                       product.RAM,
+                                      true,
+                                       product.IdMarca,
+                                        product.IdCategoria,
+                                       product.IdColor,
+                                       product.Bateria,
+                                       product.Nuevo,
+                                       product.Esim,
+                                       product.IdProveedor,
+                                       product.Imei,
+                                       product.CodigoBarra,
+                                       product.CreadoPor,
+                                        isSuccessParam,
+                                        errorMsgParam
+                                    );
+                
+                if ((int)isSuccessParam.Value == 0)
+                {
+                    errorMessage = errorMsgParam.Value.ToString();
+                   return false;
+                }
 
                 return true;
             }
@@ -211,19 +251,19 @@ namespace Logica.Catalogo
                     product.Stock,
                     product.PrecioCompra,
                     product.PrecioVenta,
-                    1,
+                    product.Almacenamiento,
                     product.GarantiaMeses,
-                    1,
+                    product.RAM,
                     true,
                     product.IdMarca,
                     product.IdCategoria,
                     product.IdColor,
-                    1,
-                    true,
-                    true,
-                    1,
-                    "",
-                    "",
+                   product.Bateria,
+                    product.Nuevo,
+                    product.Esim,
+                    product.IdProveedor,
+                    product.Imei,
+                    product.CodigoBarra,
                     product.EditadoPor,
                     isSuccessParam,
                     errorMsgParam
