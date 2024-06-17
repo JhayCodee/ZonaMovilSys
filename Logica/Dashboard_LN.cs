@@ -16,7 +16,6 @@ namespace Logica
         {
             _db = new Contexto();
         }
-
         public List<GananciasPorMes> ObtenerGananciasPorMes()
         {
             var yearActual = DateTime.Now.Year;
@@ -24,31 +23,53 @@ namespace Logica
 
             return _db.FacturaVenta
                 .Where(f => f.Activo && f.Fecha.Year == yearActual && f.Fecha.Month == mesActual)
-                .GroupBy(f => new { Year = f.Fecha.Year, Month = f.Fecha.Month })
+                .Join(_db.DetalleFacturaVenta,
+                      factura => factura.IdFacturaVenta,
+                      detalle => detalle.IdFacturaVenta,
+                      (factura, detalle) => new { factura, detalle })
+                .Join(_db.Producto,
+                      fd => fd.detalle.IdProducto,
+                      producto => producto.IdProducto,
+                      (fd, producto) => new
+                      {
+                          fd.factura,
+                          fd.detalle,
+                          producto.PrecioCompra,
+                          producto.PrecioVenta
+                      })
+                .GroupBy(fd => new { Year = fd.factura.Fecha.Year, Month = fd.factura.Fecha.Month })
                 .Select(group => new GananciasPorMes
                 {
                     Year = group.Key.Year,
                     Month = group.Key.Month,
-                    TotalGanancias = group.Sum(f => f.Total)
+                    TotalGanancias = group.Sum(fd =>
+                        (fd.detalle.Cantidad * fd.PrecioVenta) -
+                        (fd.detalle.Cantidad * fd.PrecioCompra) -
+                        (fd.factura.Descuento ?? 0))
                 })
                 .ToList();
         }
 
-
         public TotalProductosVendidos ObtenerTotalProductosVendidos()
         {
+            var yearActual = DateTime.Now.Year;
+            var mesActual = DateTime.Now.Month;
+
             return new TotalProductosVendidos
             {
                 Cantidad = _db.DetalleFacturaVenta
-                    .Where(d => d.FacturaVenta.Activo)
+                    .Where(d => d.FacturaVenta.Activo && d.FacturaVenta.Fecha.Year == yearActual && d.FacturaVenta.Fecha.Month == mesActual)
                     .Sum(d => d.Cantidad)
             };
         }
 
         public List<MarcaVendida> ObtenerMarcasMasVendidas()
         {
+            var yearActual = DateTime.Now.Year;
+            var mesActual = DateTime.Now.Month;
+
             return _db.DetalleFacturaVenta
-                .Where(d => d.FacturaVenta.Activo)
+                .Where(d => d.FacturaVenta.Activo && d.FacturaVenta.Fecha.Year == yearActual && d.FacturaVenta.Fecha.Month == mesActual)
                 .GroupBy(d => d.Producto.Marca.Nombre)
                 .Select(group => new MarcaVendida
                 {
@@ -61,8 +82,11 @@ namespace Logica
 
         public List<ProductoVendido> ObtenerProductosMasVendidos()
         {
+            var yearActual = DateTime.Now.Year;
+            var mesActual = DateTime.Now.Month;
+
             return _db.DetalleFacturaVenta
-                .Where(d => d.FacturaVenta.Activo)
+                .Where(d => d.FacturaVenta.Activo && d.FacturaVenta.Fecha.Year == yearActual && d.FacturaVenta.Fecha.Month == mesActual)
                 .GroupBy(d => d.Producto.Nombre)
                 .Select(group => new ProductoVendido
                 {

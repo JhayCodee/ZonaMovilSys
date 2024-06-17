@@ -686,5 +686,22 @@ namespace Datos
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_AgregarGarantia", idProductoParameter, idDetalleFacturaVentaParameter);
         }
+    
+        public virtual int sp_ReclamarGarantia(Nullable<int> idGarantia, string descripcionEvento, Nullable<System.DateTime> fechaEntrega, ObjectParameter success, ObjectParameter errorMessage)
+        {
+            var idGarantiaParameter = idGarantia.HasValue ?
+                new ObjectParameter("IdGarantia", idGarantia) :
+                new ObjectParameter("IdGarantia", typeof(int));
+    
+            var descripcionEventoParameter = descripcionEvento != null ?
+                new ObjectParameter("DescripcionEvento", descripcionEvento) :
+                new ObjectParameter("DescripcionEvento", typeof(string));
+    
+            var fechaEntregaParameter = fechaEntrega.HasValue ?
+                new ObjectParameter("FechaEntrega", fechaEntrega) :
+                new ObjectParameter("FechaEntrega", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_ReclamarGarantia", idGarantiaParameter, descripcionEventoParameter, fechaEntregaParameter, success, errorMessage);
+        }
     }
 }

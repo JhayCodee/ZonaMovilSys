@@ -19,5 +19,12 @@ namespace Modelo.Ventas
         public string IMEI { get; set; }
 
     }
-
+    public class EventoGarantia_VM
+    {
+        public int IdEvento { get; set; } // Llave primaria
+        public int IdGarantia { get; set; } // Llave foránea a la tabla Garantia
+        public DateTime FechaEvento { get; set; }
+        public DateTime? NuevaFechaFin { get; set; } // Puede ser null
+        public string DescripcionEvento { get; set; }
+    }
 }

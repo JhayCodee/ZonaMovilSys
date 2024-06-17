@@ -45,10 +45,26 @@ namespace Web.Controllers.Ventas
         }
 
         [HttpPost]
+        public JsonResult FinalizarGarantia(int idGarantia)
+        {
+            string errorMessage = string.Empty;
+            bool status = _ln.FinalizarGarantia(idGarantia, ref errorMessage);
+            return Json(new { status, errorMessage });
+        }
+
+        [HttpPost]
         public JsonResult EntregarGarantia(int id)
         {
             string errorMessage = string.Empty;
             bool status = _ln.EntregarGarantia(id, ref errorMessage);
+            return Json(new { status, errorMessage });
+        }
+
+        [HttpPost]
+        public JsonResult ExtenderGarantia(int idGarantia, DateTime nuevaFechaFin)
+        {
+            string errorMessage = string.Empty;
+            bool status = _ln.ExtenderGarantia(idGarantia, nuevaFechaFin, ref errorMessage);
             return Json(new { status, errorMessage });
         }
 

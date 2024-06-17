@@ -25,6 +25,7 @@ namespace Datos
         public System.DateTime FechaInicio { get; set; }
         public System.DateTime FechaFin { get; set; }
         public int Estado { get; set; }
+        public Nullable<System.DateTime> FechaEntregaEstimada { get; set; }
     
         public virtual DetalleFacturaVenta DetalleFacturaVenta { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

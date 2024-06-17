@@ -240,6 +240,7 @@
           <Property Name="FechaInicio" Type="datetime" Nullable="false" />
           <Property Name="FechaFin" Type="datetime" Nullable="false" />
           <Property Name="Estado" Type="int" Nullable="false" />
+          <Property Name="FechaEntregaEstimada" Type="date" />
         </EntityType>
         <Association Name="FK__Categoria__Cread__3E52440B">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
@@ -942,6 +943,13 @@
           <Parameter Name="IsSuccess" Type="int" Mode="InOut" />
           <Parameter Name="ErrorMsg" Type="nvarchar" Mode="InOut" />
         </Function>
+        <Function Name="sp_ReclamarGarantia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Ventas">
+          <Parameter Name="IdGarantia" Type="int" Mode="In" />
+          <Parameter Name="DescripcionEvento" Type="nvarchar" Mode="In" />
+          <Parameter Name="FechaEntrega" Type="date" Mode="In" />
+          <Parameter Name="Success" Type="bit" Mode="InOut" />
+          <Parameter Name="ErrorMessage" Type="nvarchar" Mode="InOut" />
+        </Function>
         <EntityContainer Name="ContextoZMStoreContainer">
           <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="Catalogo" store:Type="Tables" />
           <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="Catalogo" store:Type="Tables" />
@@ -1400,6 +1408,7 @@
           <Property Name="Estado" Type="Int32" Nullable="false" />
           <NavigationProperty Name="DetalleFacturaVenta" Relationship="Self.FK__Garantia__IdDeta__06CD04F7" FromRole="Garantia" ToRole="DetalleFacturaVenta" />
           <NavigationProperty Name="EventosGarantia" Relationship="ContextoZM.FK_EventosGarantia_Garantia" FromRole="Garantia" ToRole="EventosGarantia" />
+          <Property Name="FechaEntregaEstimada" Type="DateTime" Precision="0" />
         </EntityType>
         <Association Name="FK__Categoria__Cread__3E52440B">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
@@ -2182,6 +2191,13 @@
             <Parameter Name="IdProducto" Mode="In" Type="Int32" />
             <Parameter Name="IdDetalleFacturaVenta" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="sp_ReclamarGarantia">
+            <Parameter Name="IdGarantia" Mode="In" Type="Int32" />
+            <Parameter Name="DescripcionEvento" Mode="In" Type="String" />
+            <Parameter Name="FechaEntrega" Mode="In" Type="DateTime" />
+            <Parameter Name="Success" Mode="InOut" Type="Boolean" />
+            <Parameter Name="ErrorMessage" Mode="InOut" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_FacturaVenta_Create_Result">
           <Property Type="Int32" Name="IdFacturaVenta" Nullable="false" />
@@ -2554,6 +2570,7 @@
           <EntitySetMapping Name="Garantia">
             <EntityTypeMapping TypeName="ContextoZM.Garantia">
               <MappingFragment StoreEntitySet="Garantia">
+                <ScalarProperty Name="FechaEntregaEstimada" ColumnName="FechaEntregaEstimada" />
                 <ScalarProperty Name="IdGarantia" ColumnName="IdGarantia" />
                 <ScalarProperty Name="IdDetalleFacturaVenta" ColumnName="IdDetalleFacturaVenta" />
                 <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
@@ -2660,6 +2677,7 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_AgregarGarantia" FunctionName="ContextoZM.Store.sp_AgregarGarantia" />
+          <FunctionImportMapping FunctionImportName="sp_ReclamarGarantia" FunctionName="ContextoZM.Store.sp_ReclamarGarantia" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
