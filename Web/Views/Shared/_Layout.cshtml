@@ -69,14 +69,48 @@
         .dt-buttons {
             margin-bottom: 16px; /* Ajusta según tus necesidades */
         }
+
+        /* Estilos para el modo claro */
+        .modo-claro {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        /* Estilos para el modo oscuro */
+        .modo-oscuro {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        body {
+            font-size: 16px; /* Tamaño de fuente base */
+        }
+
+        /* Clases para diferentes tamaños de fuente */
+        .font-size-small {
+            font-size: 14px !important;
+        }
+
+        .font-size-medium {
+            font-size: 16px !important;
+        }
+
+        .font-size-large {
+            font-size: 18px !important;
+        }
+
+        .font-size-xlarge {
+            font-size: 20px !important;
+        }
     </style>
 
+    <script src="~/Content/vendor/libs/jquery/jquery.js"></script>
     <!-- styles zona mobile -->
     <!-- end styles zona mobile -->
-
+    <script src="~/Scripts/modo.js"></script>
 </head>
 
-<body>
+<body class="modo-claro">
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
@@ -174,6 +208,14 @@
                             </li>
                             <!--/ User -->
                         </ul>
+                        <div id="modoIcono" class="modo-claro">
+                            <img src="~/Imagenes/dark-mode.png" alt="Icono de modo claro y oscuro" id="modoToggle">
+                        </div>
+                        <!-- Botones de tamaño de letra -->
+                        <div class="font-size-controls me-3">
+                            <button id="fontIncrease" class="btn btn-sm btn-primary">A+</button>
+                            <button id="fontDecrease" class="btn btn-sm btn-primary">A-</button>
+                        </div>
 
                     </div>
                 </nav>
