@@ -22,7 +22,31 @@
             const id = $(this).data("id");
             eliminarColor(id);
         });
+        //opciones para guardar con F1 y F2
+        $(document).ready(function () {
+            // Agregar evento para detectar la tecla presionada en todo el documento
+            $(document).keydown(function (e) {
+                // Verificar si la tecla presionada es la tecla F1 (código 112)
+                if (e.which == 112) {
+                    // Evitar el comportamiento predeterminado de la tecla F1 (como abrir la ayuda del navegador)
+                    e.preventDefault();
+                    // Ejecutar la misma función que se ejecuta al hacer clic en el botón #btnGuardarCliente
+                    $("#btnRegresarColor").click();
+                }
+                // Verificar si la tecla presionada es la tecla F2 (código 113)
+                if (e.which == 113) {
+                    // Evitar el comportamiento predeterminado de la tecla F1 (como abrir la ayuda del navegador)
+                    e.preventDefault();
+                    // Ejecutar la misma función que se ejecuta al hacer clic en el botón #btnGuardarCliente
+                    $("#btnGuardarColor").click();
+                }
+            });
+        });
+ 
     });
+
+
+
 
     function loadColoresDataTable() {
         if ($.fn.DataTable.isDataTable(ColorContainer.Table)) {
@@ -112,6 +136,7 @@
     }
 
     function guardarColor(e) {
+
         e.preventDefault();
 
         var nombreColor = $.trim($('#inputNombreColor').val());

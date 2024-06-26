@@ -82,25 +82,8 @@
             color: #ffffff;
         }
 
-        body {
-            font-size: 16px; /* Tamaño de fuente base */
-        }
-
-        /* Clases para diferentes tamaños de fuente */
-        .font-size-small {
-            font-size: 14px !important;
-        }
-
-        .font-size-medium {
-            font-size: 16px !important;
-        }
-
-        .font-size-large {
-            font-size: 18px !important;
-        }
-
-        .font-size-xlarge {
-            font-size: 20px !important;
+        .font-adjustable {
+            font-size: 1rem; /* Tamaño de fuente inicial */
         }
     </style>
 
@@ -110,22 +93,22 @@
     <script src="~/Scripts/modo.js"></script>
 </head>
 
-<body class="modo-claro">
+<body>
     <!-- Layout wrapper -->
-    <div class="layout-wrapper layout-content-navbar">
+    <div class="layout-wrapper layout-content-navbar font-adjustable">
         <div class="layout-container">
             <!-- Menu -->
 
-            <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme mx-3 rounded shadow">
+            <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme mx-3 rounded shadow font-adjustable">
                 <div class="app-brand demo">
-                    <div class="app-brand justify-content-center py-3">
+                    <div class="app-brand justify-content-center py-3 font-adjustable">
                         <span class="app-brand-link gap-2">
                             <img src="@Url.Content("~/Imagenes/logoblue.jpg")" alt="ZONA MOVIL" style="max-width: 150px;">
                         </span>
                     </div>
                 </div>
 
-                <div class="menu-inner-shadow"></div>
+                <div class="menu-inner-shadow font-adjustable"></div>
 
                 <ul class="menu-inner ps ps--active-y">
                     <br />
@@ -180,6 +163,15 @@
 
 
                         <ul class="navbar-nav flex-row align-items-center ms-auto">
+
+                            <!-- Botón de ayuda -->
+                            <li class="nav-item d-none d-xl-block">
+                                <a class="nav-link" href="~/Imagenes/manual.pdf" target="_blank">
+                                    <i class="bx bx-help-circle bx-sm"></i>
+                                    <span class="align-middle">Ayuda</span>
+                                </a>
+                            </li>
+
                             <!-- User -->
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
@@ -287,6 +279,23 @@
 
         $('select').select2({
             theme: 'bootstrap-5'
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            var fontSize = 1; // Tamaño de fuente inicial en "rem"
+
+            $('#fontIncrease').click(function () {
+                fontSize += 0.1; // Incrementar tamaño de fuente
+                $('.font-adjustable').css('font-size', fontSize + 'rem');
+            });
+
+            $('#fontDecrease').click(function () {
+                fontSize -= 0.1; // Disminuir tamaño de fuente
+                if (fontSize < 0.5) fontSize = 0.5; // Evitar que el tamaño de fuente sea demasiado pequeño
+                $('.font-adjustable').css('font-size', fontSize + 'rem');
+            });
         });
     </script>
 
