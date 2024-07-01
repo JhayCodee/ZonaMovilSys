@@ -1,149 +1,35 @@
-﻿(function ($) {
-
-    let isEditing = false;
-
-    $(function () {
-        loadProductsDataTable();
-
-      
-
-
-        $("#btnGuardar").click(function (e) {
-            e.preventDefault();
-
-            if ($("#frmProductos").valid()) {
-                Swal.fire({
-                    title: '¿Estás seguro?',
-                    text: "Confirma para guardar los cambios.",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Sí, guardar',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        saveProduct();
-                    }
-                });
-            }
-        });
-
-        $tblProducts.on('click', '.edit-button', function () {
-            isEditing = true;
-            const id = $(this).data("id");
-
-            $.ajax({
-                url: productsContainer.Url + `/GetProductsById?productId=${id}`,
-                type: 'POST',
-                success: function (response) {
-                    if (response.status) {
-                        populateProductForm(response.data);
-                        productsContainer.Form.show();
-                        productsContainer.Index.hide();
-                    } else {
-                        // Maneja el error según tu preferencia
-                        alert(response.errorMessage);
-                    }
-                },
-                error: function (err) {
-                    alert("Error al obtener el producto");
-                }
-            });
-
-            $.ajax({
-                type: "POST",
-                url: productsContainer.Url + "/GetProductsById",
-                data: { productId: id },
-                dataType: "json",
-                success: function (response) {
-                    if (response.status && response.data) {
-                        populateProductForm(response.data);
-                        productsContainer.Form.show();
-                        productsContainer.Index.hide();
-                    } else {
-                        // Muestra un mensaje de error si algo va mal.
-                        alert("Error: " + response.errorMessage);
-                    }
-                },
-                error: function (error) {
-                    alert("Error al conectar con el servidor.");
-                }
-            });
-        });
-
-        $tblProducts.on('click', '.delete-button', function () {
-            const id = $(this).data("id");
-
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: "¿Deseas eliminar este producto?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Sí, eliminar',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: productsContainer.Url + `/DeleteProduct?productId=${id}`,
-                        type: 'POST',
-                        success: function (response) {
-                            if (response.status) {
-                                Swal.fire({
-                                    title: 'Eliminado',
-                                    text: 'El producto ha sido eliminado exitosamente.',
-                                    icon: 'success',
-                                    confirmButtonText: 'OK'
-                                }).then((result) => {
-                                    if (result.isConfirmed) {
-                                         loadProductsDataTable();
-                                    }
-                                });
-                            } else {
-                                Swal.fire(
-                                    'Error',
-                                    `Error al eliminar: ${response.errorMessage}`,
-                                    'error'
-                                );
-                            }
-                        },
-                        error: function (err) {
-                            Swal.fire(
-                                'Error',
-                                'Error al realizar la petición al servidor.',
-                                'error'
-                            );
-                        }
-                    });
-                }
-            });
-        });
-
-        $("#btnRegresarProduct").click(function (e) {
-            productsContainer.Form.hide();
-            productsContainer.Index.show();
-            clearFormProduct();
-        });
-    });
-
-    const productsContainer = {
-        Url: '/Productos',
-        Index: $('#Index-Productos'),
-        Form: $('#Form-Productos'),
+﻿var ProductApp = function (options) {
+    var component = {
+        url: '/Productos',
+        tableIndex: null,
+        isEditing: false
     };
 
-    const $tblProducts = $('#tblProductos');
+    this.construct = function (options) {
+        options.formContainer = $(options.parent).find("#Form-Productos");
+        options.tableContainer = $(options.parent).find('#Index-Productos');
+        options.table = $(options.parent).find("#tblProductos");
+        $.extend(component, options);
+    };
 
-    function loadProductsDataTable() {
+    var self = this;
 
-        if ($.fn.DataTable.isDataTable($tblProducts))
-            $tblProducts.DataTable().destroy();
+    this.init = function () {
+        self.initDataTable();
+        self.initPlugins();
+        self.bindEvents();
+    };
 
-        $tblProducts.DataTable({
+    this.initDataTable = function () {
+        if ($.fn.DataTable.isDataTable(component.table))
+            component.table.DataTable().destroy();
+
+        component.table.DataTable({
             ajax: {
-                url: productsContainer.Url + "/GetProductos",
+                url: component.url + "/GetProductos",
                 type: 'POST',
                 datatype: 'json',
                 dataSrc: function (json) {
-                    console.log(json);
                     if (!json.status) {
                         return [];
                     }
@@ -169,13 +55,13 @@
                 { data: "Bateria" },
                 {
                     data: "Nuevo",
-                    render: function (data, type, row) {
+                    render: function (data) {
                         return data ? '<span class="badge bg-label-success">Sí</span>' : '<span class="badge bg-label-warning">No</span>';
                     }
                 },
                 {
                     data: "Esim",
-                    render: function (data, type, row) {
+                    render: function (data) {
                         return data ? '<span class="badge bg-label-success">Sí</span>' : '<span class="badge bg-label-warning">No</span>';
                     }
                 },
@@ -184,22 +70,16 @@
                 { data: "CodigoBarra" },
                 {
                     data: null,
-                    render: function (data, type, row) {
-                        let buttons = `
-                                        <div class=" gap-2">
-                                            <button class="btn btn-warning btn-sm edit-button" 
-                                                    data-id="${row.IdProducto}" 
-                                                    title="Editar Producto">
-                                                <i class='bx bx-edit'></i>
-                                            </button>
-                                            <button class="btn btn-danger btn-sm delete-button" 
-                                                    data-id="${row.IdProducto}" 
-                                                    title="Eliminar Producto">
-                                                <i class='bx bx-trash'></i>
-                                            </button>
-                                    `;
-                        buttons += `</div>`;
-                        return buttons;
+                    render: function (data) {
+                        return `
+                            <div class="gap-2">
+                                <button class="btn btn-warning btn-sm edit-button" data-id="${data.IdProducto}" title="Editar Producto">
+                                    <i class='bx bx-edit'></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm delete-button" data-id="${data.IdProducto}" title="Eliminar Producto">
+                                    <i class='bx bx-trash'></i>
+                                </button>
+                            </div>`;
                     }
                 }
             ],
@@ -207,41 +87,93 @@
                 {
                     text: 'Nuevo',
                     className: 'btn btn-primary',
-                    action: function (e, dt, node, config) {
-                        isEditing = false;
-                        productsContainer.Index.hide();
-                        productsContainer.Form.show();
-
+                    action: function () {
+                        component.isEditing = false;
+                        component.tableContainer.hide();
+                        component.formContainer.show();
+                        $('#camposCelulares').hide();
+                        $('#camposAccesorios').hide();
+                        self.clearForm();
                     }
                 }
             ]
         });
-    }
+    };
 
-    function saveProduct() {
+    this.initPlugins = function () {
+        $('select').select2({
+            theme: 'bootstrap-5'
+        });
+    };
+
+    this.bindEvents = function () {
+        $('#btnGuardar').on('click', function (e) {
+            e.preventDefault();
+            if ($("#frmProductos").valid()) {
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "Confirma para guardar los cambios.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí, guardar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        self.saveProduct();
+                    }
+                });
+            }
+        });
+
+        component.table.on('click', '.edit-button', function () {
+            component.isEditing = true;
+            const id = $(this).data("id");
+            self.getProductById(id);
+        });
+
+        component.table.on('click', '.delete-button', function () {
+            const id = $(this).data("id");
+            self.deleteProduct(id);
+        });
+
+        $('#btnRegresarProduct').on('click', function () {
+            component.formContainer.hide();
+            component.tableContainer.show();
+            self.clearForm();
+        });
+
+        $('#inputCategoria').on('change', function () {
+            self.toggleFieldsBasedOnCategory();
+        });
+    };
+
+    this.saveProduct = function () {
+        const selectedCategory = $("#inputCategoria").find(":selected").text();
+        const isCellphone = selectedCategory === 'Celular';
+
         const product = {
             IdProducto: parseInt($("#idProducto").val()),
             Nombre: $("#inputNombre").val(),
             Modelo: $("#inputModelo").val(),
             Descripcion: $("#inputDescripcion").val(),
-            Stock: parseInt($("#inputStock").val()),
-            PrecioCompra: parseFloat($("#inputPrecioCompra").val()),
-            PrecioVenta: parseFloat($("#inputPrecioVenta").val()),
-            Almacenamiento: $("#inputAlmacenamiento").val(),
-            GarantiaMeses: $("#inputGarantiaMeses").val() ? parseInt($("#inputGarantiaMeses").val()) : null,
-            RAM: $("#inputRAM").val(),
-            IdColor: $("#inputColor").val(),
-            IdMarca: $("#inputMarca").val(),
+            Stock: isCellphone ? 1 : parseInt($("#inputStock").val()) || 1,
+            PrecioCompra: isCellphone ? parseFloat($("#inputPrecioCompra").val()) : parseFloat($("#inputPrecioCompraAcc").val()),
+            PrecioVenta: isCellphone ? parseFloat($("#inputPrecioVenta").val()) : parseFloat($("#inputPrecioVentaAcc").val()),
+            Almacenamiento: isCellphone ? $("#inputAlmacenamiento").val() : null,
+            GarantiaMeses: isCellphone ? parseInt($("#inputGarantiaMeses").val()) : parseInt($("#inputGarantiaMesesAcc").val()),
+            RAM: isCellphone ? $("#inputRAM").val() : null,
+            IdColor: isCellphone ? $("#inputColor").val() : $("#inputColorAcc").val(),
+            IdMarca: isCellphone ? $("#inputMarca").val() : $("#inputMarcaAcc").val(),
             IdCategoria: $("#inputCategoria").val(),
-            Bateria: parseInt($("#inputBateria").val()),
-            Nuevo: $("#inputNuevo").val() === "true", // Obtener el valor del campo Nuevo como booleano
-            Esim: $("#inputEsim").val() === "true",
-            IdProveedor: $("#inputProveedores").val(),
-            Imei: $("#inputImei").val(),
+            Bateria: isCellphone ? parseInt($("#inputBateria").val()) : null,
+            Nuevo: isCellphone ? $("#inputNuevo").val() === "true" : null,
+            Esim: isCellphone ? $("#inputEsim").val() === "true" : null,
+            IdProveedor: isCellphone ? $("#inputProveedores").val() : $("#inputProveedoresAcc").val(),
+            Imei: isCellphone ? $("#inputImei").val() : null,
             CodigoBarra: $("#inputCodigoBarras").val()
         };
-        console.log("Valor de Batería:", product.Bateria);
-        const url = `${productsContainer.Url}/${isEditing ? 'UpdateProduct' : 'CreateProduct'}`;
+
+        const url = `${component.url}/${component.isEditing ? 'UpdateProduct' : 'CreateProduct'}`;
 
         Swal.fire({
             title: 'Por favor espera',
@@ -267,10 +199,10 @@
                         icon: 'success',
                         confirmButtonText: 'OK'
                     }).then(() => {
-                        productsContainer.Form.hide();
-                        productsContainer.Index.show();
-                        clearFormProduct();
-                        loadProductsDataTable();
+                        component.formContainer.hide();
+                        component.tableContainer.show();
+                        self.clearForm();
+                        component.table.DataTable().ajax.reload();
                     });
                 } else {
                     Swal.fire({
@@ -281,7 +213,7 @@
                     });
                 }
             },
-            error: function (err) {
+            error: function () {
                 Swal.fire({
                     title: 'Error',
                     text: 'Hubo un error al guardar el producto',
@@ -290,45 +222,140 @@
                 });
             }
         });
-    }
+    };
 
-    function populateProductForm(product) {
+    this.getProductById = function (id) {
+        $.ajax({
+            url: component.url + `/GetProductsById?productId=${id}`,
+            type: 'POST',
+            success: function (response) {
+                if (response.status) {
+                    component.formContainer.show();
+                    component.tableContainer.hide();
+                    self.populateForm(response.data);
+                } else {
+                    alert(response.errorMessage);
+                }
+            },
+            error: function () {
+                alert("Error al obtener el producto");
+            }
+        });
+    };
+
+    this.deleteProduct = function (id) {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¿Deseas eliminar este producto?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: component.url + `/DeleteProduct?productId=${id}`,
+                    type: 'POST',
+                    success: function (response) {
+                        if (response.status) {
+                            Swal.fire({
+                                title: 'Eliminado',
+                                text: 'El producto ha sido eliminado exitosamente.',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            }).then(() => {
+                                component.table.DataTable().ajax.reload();
+                            });
+                        } else {
+                            Swal.fire(
+                                'Error',
+                                `Error al eliminar: ${response.errorMessage}`,
+                                'error'
+                            );
+                        }
+                    },
+                    error: function () {
+                        Swal.fire(
+                            'Error',
+                            'Error al realizar la petición al servidor.',
+                            'error'
+                        );
+                    }
+                });
+            }
+        });
+    };
+
+    this.populateForm = function (product) {
         $("#idProducto").val(product.IdProducto);
         $("#inputNombre").val(product.Nombre);
         $("#inputModelo").val(product.Modelo);
         $("#inputDescripcion").val(product.Descripcion);
-        $("#inputStock").val(product.Stock);
+        $("#inputCategoria").val(product.IdCategoria).trigger('change');
+
+        // Mostrar los campos correctos según la categoría antes de cargar valores
+        self.toggleFieldsBasedOnCategory();
+
+        if (product.Categoria === 'Celular') {
+            self.populateCellphoneForm(product);
+        } else {
+            self.populateAccessoryForm(product);
+        }
+    };
+
+    this.populateCellphoneForm = function (product) {
         $("#inputPrecioCompra").val(product.PrecioCompra);
         $("#inputPrecioVenta").val(product.PrecioVenta);
-
         $("#inputAlmacenamiento").val(product.Almacenamiento).trigger('change');
         $("#inputGarantiaMeses").val(product.GarantiaMeses).trigger('change');
         $("#inputRAM").val(product.RAM).trigger('change');
-
         $("#inputColor").val(product.IdColor).trigger('change');
         $("#inputMarca").val(product.IdMarca).trigger('change');
-        $("#inputCategoria").val(product.IdCategoria).trigger('change');
         $("#inputBateria").val(product.Bateria);
-        $("#inputNuevo").val(product.Nuevo).trigger('change');
-        $("#inputEsim").val(product.Esim).trigger('change');
+        $("#inputNuevo").val(product.Nuevo ? "true" : "false").trigger('change');
+        $("#inputEsim").val(product.Esim ? "true" : "false").trigger('change');
         $("#inputProveedores").val(product.IdProveedor).trigger('change');
         $("#inputImei").val(product.Imei);
         $("#inputCodigoBarras").val(product.CodigoBarra);
-    }
+    };
 
+    this.populateAccessoryForm = function (product) {
+        $("#inputPrecioCompraAcc").val(product.PrecioCompra);
+        $("#inputPrecioVentaAcc").val(product.PrecioVenta);
+        $("#inputStock").val(product.Stock);
+        $("#inputGarantiaMesesAcc").val(product.GarantiaMeses).trigger('change');
+        $("#inputColorAcc").val(product.IdColor).trigger('change');
+        $("#inputMarcaAcc").val(product.IdMarca).trigger('change');
+        $("#inputProveedoresAcc").val(product.IdProveedor).trigger('change');
+    };
 
-    function clearFormProduct() {
-        // Resetear el formulario a valores iniciales
+    this.clearForm = function () {
         $("#frmProductos")[0].reset();
-
-        // Limpiar mensajes de error de jQuery Validate
         let validator = $("#frmProductos").validate();
         validator.resetForm();
-
-        // Si estás usando la biblioteca Select2 para tus elementos select:
         $("#frmProductos .select2").val(null).trigger('change');
-    }
+    };
 
-})(jQuery);
+    this.toggleFieldsBasedOnCategory = function () {
+        const selectedCategory = $("#inputCategoria").find(":selected").text();
 
- 
+        if (selectedCategory === 'Celular') {
+            $('#camposCelulares').show();
+            $('#camposAccesorios').hide();
+            $("#inputStock").val(1).prop('readonly', true);
+        } else {
+            $('#camposCelulares').hide();
+            $('#camposAccesorios').show();
+            $("#inputStock").prop('readonly', false);
+        }
+    };
+
+    this.construct(options);
+};
+
+$(function () {
+    var productApp = new ProductApp({
+        parent: $("#ContainerProductos"),
+    });
+    productApp.init();
+});

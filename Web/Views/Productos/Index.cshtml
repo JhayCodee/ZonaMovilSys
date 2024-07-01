@@ -3,222 +3,276 @@
     ViewBag.Title = "Index";
 }
 
-<div class="row" id="Index-Productos">
-    <div class="col-12">
-        <div class="card mb-4">
-            <h5 class="card-header">PRODUCTOS</h5>
+<div id="ContainerProductos">
 
-            <div class="card-body">
-                <table id="tblProductos" class="table table-hover table-striped table-responsive" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Modelo</th>
-                            <th>Descripcion</th>
-                            <th>Stock</th>
-                            <th>Precio Compra</th>
-                            <th>Precio Venta</th>
-                            <th>Almacenamiento (GB)</th>
-                            <th>Meses de Garantia</th>
-                            <th>RAM (GB)</th>
-                            <th>Color</th>
-                            <th>Marca</th>
-                            <th>Categoría</th>
-                            <th>Bateria</th>
-                            <th>Nuevo</th>
-                            <th>Esim</th>
-                            <th>Proveedor</th>
-                            <th>Imei</th>
-                            <th>CodigoBarra</th>
-                            <th class="text-center">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+    <div class="row" id="Index-Productos">
+        <div class="col-12">
+            <div class="card mb-4">
+                <h5 class="card-header">PRODUCTOS</h5>
+
+                <div class="card-body">
+                    <table id="tblProductos" class="table table-hover table-striped table-responsive" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Modelo</th>
+                                <th>Descripcion</th>
+                                <th>Stock</th>
+                                <th>Precio Compra</th>
+                                <th>Precio Venta</th>
+                                <th>Almacenamiento (GB)</th>
+                                <th>Meses de Garantia</th>
+                                <th>RAM (GB)</th>
+                                <th>Color</th>
+                                <th>Marca</th>
+                                <th>Categoría</th>
+                                <th>Bateria</th>
+                                <th>Nuevo</th>
+                                <th>Esim</th>
+                                <th>Proveedor</th>
+                                <th>Imei</th>
+                                <th>CodigoBarra</th>
+                                <th class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="row" id="Form-Productos" style="display:none;">
-    <div class="col-12">
-        <div class="card mb-4">
-            <h5 class="card-header">REGISTRO DE PRODUCTOS</h5>
-            <div class="card-body">
-                <form id="frmProductos">
-                    <div class="row">
-                        <input type="hidden" class="form-control" id="idProducto" name="idProducto">
-                        <!-- Primera columna: Nombre -->
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="inputNombre" class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="inputNombre" name="inputNombre">
+    <div class="row" id="Form-Productos" style="display:none;">
+        <div class="col-12">
+            <div class="card mb-4">
+                <h5 class="card-header">REGISTRO DE PRODUCTOS</h5>
+                <div class="card-body">
+                    <form id="frmProductos">
+                        <div class="row">
+                            <input type="hidden" class="form-control" id="idProducto" name="idProducto">
+
+                            <!-- Select de Categoría -->
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="inputCategoria" class="form-label">Categoría</label>
+                                    <select class="form-control select2" id="inputCategoria" name="inputCategoria">
+                                        <option value="" selected disabled>Seleccione una opción</option>
+                                        @foreach (var categoria in ViewBag.Categorias)
+                                        {
+                                            <option value="@categoria.Id">@categoria.Value</option>
+                                        }
+                                    </select>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Segunda columna: Modelo -->
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="inputModelo" class="form-label">Modelo</label>
-                                <input type="text" class="form-control" id="inputModelo" name="inputModelo">
+                        <!-- Sección de campos comunes -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="inputNombre" class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="inputNombre" name="inputNombre">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="inputModelo" class="form-label">Modelo</label>
+                                    <input type="text" class="form-control" id="inputModelo" name="inputModelo">
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Descripción en su propia fila -->
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="mb-3">
-                                <label for="inputDescripcion" class="form-label">Descripción</label>
-                                <textarea class="form-control" id="inputDescripcion" name="inputDescripcion" rows="3"></textarea>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <label for="inputDescripcion" class="form-label">Descripción</label>
+                                    <textarea class="form-control" id="inputDescripcion" name="inputDescripcion" rows="3"></textarea>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Resto de los campos en dos columnas -->
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="inputStock" class="form-label">Stock</label>
-                                <input type="number" class="form-control" id="inputStock" name="inputStock">
-                            </div>
-                            <div class="mb-3">
-                                <label for="inputPrecioCompra" class="form-label">Precio de Compra</label>
-                                <input type="number" class="form-control" id="inputPrecioCompra" name="inputPrecioCompra">
-                            </div>
-                            <div class="mb-3">
-                                <label for="inputColor" class="form-label">Color</label>
-                                <select class="form-control select2" id="inputColor" name="inputColor">
-                                    <option value="" selected disabled>Seleccione una opción</option>
-                                    @foreach (var color in ViewBag.Colores)
-                                    {
-                                        <option value="@color.Id">@color.Value</option>
-                                    }
-                                </select>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="inputMarca" class="form-label">Marca</label>
-                                <select class="form-control select2" id="inputMarca" name="inputMarca">
-                                    <option value="" selected disabled>Seleccione una opción</option>
-                                    @foreach (var marca in ViewBag.Marcas)
-                                    {
-                                        <option value="@marca.Id">@marca.Value</option>
-                                    }
-                                </select>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="inputCategoria" class="form-label">Categoría</label>
-                                <select class="form-control select2" id="inputCategoria" name="inputCategoria">
-                                    <option value="" selected disabled>Seleccione una opción</option>
-                                    @foreach (var categoria in ViewBag.Categorias)
-                                    {
-                                        <option value="@categoria.Id">@categoria.Value</option>
-                                    }
-                                </select>
-                            </div>
-                            <!-- BATERIA-->
-                            <div class="mb-3">
-                                <label for="inputBateria" class="form-label">Bateria</label>
-                                <input type="number" class="form-control" id="inputBateria" name="inputBateria">
-                            </div>
-
-                            <!-- NUEVO -->
-                            <div class="mb-3">
-                                <label for="inputNuevo" class="form-label">Nuevo</label>
-                                <select class="form-control" id="inputNuevo" name="inputNuevo">
-                                    <option value="" selected disabled>Seleccione una opción</option>
-                                    <option value="true">Sí</option>
-                                    <option value="false">No</option>
-                                </select>
-                            </div>
-
-                            <!-- Imei-->
-                            <div class="mb-3">
-                                <label for="inputImei" class="form-label">Imei</label>
-                                <input type="text" class="form-control" id="inputImei" name="inputImei">
-                            </div>
-
-                            <!-- Codigo Barras-->
-                            <div class="mb-3">
-                                <label for="inputCodigoBarras" class="form-label">CodigoBarra</label>
-                                <input type="text" id="inputCodigoBarras" name="inputCodigoBarras">
+                        <!-- Sección de campos específicos para Celulares -->
+                        <div id="camposCelulares" style="display:none;">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="inputPrecioCompra" class="form-label">Precio de Compra</label>
+                                        <input type="number" class="form-control" id="inputPrecioCompra" name="inputPrecioCompra">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="inputPrecioVenta" class="form-label">Precio de Venta</label>
+                                        <input type="number" class="form-control" id="inputPrecioVenta" name="inputPrecioVenta">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="inputAlmacenamiento" class="form-label">Almacenamiento</label>
+                                        <select class="form-control select2" id="inputAlmacenamiento" name="inputAlmacenamiento">
+                                            <option value="" selected disabled>Seleccione una opción</option>
+                                            @foreach (var color in ViewBag.Gb)
+                                            {
+                                                <option value="@color.Id">@color.Value</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="inputGarantiaMeses" class="form-label">Meses de Garantía</label>
+                                        <select class="form-control select2" id="inputGarantiaMeses" name="inputGarantiaMeses">
+                                            <option value="" selected disabled>Seleccione una opción</option>
+                                            @foreach (var color in ViewBag.Meses)
+                                            {
+                                                <option value="@color.Id">@color.Value</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="inputRAM" class="form-label">RAM</label>
+                                        <select class="form-control select2" id="inputRAM" name="inputRAM">
+                                            <option value="" selected disabled>Seleccione una opción</option>
+                                            @foreach (var color in ViewBag.Gb)
+                                            {
+                                                <option value="@color.Id">@color.Value</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="inputColor" class="form-label">Color</label>
+                                        <select class="form-control select2" id="inputColor" name="inputColor">
+                                            <option value="" selected disabled>Seleccione una opción</option>
+                                            @foreach (var color in ViewBag.Colores)
+                                            {
+                                                <option value="@color.Id">@color.Value</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="inputMarca" class="form-label">Marca</label>
+                                        <select class="form-control select2" id="inputMarca" name="inputMarca">
+                                            <option value="" selected disabled>Seleccione una opción</option>
+                                            @foreach (var marca in ViewBag.Marcas)
+                                            {
+                                                <option value="@marca.Id">@marca.Value</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="inputBateria" class="form-label">Batería</label>
+                                        <input type="number" class="form-control" id="inputBateria" name="inputBateria">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="inputNuevo" class="form-label">Nuevo</label>
+                                        <select class="form-control" id="inputNuevo" name="inputNuevo">
+                                            <option value="" selected disabled>Seleccione una opción</option>
+                                            <option value="true">Sí</option>
+                                            <option value="false">No</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="inputImei" class="form-label">Imei</label>
+                                        <input type="text" class="form-control" id="inputImei" name="inputImei">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="inputEsim" class="form-label">Esim</label>
+                                        <select class="form-control" id="inputEsim" name="inputEsim">
+                                            <option value="" selected disabled>Seleccione una opción</option>
+                                            <option value="true">Sí</option>
+                                            <option value="false">No</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="inputProveedores" class="form-label">Proveedor</label>
+                                        <select class="form-control select2" id="inputProveedores" name="inputProveedores">
+                                            <option value="" selected disabled>Seleccione una opción</option>
+                                            @foreach (var proveedor in ViewBag.Proveedores)
+                                            {
+                                                <option value="@proveedor.Id">@proveedor.Value</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="inputCodigoBarras" class="form-label">Código de Barra</label>
+                                        <input type="text" class="form-control" id="inputCodigoBarras" name="inputCodigoBarras">
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="inputPrecioVenta" class="form-label">Precio de Venta</label>
-                                <input type="number" class="form-control" id="inputPrecioVenta" name="inputPrecioVenta">
-                            </div>
-                            <div class="mb-3">
-                                <label for="inputAlmacenamiento" class="form-label">Almacenamiento</label>
-                                <select class="form-control select2" id="inputAlmacenamiento" name="inputAlmacenamiento">
-                                    <option value="" selected disabled>Seleccione una opción</option>
-                                    @foreach (var color in ViewBag.Gb)
-                                    {
-                                        <option value="@color.Id">@color.Value</option>
-                                    }
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="inputGarantiaMeses" class="form-label">Meses de Garantía</label>
-                                <select class="form-control select2" id="inputGarantiaMeses" name="inputGarantiaMeses">
-                                    <option value="" selected disabled>Seleccione una opción</option>
-                                    @foreach (var color in ViewBag.Meses)
-                                    {
-                                        <option value="@color.Id">@color.Value</option>
-                                    }
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="inputRAM" class="form-label">RAM</label>
-                                <select class="form-control select2" id="inputRAM" name="inputRAM">
-                                    <option value="" selected disabled>Seleccione una opción</option>
-                                    @foreach (var color in ViewBag.Gb)
-                                    {
-                                        <option value="@color.Id">@color.Value</option>
-                                    }
-                                </select>
-                            </div>
 
-                             
-                            <!-- Esim -->
-                            <div class="mb-3">
-                                <label for="inputEsim" class="form-label">Esim</label>
-                                <select class="form-control" id="inputEsim" name="inputEsim">
-                                    <option value="" selected disabled>Seleccione una opción</option>
-                                    <option value="true">Sí</option>
-                                    <option value="false">No</option>
-                                </select>
-                            </div>
-
-                            <!-- Proveedor -->
-                            <div class="mb-3">
-                                <label for="inputProveedores" class="form-label">Proveedor</label>
-                                <select class="form-control select2" id="inputProveedores" name="inputProveedores">
-                                    <option value="" selected disabled>Seleccione una opción</option>
-                                    @foreach (var proveedor in ViewBag.Proveedores)
-                                    {
-                                        <option value="@proveedor.Id">@proveedor.Value</option>
-                                    }
-                                </select>
+                        <!-- Sección de campos específicos para Accesorios -->
+                        <div id="camposAccesorios" style="display:none;">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="inputPrecioCompraAcc" class="form-label">Precio de Compra</label>
+                                        <input type="number" class="form-control" id="inputPrecioCompraAcc" name="inputPrecioCompraAcc">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="inputPrecioVentaAcc" class="form-label">Precio de Venta</label>
+                                        <input type="number" class="form-control" id="inputPrecioVentaAcc" name="inputPrecioVentaAcc">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="inputStock" class="form-label">Stock</label>
+                                        <input type="number" class="form-control" id="inputStock" name="inputStock">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="inputGarantiaMesesAcc" class="form-label">Meses de Garantía</label>
+                                        <select class="form-control select2" id="inputGarantiaMesesAcc" name="inputGarantiaMesesAcc">
+                                            <option value="" selected disabled>Seleccione una opción</option>
+                                            @foreach (var color in ViewBag.Meses)
+                                            {
+                                                <option value="@color.Id">@color.Value</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="inputColorAcc" class="form-label">Color</label>
+                                        <select class="form-control select2" id="inputColorAcc" name="inputColorAcc">
+                                            <option value="" selected disabled>Seleccione una opción</option>
+                                            @foreach (var color in ViewBag.Colores)
+                                            {
+                                                <option value="@color.Id">@color.Value</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="inputMarcaAcc" class="form-label">Marca</label>
+                                        <select class="form-control select2" id="inputMarcaAcc" name="inputMarcaAcc">
+                                            <option value="" selected disabled>Seleccione una opción</option>
+                                            @foreach (var marca in ViewBag.Marcas)
+                                            {
+                                                <option value="@marca.Id">@marca.Value</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="inputProveedoresAcc" class="form-label">Proveedor</label>
+                                        <select class="form-control select2" id="inputProveedoresAcc" name="inputProveedoresAcc">
+                                            <option value="" selected disabled>Seleccione una opción</option>
+                                            @foreach (var proveedor in ViewBag.Proveedores)
+                                            {
+                                                <option value="@proveedor.Id">@proveedor.Value</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="mt-3 text-end">
-                        <button type="button" class="btn btn-secondary" id="btnRegresarProduct">Regresar</button>
-                        <button type="submit" class="btn btn-primary" id="btnGuardar">Guardar</button>
-                    </div>
-                </form>
+                        <div class="mt-3 text-end">
+                            <button type="button" class="btn btn-secondary" id="btnRegresarProduct">Regresar</button>
+                            <button type="submit" class="btn btn-primary" id="btnGuardar">Guardar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
+
+
+
+
 </div>
-
-
-
 
 
 @section scripts {

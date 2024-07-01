@@ -25,43 +25,46 @@ namespace Logica.Catalogo
         {
             try
             {
-                data = ( from p in _db.Producto.AsNoTracking()
-                         join vu1 in _db.ValoresUnidadMedida on p.RAM equals vu1.IdValUniMed
-                         join vu2 in _db.ValoresUnidadMedida on p.GarantiaMeses equals vu2.IdValUniMed
-                         join vu3 in _db.ValoresUnidadMedida on p.Almacenamiento equals vu3.IdValUniMed
-                         join um in _db.UnidadMedida on vu1.IdUnidadMedida equals um.idUnidadMedida
-                         join um2 in _db.UnidadMedida on vu2.IdUnidadMedida equals um2.idUnidadMedida
-                         join um3 in _db.UnidadMedida on vu3.IdUnidadMedida equals um3.idUnidadMedida
-                         select new Producto_VM
-                         {
-                            IdProducto=p.IdProducto,
-                            Nombre=p.Nombre,
-                            Modelo=p.Modelo,
-                            Descripcion=p.Descripcion,
-                            Stock=p.Stock,
-                            PrecioVenta=p.PrecioVenta,
-                            PrecioCompra=p.PrecioCompra,
-                            GarantiaMeses=vu2.Valor,
-                            Almacenamiento=vu3.Valor,
-                            RAM= vu1.Valor,
-                            Activo= p.Activo,
-                            Marca= p.Marca.Nombre,
-                            Color=p.Color.Nombre,
-                            Categoria=p.Categoria.Nombre,
-                            Bateria=p.Bateria,
-                            Nuevo=p.Nuevo,
-                            Esim=p.eSim,
-                            Proveedor=p.Proveedor.Nombre,
-                            Imei=p.IMEI,
-                            CodigoBarra=p.CodigoBarra
+                data = (
+                        from p in _db.Producto.AsNoTracking()
+                        join vu1 in _db.ValoresUnidadMedida on p.RAM equals vu1.IdValUniMed into ramJoin
+                        from vu1 in ramJoin.DefaultIfEmpty()
+                        join vu2 in _db.ValoresUnidadMedida on p.GarantiaMeses equals vu2.IdValUniMed into garantiaJoin
+                        from vu2 in garantiaJoin.DefaultIfEmpty()
+                        join vu3 in _db.ValoresUnidadMedida on p.Almacenamiento equals vu3.IdValUniMed into almacenamientoJoin
+                        from vu3 in almacenamientoJoin.DefaultIfEmpty()
+                        join um in _db.UnidadMedida on vu1.IdUnidadMedida equals um.idUnidadMedida into umJoin
+                        from um in umJoin.DefaultIfEmpty()
+                        join um2 in _db.UnidadMedida on vu2.IdUnidadMedida equals um2.idUnidadMedida into um2Join
+                        from um2 in um2Join.DefaultIfEmpty()
+                        join um3 in _db.UnidadMedida on vu3.IdUnidadMedida equals um3.idUnidadMedida into um3Join
+                        from um3 in um3Join.DefaultIfEmpty()
+                        where p.Activo && p.Stock > 0
+                        select new Producto_VM
+                        {
+                            IdProducto = p.IdProducto,
+                            Nombre = p.Nombre,
+                            Modelo = p.Modelo,
+                            Descripcion = p.Descripcion,
+                            Stock = p.Stock,
+                            PrecioVenta = p.PrecioVenta,
+                            PrecioCompra = p.PrecioCompra,
+                            GarantiaMeses = vu2 != null ? vu2.Valor : 0, // 0 como valor predeterminado
+                            Almacenamiento = vu3 != null ? vu3.Valor : 0, // 0 como valor predeterminado
+                            RAM = vu1 != null ? vu1.Valor : 0, // 0 como valor predeterminado
+                            Activo = p.Activo,
+                            Marca = p.Marca.Nombre,
+                            Color = p.Color.Nombre,
+                            Categoria = p.Categoria.Nombre,
+                            Bateria = p.Bateria,
+                            Nuevo = p.Nuevo,
+                            Esim = p.eSim,
+                            Proveedor = p.Proveedor.Nombre,
+                            Imei = p.IMEI,
+                            CodigoBarra = p.CodigoBarra
+                        }
+                     ).ToList();
 
-
-
-                             
-                         }
-
-
-                    ).ToList();
 
                 return true;
             }
@@ -191,6 +194,7 @@ namespace Logica.Catalogo
                         Nuevo = product.Nuevo,
                         Esim = product.eSim,
                         Proveedor = product.Proveedor?.Nombre,
+                        IdProveedor = product.IdProveedor,
                         Imei = product.IMEI,
                         CodigoBarra = product.CodigoBarra,
                         DetalleCelular = detalleCelular
