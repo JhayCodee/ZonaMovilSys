@@ -2,10 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
-}
 
-@{
-    ViewBag.Title = "Index";
     var gananciasPorMes = ViewBag.GananciasPorMes as List<GananciasPorMes>;
     var totalProductosVendidos = ViewBag.TotalProductosVendidos as TotalProductosVendidos;
     var marcasMasVendidas = ViewBag.MarcasMasVendidas as List<MarcaVendida>;
@@ -13,105 +10,100 @@
 
     var totalGanancias = gananciasPorMes?.Sum(g => g.TotalGanancias) ?? 0;
     var cantidadProductosVendidos = totalProductosVendidos?.Cantidad ?? 0;
+
+    var costosIngresosDiarios = ViewBag.CostosIngresosDiarios as List<CostosIngresosDiarios>;
+    var costos = costosIngresosDiarios.Select(ci => ci.Costos).ToList();
+    var ingresos = costosIngresosDiarios.Select(ci => ci.Ingresos).ToList();
+    var dias = costosIngresosDiarios.Select(ci => ci.Dia).ToList();
 }
 
-
-<div class="row">
-    <div class="col-lg-8 mb-4 order-0">
-        <div class="card">
-            <div class="d-flex align-items-end row">
-                <div class="col-sm-7">
-                    <div class="card-body">
-                        <h5 class="card-title text-primary">¡Bienvenido @ViewBag.UserName! 🎉</h5>
-                        <p class="mb-4">
-                            Hoy es un gran día para alcanzar nuevos objetivos. Explora las nuevas funcionalidades que hemos añadido y mejora tu experiencia.
-                        </p>
-                    </div>
-
-                </div>
-                <div class="col-sm-5 text-center text-sm-left">
-                    <div class="card-body pb-0 px-0 px-md-4">
-                        <img src="~/Imagenes/man-with-laptop-light.png"
-                             height="140"
-                             alt="View Badge User" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-4 col-md-4 order-1">
-        <div class="row">
-            <div class="col-lg-6 col-md-12 col-6 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="card-title d-flex align-items-start justify-content-between">
-                            <div class="avatar flex-shrink-0">
-                                <img src="~/Imagenes/wallet-info.png"
-                                     alt="chart success"
-                                     class="rounded" />
-                            </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-8 mb-4 order-0">
+            <div class="card">
+                <div class="d-flex align-items-end row">
+                    <div class="col-sm-7">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary">¡Bienvenido @ViewBag.UserName! 🎉</h5>
+                            <p class="mb-4">
+                                Hoy es un gran día para alcanzar nuevos objetivos. Explora las nuevas funcionalidades que hemos añadido y mejora tu experiencia.
+                            </p>
                         </div>
-                        <span class="fw-semibold d-block mb-1">Total de Ganancias</span>
-                        <h3 class="card-title mb-2">$@totalGanancias.ToString("N2")</h3>
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-12 col-6 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="card-title d-flex align-items-start justify-content-between">
-                            <div class="avatar flex-shrink-0">
-                                <img src="~/Imagenes/chart.png"
-                                     alt="chart success"
-                                     class="rounded" />
-                            </div>
+                    <div class="col-sm-5 text-center text-sm-left">
+                        <div class="card-body pb-0 px-0 px-md-4">
+                            <img src="~/Imagenes/man-with-laptop-light.png" height="140" alt="View Badge User" />
                         </div>
-                        <span class="fw-semibold d-block mb-1">Productos Vendidos</span>
-                        <h3 class="card-title mb-2">@cantidadProductosVendidos</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-12 order-1">
+            <div class="row">
+                <div class="col-12 col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title d-flex align-items-start justify-content-between">
+                                <div class="avatar flex-shrink-0">
+                                    <img src="~/Imagenes/wallet-info.png" alt="chart success" class="rounded" />
+                                </div>
+                            </div>
+                            <span class="fw-semibold d-block mb-1">Total de Ganancias</span>
+                            <h3 class="card-title mb-2">$@totalGanancias.ToString("N2")</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title d-flex align-items-start justify-content-between">
+                                <div class="avatar flex-shrink-0">
+                                    <img src="~/Imagenes/chart.png" alt="chart success" class="rounded" />
+                                </div>
+                            </div>
+                            <span class="fw-semibold d-block mb-1">Productos Vendidos</span>
+                            <h3 class="card-title mb-2">@cantidadProductosVendidos</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Graficos -->
+        <div class="col-12 order-2 mb-4">
+            <div class="row">
+                <!-- Gráfico de Barras: Marcas más Vendidas -->
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <h5 class="card-header m-0 me-2 pb-3">Marcas Más Vendidas</h5>
+                        <div id="marcasMasVendidasChart" class="px-2"></div>
+                    </div>
+                </div>
+
+                <!-- Gráfico de Líneas: Costos vs Ingresos del Mes Actual -->
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <h5 class="card-header m-0 me-2 pb-3">Costos vs Ingresos del Mes Actual</h5>
+                        <div id="costosVsIngresosChart" class="px-2"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!--Graficos -->
-    <div class="col-12 col-lg-12 order-2 order-md-3 order-lg-2 mb-4">
-        <div class="row">
-            <!-- Gráfico de Barras: Marcas más Vendidas -->
-            <div class="col-md-6">
-                <div class="card mb-4">
-                    <h5 class="card-header m-0 me-2 pb-3">Marcas Más Vendidas</h5>
-                    <div id="marcasMasVendidasChart" class="px-2"></div>
-                </div>
-            </div>
-
-            <!-- Gráfico Circular: Productos más Vendidos -->
-            <div class="col-md-6">
-                <div class="card mb-4">
-                    <h5 class="card-header m-0 me-2 pb-3">Productos Más Vendidos</h5>
-                    <div id="productosMasVendidosChart" class="px-2"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
 </div>
-
 
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script>
         // Gráfico de Barras: Marcas más Vendidas
-         var opcionesMarcasMasVendidas = {
+        var opcionesMarcasMasVendidas = {
             series: [{
                 name: 'Ventas',
                 data: @Html.Raw(Json.Encode(marcasMasVendidas.Select(m => m.CantidadVendida)))
             }],
             chart: {
                 type: 'bar',
-                height: 350
+                height: 500 // Aumentar la altura para escritorio
             },
             colors: ['#008FFB', '#00E396', '#FEB019', '#FF4560', '#775DD0', '#546E7A', '#D10CE8'],
             plotOptions: {
@@ -130,22 +122,42 @@
         var graficoMarcasMasVendidas = new ApexCharts(document.querySelector("#marcasMasVendidasChart"), opcionesMarcasMasVendidas);
         graficoMarcasMasVendidas.render();
 
-        // Configuración del Gráfico de Pastel para Productos Más Vendidos
-        var opcionesProductosMasVendidos = {
-            series: @Html.Raw(Json.Encode(productosMasVendidos.Select(p => p.CantidadVendida))),
+        // Configuración del Gráfico de Líneas para Costos vs Ingresos del Mes Actual
+        var opcionesCostosVsIngresos = {
+            series: [{
+                name: 'Costos',
+                data: @Html.Raw(Json.Encode(costos))
+            }, {
+                name: 'Ingresos',
+                data: @Html.Raw(Json.Encode(ingresos))
+            }],
             chart: {
-                type: 'pie',
-                height: 350
+                type: 'line',
+                height: 500, // Aumentar la altura para escritorio
+                toolbar: {
+                    show: false // Ocultar opciones de zoom y otras herramientas
+                }
             },
-            labels: @Html.Raw(Json.Encode(productosMasVendidos.Select(p => p.Producto))),
+            xaxis: {
+                title: {
+                    text: 'Días del mes'
+                },
+                categories: @Html.Raw(Json.Encode(dias))
+            },
+            yaxis: {
+                title: {
+                    text: 'Monto ($)'
+                }
+            },
             title: {
-                text: ''
-            }
+                text: '',
+                align: 'left'
+            },
+            colors: ['#FF4560', '#008FFB']
         };
 
-        var graficoProductosMasVendidos = new ApexCharts(document.querySelector("#productosMasVendidosChart"), opcionesProductosMasVendidos);
-        graficoProductosMasVendidos.render();
+        var graficoCostosVsIngresos = new ApexCharts(document.querySelector("#costosVsIngresosChart"), opcionesCostosVsIngresos);
+        graficoCostosVsIngresos.render();
 
     </script>
-
 }

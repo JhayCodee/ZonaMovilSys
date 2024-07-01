@@ -24,11 +24,14 @@ namespace Web.Controllers
             var totalProductosVendidos = _reporteService.ObtenerTotalProductosVendidos();
             var marcasMasVendidas = _reporteService.ObtenerMarcasMasVendidas();
             var productosMasVendidos = _reporteService.ObtenerProductosMasVendidos();
+            var costosIngresosDiarios = _reporteService.ObtenerCostosIngresosDiarios();
+
 
             ViewBag.GananciasPorMes = gananciasPorMes;
             ViewBag.TotalProductosVendidos = totalProductosVendidos;
             ViewBag.MarcasMasVendidas = marcasMasVendidas;
             ViewBag.ProductosMasVendidos = productosMasVendidos;
+            ViewBag.CostosIngresosDiarios = costosIngresosDiarios;
 
             return View();
         }

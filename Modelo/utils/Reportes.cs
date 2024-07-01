@@ -35,4 +35,11 @@ namespace Modelo.utils
         public int CantidadVendida { get; set; }
     }
 
+    public class CostosIngresosDiarios
+    {
+        public int Dia { get; set; }
+        public decimal Costos { get; set; }
+        public decimal Ingresos { get; set; }
+    }
+
 }

@@ -16,6 +16,7 @@ namespace Logica
         {
             _db = new Contexto();
         }
+
         public List<GananciasPorMes> ObtenerGananciasPorMes()
         {
             var yearActual = DateTime.Now.Year;
@@ -43,7 +44,7 @@ namespace Logica
                     Year = group.Key.Year,
                     Month = group.Key.Month,
                     TotalGanancias = group.Sum(fd =>
-                        (fd.detalle.Cantidad * fd.PrecioVenta) -
+                        (fd.detalle.Cantidad * fd.detalle.PrecioUnitario) -
                         (fd.detalle.Cantidad * fd.PrecioCompra) -
                         (fd.factura.Descuento ?? 0))
                 })
@@ -96,6 +97,40 @@ namespace Logica
                 .OrderByDescending(x => x.CantidadVendida)
                 .Take(5)
                 .ToList();
+        }
+
+        public List<CostosIngresosDiarios> ObtenerCostosIngresosDiarios()
+        {
+            var yearActual = DateTime.Now.Year;
+            var mesActual = DateTime.Now.Month;
+
+            var result = _db.FacturaVenta
+                .Where(f => f.Activo && f.Fecha.Year == yearActual && f.Fecha.Month == mesActual)
+                .Join(_db.DetalleFacturaVenta,
+                      factura => factura.IdFacturaVenta,
+                      detalle => detalle.IdFacturaVenta,
+                      (factura, detalle) => new { factura, detalle })
+                .Join(_db.Producto,
+                      fd => fd.detalle.IdProducto,
+                      producto => producto.IdProducto,
+                      (fd, producto) => new
+                      {
+                          fd.factura,
+                          fd.detalle,
+                          producto.PrecioCompra,
+                          producto.PrecioVenta
+                      })
+                .GroupBy(fd => fd.factura.Fecha.Day)
+                .Select(group => new CostosIngresosDiarios
+                {
+                    Dia = group.Key,
+                    Costos = group.Sum(fd => fd.detalle.Cantidad * fd.PrecioCompra),
+                    Ingresos = group.Sum(fd => fd.detalle.Cantidad * fd.detalle.PrecioUnitario)
+                })
+                .OrderBy(ci => ci.Dia)
+                .ToList();
+
+            return result;
         }
     }
 }
