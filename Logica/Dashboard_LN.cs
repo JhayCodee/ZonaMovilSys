@@ -59,8 +59,8 @@ namespace Logica
             return new TotalProductosVendidos
             {
                 Cantidad = _db.DetalleFacturaVenta
-                    .Where(d => d.FacturaVenta.Activo && d.FacturaVenta.Fecha.Year == yearActual && d.FacturaVenta.Fecha.Month == mesActual)
-                    .Sum(d => d.Cantidad)
+                .Where(d => d.FacturaVenta.Activo && d.FacturaVenta.Fecha.Year == yearActual && d.FacturaVenta.Fecha.Month == mesActual)
+                .Sum(d => (int?)d.Cantidad) ?? 0
             };
         }
 

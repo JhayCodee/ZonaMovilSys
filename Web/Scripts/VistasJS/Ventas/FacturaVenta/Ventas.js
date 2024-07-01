@@ -89,17 +89,20 @@
                 responseType: 'blob'
             },
             success: function (data) {
-                var a = document.createElement('a');
-                var url = window.URL.createObjectURL(data);
-                a.href = url;
-                a.download = 'Factura.pdf';
-                document.body.append(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
-                a.remove();
+                var blob = new Blob([data], { type: 'application/pdf' });
+                var url = window.URL.createObjectURL(blob);
+                var printWindow = window.open(url);
+                if (printWindow) {
+                    printWindow.addEventListener('load', function () {
+                        printWindow.print();
+                    });
+                } else {
+                    alert('Por favor, permita las ventanas emergentes para este sitio web.');
+                }
             }
         });
     });
+
 
     $('#tblFacturasVenta').on('click', '.info-button', function () {
         var facturaId = $(this).data('id');
