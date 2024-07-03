@@ -23,6 +23,7 @@ namespace Web.Controllers.Catalogos
         [AuthorizeUser(idOperacion: 6)]
         public ActionResult Index()
         {
+            ViewBag.PageName = "clientes";  // Pasa el nombre de la página actual
             ViewBag.Departamentos = _ln.GetDepartamentosDropDown();
             return View();
         }

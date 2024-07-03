@@ -24,6 +24,7 @@ namespace Web.Controllers.Catalogos
         [AuthorizeUser(idOperacion: 7)]
         public ActionResult Index()
         {
+            ViewBag.PageName = "marcas";  // Pasa el nombre de la página actual
             return View();
         }
 

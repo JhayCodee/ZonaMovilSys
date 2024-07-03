@@ -24,6 +24,7 @@ namespace Web.Controllers.Ventas
         [AuthorizeUser(idOperacion: 11)]
         public ActionResult Index()
         {
+            ViewBag.PageName = "garantias";  // Pasa el nombre de la página actual
             return View();
         }
 

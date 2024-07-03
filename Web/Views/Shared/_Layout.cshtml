@@ -74,9 +74,12 @@
     <!-- styles zona mobile -->
     <!-- end styles zona mobile -->
 
+    <!-- Intro.js CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.2.0/introjs.min.css" rel="stylesheet">
+
 </head>
 
-<body>
+<body data-page-name="@ViewBag.PageName">
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
@@ -143,17 +146,13 @@
                     </div>
 
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-
-
                         <ul class="navbar-nav flex-row align-items-center ms-auto">
-                            <!-- User -->
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <span class="d-flex align-items-center">
-                                        <!-- Contenedor flex para alinear texto e icono -->
-                                        <span class="me-2">@ViewBag.UserName</span> <!-- Texto añadido aquí -->
+                                        <span class="me-2">@ViewBag.UserName</span>
                                         <div class="avatar avatar-online d-flex align-items-center justify-content-center">
-                                            <i class="bx bx-cog bx-sm"></i> <!-- Icono de opciones/ajustes de Boxicons -->
+                                            <i class="bx bx-cog bx-sm"></i>
                                         </div>
                                     </span>
                                 </a>
@@ -172,10 +171,18 @@
                                     </li>
                                 </ul>
                             </li>
-                            <!--/ User -->
-                        </ul>
 
+                            <!-- Botón de ayuda fuera del dropdown -->
+                            <li class="nav-item">
+                                <div class="avatar avatar-online d-flex align-items-center justify-content-center">
+                                    <button type="button" class="btn p-0" id="btnHelp" style="border: none; background: none;">
+                                        <img width="36" height="36" src="https://img.icons8.com/fluency/48/refer-to-manual.png" alt="refer-to-manual" />
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
+
                 </nav>
 
                 <!-- / Navbar -->
@@ -250,5 +257,7 @@
 
     @RenderSection("scripts", required: false)
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.2.0/intro.min.js"></script>
+    <script src="~/Scripts/tour.js"></script>
 </body>
 </html>

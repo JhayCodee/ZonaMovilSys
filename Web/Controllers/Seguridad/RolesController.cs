@@ -22,6 +22,7 @@ namespace Web.Controllers.Seguridad
         [AuthorizeUser(idOperacion: 2)]
         public ActionResult Index()
         {
+            ViewBag.PageName = "roles";
             return View();
         }
 

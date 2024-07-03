@@ -25,6 +25,7 @@ namespace Web.Controllers.Seguridad
         [AuthorizeUser(idOperacion: 3)]
         public ActionResult Index()
         {
+            ViewBag.PageName = "usuarios";
             return View();
         }
 

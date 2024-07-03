@@ -23,6 +23,7 @@ namespace Web.Controllers.Catalogos
         [AuthorizeUser(idOperacion: 5)]
         public ActionResult Index()
         {
+            ViewBag.PageName = "categoria";  // Pasa el nombre de la página actual
             return View();
         }
 
