@@ -703,5 +703,62 @@ namespace Datos
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_ReclamarGarantia", idGarantiaParameter, descripcionEventoParameter, fechaEntregaParameter, success, errorMessage);
         }
+    
+        public virtual ObjectResult<ReporteClientes_Result> ReporteClientes(Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin)
+        {
+            var fechaInicioParameter = fechaInicio.HasValue ?
+                new ObjectParameter("FechaInicio", fechaInicio) :
+                new ObjectParameter("FechaInicio", typeof(System.DateTime));
+    
+            var fechaFinParameter = fechaFin.HasValue ?
+                new ObjectParameter("FechaFin", fechaFin) :
+                new ObjectParameter("FechaFin", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ReporteClientes_Result>("ReporteClientes", fechaInicioParameter, fechaFinParameter);
+        }
+    
+        public virtual ObjectResult<ReporteFinancieroPorPeriodo_Result> ReporteFinancieroPorPeriodo(Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin)
+        {
+            var fechaInicioParameter = fechaInicio.HasValue ?
+                new ObjectParameter("FechaInicio", fechaInicio) :
+                new ObjectParameter("FechaInicio", typeof(System.DateTime));
+    
+            var fechaFinParameter = fechaFin.HasValue ?
+                new ObjectParameter("FechaFin", fechaFin) :
+                new ObjectParameter("FechaFin", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ReporteFinancieroPorPeriodo_Result>("ReporteFinancieroPorPeriodo", fechaInicioParameter, fechaFinParameter);
+        }
+    
+        public virtual ObjectResult<ReporteGarantiasPorPeriodo_Result> ReporteGarantiasPorPeriodo(Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin)
+        {
+            var fechaInicioParameter = fechaInicio.HasValue ?
+                new ObjectParameter("FechaInicio", fechaInicio) :
+                new ObjectParameter("FechaInicio", typeof(System.DateTime));
+    
+            var fechaFinParameter = fechaFin.HasValue ?
+                new ObjectParameter("FechaFin", fechaFin) :
+                new ObjectParameter("FechaFin", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ReporteGarantiasPorPeriodo_Result>("ReporteGarantiasPorPeriodo", fechaInicioParameter, fechaFinParameter);
+        }
+    
+        public virtual ObjectResult<ReporteInventarioActual_Result> ReporteInventarioActual()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ReporteInventarioActual_Result>("ReporteInventarioActual");
+        }
+    
+        public virtual ObjectResult<ReporteVentasPorPeriodo_Result> ReporteVentasPorPeriodo(Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin)
+        {
+            var fechaInicioParameter = fechaInicio.HasValue ?
+                new ObjectParameter("FechaInicio", fechaInicio) :
+                new ObjectParameter("FechaInicio", typeof(System.DateTime));
+    
+            var fechaFinParameter = fechaFin.HasValue ?
+                new ObjectParameter("FechaFin", fechaFin) :
+                new ObjectParameter("FechaFin", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ReporteVentasPorPeriodo_Result>("ReporteVentasPorPeriodo", fechaInicioParameter, fechaFinParameter);
+        }
     }
 }

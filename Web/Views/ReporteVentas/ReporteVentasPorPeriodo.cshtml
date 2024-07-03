@@ -1,0 +1,99 @@
+﻿@model List<Modelo.Ventas.Reporte_VM>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte de Ventas por Periodo</title>
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .table {
+            width: 100%;
+            margin-bottom: 1rem;
+            color: #212529;
+            border-collapse: collapse;
+        }
+
+            .table th, .table td {
+                padding: .75rem;
+                vertical-align: top;
+                border: 1px solid #dee2e6;
+            }
+
+            .table thead th {
+                vertical-align: bottom;
+                border-bottom: 2px solid #dee2e6;
+            }
+
+            .table tbody + tbody {
+                border-top: 2px solid #dee2e6;
+            }
+
+            .table th {
+                background-color: #f8f9fa;
+            }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+            .header h1 {
+                margin-bottom: 10px;
+            }
+
+            .header p {
+                margin: 0;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Reporte de Ventas por Periodo</h1>
+            <p>Desde: @ViewBag.FechaInicio Hasta: @ViewBag.FechaFin</p>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Fecha de Venta</th>
+                    <th>Número de Factura</th>
+                    <th>Cliente</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio Total ($)</th>
+                    <th>Descuento ($)</th>
+                    <th>Vendedor</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.FechaVenta.ToString("dd/MM/yyyy")</td>
+                        <td>@item.NumeroFactura</td>
+                        <td>@item.Cliente</td>
+                        <td>@item.Producto</td>
+                        <td>@item.Cantidad</td>
+                        <td>@item.PrecioTotal.ToString("C", new System.Globalization.CultureInfo("en-US"))</td>
+                        <td>@item.Descuento.ToString("C", new System.Globalization.CultureInfo("en-US"))</td>
+                        <td>@item.Vendedor</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

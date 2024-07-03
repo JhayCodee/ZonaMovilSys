@@ -58,6 +58,7 @@
     <Compile Include="Ventas\DetalleFacturaVenta_VM.cs" />
     <Compile Include="Ventas\FacturaVenta_VM.cs" />
     <Compile Include="Ventas\Garantia_VM.cs" />
+    <Compile Include="Ventas\Reporte_VM.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -143,6 +143,7 @@
     <Compile Include="Controllers\Seguridad\RolesController.cs" />
     <Compile Include="Controllers\Seguridad\UsuariosController.cs" />
     <Compile Include="Controllers\Ventas\GarantiasController.cs" />
+    <Compile Include="Controllers\Ventas\ReporteVentasController.cs" />
     <Compile Include="Controllers\Ventas\VentasController.cs" />
     <Compile Include="Filters\AuthorizeUser.cs" />
     <Compile Include="Filters\VerificaSession.cs" />
@@ -253,6 +254,8 @@
     <Content Include="Views\Colores\Index.cshtml" />
     <Content Include="Views\Templates\Factura.cshtml" />
     <Content Include="Views\Error\UnauthorizedOperation.cshtml" />
+    <Content Include="Views\ReporteVentas\Index.cshtml" />
+    <Content Include="Views\ReporteVentas\ReporteVentasPorPeriodo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logica\Logica.csproj">

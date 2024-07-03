@@ -927,6 +927,23 @@
         <Function Name="GenerarFactura" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Ventas">
           <Parameter Name="idFacturaVenta" Type="int" Mode="In" />
         </Function>
+        <Function Name="ReporteClientes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Ventas">
+          <Parameter Name="FechaInicio" Type="date" Mode="In" />
+          <Parameter Name="FechaFin" Type="date" Mode="In" />
+        </Function>
+        <Function Name="ReporteFinancieroPorPeriodo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Ventas">
+          <Parameter Name="FechaInicio" Type="date" Mode="In" />
+          <Parameter Name="FechaFin" Type="date" Mode="In" />
+        </Function>
+        <Function Name="ReporteGarantiasPorPeriodo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Ventas">
+          <Parameter Name="FechaInicio" Type="date" Mode="In" />
+          <Parameter Name="FechaFin" Type="date" Mode="In" />
+        </Function>
+        <Function Name="ReporteInventarioActual" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Ventas" />
+        <Function Name="ReporteVentasPorPeriodo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Ventas">
+          <Parameter Name="FechaInicio" Type="date" Mode="In" />
+          <Parameter Name="FechaFin" Type="date" Mode="In" />
+        </Function>
         <Function Name="sp_AgregarGarantia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Ventas">
           <Parameter Name="IdProducto" Type="int" Mode="In" />
           <Parameter Name="IdDetalleFacturaVenta" Type="int" Mode="In" />
@@ -2198,6 +2215,23 @@
             <Parameter Name="Success" Mode="InOut" Type="Boolean" />
             <Parameter Name="ErrorMessage" Mode="InOut" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="ReporteClientes" ReturnType="Collection(ContextoZM.ReporteClientes_Result)">
+            <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="ReporteFinancieroPorPeriodo" ReturnType="Collection(ContextoZM.ReporteFinancieroPorPeriodo_Result)">
+            <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="ReporteGarantiasPorPeriodo" ReturnType="Collection(ContextoZM.ReporteGarantiasPorPeriodo_Result)">
+            <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="ReporteInventarioActual" ReturnType="Collection(ContextoZM.ReporteInventarioActual_Result)" />
+          <FunctionImport Name="ReporteVentasPorPeriodo" ReturnType="Collection(ContextoZM.ReporteVentasPorPeriodo_Result)">
+            <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_FacturaVenta_Create_Result">
           <Property Type="Int32" Name="IdFacturaVenta" Nullable="false" />
@@ -2353,6 +2387,59 @@
           <Property Type="Boolean" Name="Activo" Nullable="false" />
           <Property Type="Decimal" Name="Descuento" Nullable="false" Precision="10" Scale="2" />
           <Property Type="String" Name="IMEI" Nullable="false" MaxLength="15" />
+        </ComplexType>
+        <ComplexType Name="ReporteClientes_Result">
+          <Property Type="Int32" Name="IdCliente" Nullable="false" />
+          <Property Type="String" Name="Cliente" Nullable="false" MaxLength="101" />
+          <Property Type="String" Name="Correo" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Telefono" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="Departamento" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="TotalCompras" Nullable="true" />
+          <Property Type="Decimal" Name="MontoTotalGastado" Nullable="true" Precision="38" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="ReporteFinancieroPorPeriodo_Result">
+          <Property Type="DateTime" Name="FechaVenta" Nullable="false" Precision="23" />
+          <Property Type="String" Name="NumeroFactura" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Cliente" Nullable="false" MaxLength="101" />
+          <Property Type="Decimal" Name="TotalVenta" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="TotalCosto" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="GananciaBruta" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="Descuento" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="GananciaNeta" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="String" Name="Vendedor" Nullable="false" MaxLength="101" />
+        </ComplexType>
+        <ComplexType Name="ReporteGarantiasPorPeriodo_Result">
+          <Property Type="Int32" Name="IdGarantia" Nullable="false" />
+          <Property Type="DateTime" Name="FechaInicio" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="FechaFin" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Estado" Nullable="false" MaxLength="11" />
+          <Property Type="DateTime" Name="FechaEntregaEstimada" Nullable="true" />
+          <Property Type="String" Name="Producto" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="NumeroFactura" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="FechaEvento" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="NuevaFechaFin" Nullable="true" Precision="23" />
+          <Property Type="String" Name="DescripcionEvento" Nullable="true" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="ReporteInventarioActual_Result">
+          <Property Type="String" Name="Producto" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Modelo" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="PrecioCompra" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="PrecioVenta" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Int32" Name="CantidadDisponible" Nullable="false" />
+          <Property Type="Decimal" Name="CostoTotalInventario" Nullable="true" Precision="29" Scale="2" />
+          <Property Type="Decimal" Name="ValorVentaPotencial" Nullable="true" Precision="29" Scale="2" />
+          <Property Type="String" Name="Categoria" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Marca" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="ReporteVentasPorPeriodo_Result">
+          <Property Type="DateTime" Name="FechaVenta" Nullable="false" Precision="23" />
+          <Property Type="String" Name="NumeroFactura" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Cliente" Nullable="false" MaxLength="101" />
+          <Property Type="String" Name="Producto" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="Cantidad" Nullable="false" />
+          <Property Type="Decimal" Name="PrecioTotal" Nullable="true" Precision="29" Scale="2" />
+          <Property Type="Decimal" Name="Descuento" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="String" Name="Vendedor" Nullable="false" MaxLength="101" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2678,6 +2765,79 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_AgregarGarantia" FunctionName="ContextoZM.Store.sp_AgregarGarantia" />
           <FunctionImportMapping FunctionImportName="sp_ReclamarGarantia" FunctionName="ContextoZM.Store.sp_ReclamarGarantia" />
+          <FunctionImportMapping FunctionImportName="ReporteClientes" FunctionName="ContextoZM.Store.ReporteClientes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ContextoZM.ReporteClientes_Result">
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Departamento" ColumnName="Departamento" />
+                <ScalarProperty Name="TotalCompras" ColumnName="TotalCompras" />
+                <ScalarProperty Name="MontoTotalGastado" ColumnName="MontoTotalGastado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ReporteFinancieroPorPeriodo" FunctionName="ContextoZM.Store.ReporteFinancieroPorPeriodo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ContextoZM.ReporteFinancieroPorPeriodo_Result">
+                <ScalarProperty Name="FechaVenta" ColumnName="FechaVenta" />
+                <ScalarProperty Name="NumeroFactura" ColumnName="NumeroFactura" />
+                <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+                <ScalarProperty Name="TotalVenta" ColumnName="TotalVenta" />
+                <ScalarProperty Name="TotalCosto" ColumnName="TotalCosto" />
+                <ScalarProperty Name="GananciaBruta" ColumnName="GananciaBruta" />
+                <ScalarProperty Name="Descuento" ColumnName="Descuento" />
+                <ScalarProperty Name="GananciaNeta" ColumnName="GananciaNeta" />
+                <ScalarProperty Name="Vendedor" ColumnName="Vendedor" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ReporteGarantiasPorPeriodo" FunctionName="ContextoZM.Store.ReporteGarantiasPorPeriodo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ContextoZM.ReporteGarantiasPorPeriodo_Result">
+                <ScalarProperty Name="IdGarantia" ColumnName="IdGarantia" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="FechaEntregaEstimada" ColumnName="FechaEntregaEstimada" />
+                <ScalarProperty Name="Producto" ColumnName="Producto" />
+                <ScalarProperty Name="NumeroFactura" ColumnName="NumeroFactura" />
+                <ScalarProperty Name="FechaEvento" ColumnName="FechaEvento" />
+                <ScalarProperty Name="NuevaFechaFin" ColumnName="NuevaFechaFin" />
+                <ScalarProperty Name="DescripcionEvento" ColumnName="DescripcionEvento" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ReporteInventarioActual" FunctionName="ContextoZM.Store.ReporteInventarioActual">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ContextoZM.ReporteInventarioActual_Result">
+                <ScalarProperty Name="Producto" ColumnName="Producto" />
+                <ScalarProperty Name="Modelo" ColumnName="Modelo" />
+                <ScalarProperty Name="PrecioCompra" ColumnName="PrecioCompra" />
+                <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
+                <ScalarProperty Name="CantidadDisponible" ColumnName="CantidadDisponible" />
+                <ScalarProperty Name="CostoTotalInventario" ColumnName="CostoTotalInventario" />
+                <ScalarProperty Name="ValorVentaPotencial" ColumnName="ValorVentaPotencial" />
+                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+                <ScalarProperty Name="Marca" ColumnName="Marca" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ReporteVentasPorPeriodo" FunctionName="ContextoZM.Store.ReporteVentasPorPeriodo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ContextoZM.ReporteVentasPorPeriodo_Result">
+                <ScalarProperty Name="FechaVenta" ColumnName="FechaVenta" />
+                <ScalarProperty Name="NumeroFactura" ColumnName="NumeroFactura" />
+                <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+                <ScalarProperty Name="Producto" ColumnName="Producto" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="PrecioTotal" ColumnName="PrecioTotal" />
+                <ScalarProperty Name="Descuento" ColumnName="Descuento" />
+                <ScalarProperty Name="Vendedor" ColumnName="Vendedor" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

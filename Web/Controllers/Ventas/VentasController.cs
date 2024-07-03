@@ -90,6 +90,5 @@ namespace Web.Controllers.Ventas
             bool status = _ln.AnularFacturaVenta(id, GetLoggedUser().IdUsuario, razonAnulamiento, ref errorMessage);
             return Json(new { status, errorMessage });
         }
-
     }
 }

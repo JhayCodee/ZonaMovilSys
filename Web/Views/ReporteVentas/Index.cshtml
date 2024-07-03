@@ -1,0 +1,173 @@
+﻿@{
+    ViewBag.Title = "Reportes";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-center mb-4">Reportes</h1>
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white fw-bold text-center">
+                    <h3 class="card-title text-white m-0">Reportes que requieren rango de fechas</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row my-4">
+                        <div class="col-md-12 mb-3">
+                            <label for="daterange" class="form-label">Seleccione Rango de Fechas</label>
+                            <input type="text" class="form-control" id="daterange" name="daterange">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <button id="btnVentasPorPeriodo" class="btn btn-secondary w-100 fw-bold">Reporte de Ventas por Periodo</button>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <button id="btnFinancieroPorPeriodo" class="btn btn-secondary w-100 fw-bold">Reporte Financiero por Periodo</button>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <button id="btnDevolucionesPorPeriodo" class="btn btn-secondary w-100 fw-bold">Reporte de Devoluciones por Periodo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title text-white fw-bold text-center m-0">Reportes que no requieren rango de fechas</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 my-4">
+                            <button id="btnInventarioActual" class="btn btn-secondary w-100 fw-bold">Reporte de Inventario Actual</button>
+                        </div>
+                        <div class="col-md-6 my-4">
+                            <button id="btnClientes" class="btn btn-secondary w-100 fw-bold">Reporte de Clientes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        $(function () {
+            $('#daterange').daterangepicker({
+                opens: 'right',
+                locale: {
+                    format: 'YYYY-MM-DD'
+                }
+            });
+        });
+
+        function showAlert(message) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: message,
+            });
+        }
+
+        document.getElementById('btnVentasPorPeriodo').addEventListener('click', function () {
+            const dates = $('#daterange').val().split(' - ');
+            const fechaInicio = dates[0];
+            const fechaFin = dates[1];
+
+            $.ajax({
+                url: '/ReporteVentas/ReporteVentasPorPeriodo',
+                data: { fechaInicio: fechaInicio, fechaFin: fechaFin },
+                success: function (response) {
+                    if (!response.success) {
+                        showAlert(response.message);
+                    } else {
+                        var link = document.createElement('a');
+                        link.href = 'data:application/pdf;base64,' + response.fileData;
+                        link.download = response.fileName;
+                        link.click();
+                    }
+                }
+            });
+        });
+
+        document.getElementById('btnFinancieroPorPeriodo').addEventListener('click', function () {
+            const dates = $('#daterange').val().split(' - ');
+            const fechaInicio = dates[0];
+            const fechaFin = dates[1];
+
+            $.ajax({
+                url: '/ReporteVentas/ReporteFinancieroPorPeriodo',
+                data: { fechaInicio: fechaInicio, fechaFin: fechaFin },
+                success: function (response) {
+                    if (!response.success) {
+                        showAlert(response.message);
+                    } else {
+                        var link = document.createElement('a');
+                        link.href = 'data:application/pdf;base64,' + response.fileData;
+                        link.download = response.fileName;
+                        link.click();
+                    }
+                }
+            });
+        });
+
+        document.getElementById('btnDevolucionesPorPeriodo').addEventListener('click', function () {
+            const dates = $('#daterange').val().split(' - ');
+            const fechaInicio = dates[0];
+            const fechaFin = dates[1];
+
+            $.ajax({
+                url: '/ReporteVentas/ReporteDevolucionesPorPeriodo',
+                data: { fechaInicio: fechaInicio, fechaFin: fechaFin },
+                success: function (response) {
+                    if (!response.success) {
+                        showAlert(response.message);
+                    } else {
+                        var link = document.createElement('a');
+                        link.href = 'data:application/pdf;base64,' + response.fileData;
+                        link.download = response.fileName;
+                        link.click();
+                    }
+                }
+            });
+        });
+
+        document.getElementById('btnInventarioActual').addEventListener('click', function () {
+            $.ajax({
+                url: '/ReporteVentas/ReporteInventarioActual',
+                success: function (response) {
+                    if (!response.success) {
+                        showAlert(response.message);
+                    } else {
+                        var link = document.createElement('a');
+                        link.href = 'data:application/pdf;base64,' + response.fileData;
+                        link.download = response.fileName;
+                        link.click();
+                    }
+                }
+            });
+        });
+
+        document.getElementById('btnClientes').addEventListener('click', function () {
+            $.ajax({
+                url: '/ReporteVentas/ReporteClientes',
+                success: function (response) {
+                    if (!response.success) {
+                        showAlert(response.message);
+                    } else {
+                        var link = document.createElement('a');
+                        link.href = 'data:application/pdf;base64,' + response.fileData;
+                        link.download = response.fileName;
+                        link.click();
+                    }
+                }
+            });
+        });
+    </script>
+}
