@@ -10,8 +10,8 @@
     }, "El IMEI debe contener exactamente 15 dígitos numéricos.");
 
     $.validator.addMethod("codigoBarraValido", function (value, element) {
-        return this.optional(element) || /^[0-9]{6}$/.test(value);
-    }, "El código de barra debe contener exactamente 6 dígitos numéricos.");
+        return this.optional(element) || /^[0-9]{13}$/.test(value);
+    }, "El código de barra debe contener exactamente 13 dígitos numéricos.");
 
     $("#frmProductos").validate({
         rules: {
@@ -121,6 +121,10 @@
                 required: true,
                 codigoBarraValido: true
             },
+            inputCodigoBarrasAcc: {
+                required: true,
+                codigoBarraValido: true
+            },
             inputProveedores: {
                 required: function () {
                     return $("#inputCategoria").find(":selected").text() === 'Celular';
@@ -202,7 +206,11 @@
             },
             inputCodigoBarras: {
                 required: "El código de barra es obligatorio.",
-                codigoBarraValido: "El código de barra debe contener exactamente 6 dígitos numéricos."
+                codigoBarraValido: "El código de barra debe contener exactamente 13 dígitos numéricos."
+            },
+            inputCodigoBarrasAcc: {
+                required: "El código de barra es obligatorio.",
+                codigoBarraValido: "El código de barra debe contener exactamente 13 dígitos numéricos."
             },
             inputProveedores: {
                 required: "Debe seleccionar un proveedor."

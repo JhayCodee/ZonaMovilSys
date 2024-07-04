@@ -170,7 +170,7 @@
             Esim: isCellphone ? $("#inputEsim").val() === "true" : null,
             IdProveedor: isCellphone ? $("#inputProveedores").val() : $("#inputProveedoresAcc").val(),
             Imei: isCellphone ? $("#inputImei").val() : null,
-            CodigoBarra: $("#inputCodigoBarras").val()
+            CodigoBarra: isCellphone ? $("#inputCodigoBarras").val() : $("#inputCodigoBarrasAcc").val(), 
         };
 
         const url = `${component.url}/${component.isEditing ? 'UpdateProduct' : 'CreateProduct'}`;
