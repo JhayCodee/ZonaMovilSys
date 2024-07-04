@@ -1,4 +1,4 @@
-﻿@model List<Modelo.Ventas.Reporte_VM>
+﻿@model List<Modelo.Ventas.ReporteInventarioVM>
 
 @{
     Layout = null;
@@ -8,7 +8,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Reporte de Ventas por Periodo</title>
+    <title>Reporte de Inventario Actual</title>
     <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
     <style>
         body {
@@ -91,34 +91,35 @@
             <img src="~/Imagenes/logoblue.jpg" alt="Logo ZonaMovil">
         </div>
         <div class="header">
-            <h1>Reporte de Ventas por Periodo</h1>
-            <p>Desde: @ViewBag.FechaInicio.ToString("dd/MM/yyyy") Hasta: @ViewBag.FechaFin.ToString("dd/MM/yyyy")</p>
+            <h1>Reporte de Inventario Actual</h1>
         </div>
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Fecha de Venta</th>
-                    <th>Número de Factura</th>
-                    <th>Cliente</th>
                     <th>Producto</th>
-                    <th>Cantidad</th>
-                    <th>Precio Total ($)</th>
-                    <th>Descuento ($)</th>
-                    <th>Vendedor</th>
+                    <th>Modelo</th>
+                    <th>Precio de Compra ($)</th>
+                    <th>Precio de Venta ($)</th>
+                    <th>Cantidad Disponible</th>
+                    <th>Costo Total de Inventario ($)</th>
+                    <th>Valor de Venta Potencial ($)</th>
+                    <th>Categoría</th>
+                    <th>Marca</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@item.FechaVenta.ToString("dd/MM/yyyy")</td>
-                        <td>@item.NumeroFactura</td>
-                        <td>@item.Cliente</td>
                         <td>@item.Producto</td>
-                        <td>@item.Cantidad</td>
-                        <td>@item.PrecioTotal.ToString("C", new System.Globalization.CultureInfo("en-US"))</td>
-                        <td>@item.Descuento.ToString("C", new System.Globalization.CultureInfo("en-US"))</td>
-                        <td>@item.Vendedor</td>
+                        <td>@item.Modelo</td>
+                        <td>@item.PrecioCompra.ToString("C", new System.Globalization.CultureInfo("en-US"))</td>
+                        <td>@item.PrecioVenta.ToString("C", new System.Globalization.CultureInfo("en-US"))</td>
+                        <td>@item.CantidadDisponible</td>
+                        <td>@item.CostoTotalInventario.ToString("C", new System.Globalization.CultureInfo("en-US"))</td>
+                        <td>@item.ValorVentaPotencial.ToString("C", new System.Globalization.CultureInfo("en-US"))</td>
+                        <td>@item.Categoria</td>
+                        <td>@item.Marca</td>
                     </tr>
                 }
             </tbody>

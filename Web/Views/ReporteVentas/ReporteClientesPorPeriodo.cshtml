@@ -1,4 +1,4 @@
-﻿@model List<Modelo.Ventas.Reporte_VM>
+﻿@model List<Modelo.Ventas.ReporteClienteVM>
 
 @{
     Layout = null;
@@ -8,7 +8,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Reporte de Ventas por Periodo</title>
+    <title>Reporte de Clientes por Periodo</title>
     <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
     <style>
         body {
@@ -91,34 +91,30 @@
             <img src="~/Imagenes/logoblue.jpg" alt="Logo ZonaMovil">
         </div>
         <div class="header">
-            <h1>Reporte de Ventas por Periodo</h1>
+            <h1>Reporte de Clientes por Periodo</h1>
             <p>Desde: @ViewBag.FechaInicio.ToString("dd/MM/yyyy") Hasta: @ViewBag.FechaFin.ToString("dd/MM/yyyy")</p>
         </div>
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Fecha de Venta</th>
-                    <th>Número de Factura</th>
                     <th>Cliente</th>
-                    <th>Producto</th>
-                    <th>Cantidad</th>
-                    <th>Precio Total ($)</th>
-                    <th>Descuento ($)</th>
-                    <th>Vendedor</th>
+                    <th>Correo</th>
+                    <th>Teléfono</th>
+                    <th>Departamento</th>
+                    <th>Total de Compras</th>
+                    <th>Monto Total Gastado ($)</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@item.FechaVenta.ToString("dd/MM/yyyy")</td>
-                        <td>@item.NumeroFactura</td>
                         <td>@item.Cliente</td>
-                        <td>@item.Producto</td>
-                        <td>@item.Cantidad</td>
-                        <td>@item.PrecioTotal.ToString("C", new System.Globalization.CultureInfo("en-US"))</td>
-                        <td>@item.Descuento.ToString("C", new System.Globalization.CultureInfo("en-US"))</td>
-                        <td>@item.Vendedor</td>
+                        <td>@item.Correo</td>
+                        <td>@item.Telefono</td>
+                        <td>@item.Departamento</td>
+                        <td>@item.TotalCompras</td>
+                        <td>@item.MontoTotalGastado.ToString("C", new System.Globalization.CultureInfo("en-US"))</td>
                     </tr>
                 }
             </tbody>

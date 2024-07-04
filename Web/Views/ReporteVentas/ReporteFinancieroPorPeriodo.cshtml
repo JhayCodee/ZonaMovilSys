@@ -1,4 +1,4 @@
-﻿@model List<Modelo.Ventas.Reporte_VM>
+﻿@model List<Modelo.Ventas.ReporteFinancieroVM>
 
 @{
     Layout = null;
@@ -8,7 +8,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Reporte de Ventas por Periodo</title>
+    <title>Reporte Financiero por Periodo</title>
     <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
     <style>
         body {
@@ -91,7 +91,7 @@
             <img src="~/Imagenes/logoblue.jpg" alt="Logo ZonaMovil">
         </div>
         <div class="header">
-            <h1>Reporte de Ventas por Periodo</h1>
+            <h1>Reporte Financiero por Periodo</h1>
             <p>Desde: @ViewBag.FechaInicio.ToString("dd/MM/yyyy") Hasta: @ViewBag.FechaFin.ToString("dd/MM/yyyy")</p>
         </div>
         <table class="table table-bordered">
@@ -100,10 +100,11 @@
                     <th>Fecha de Venta</th>
                     <th>Número de Factura</th>
                     <th>Cliente</th>
-                    <th>Producto</th>
-                    <th>Cantidad</th>
-                    <th>Precio Total ($)</th>
+                    <th>Total Venta ($)</th>
+                    <th>Total Costo ($)</th>
+                    <th>Ganancia Bruta ($)</th>
                     <th>Descuento ($)</th>
+                    <th>Ganancia Neta ($)</th>
                     <th>Vendedor</th>
                 </tr>
             </thead>
@@ -114,10 +115,11 @@
                         <td>@item.FechaVenta.ToString("dd/MM/yyyy")</td>
                         <td>@item.NumeroFactura</td>
                         <td>@item.Cliente</td>
-                        <td>@item.Producto</td>
-                        <td>@item.Cantidad</td>
-                        <td>@item.PrecioTotal.ToString("C", new System.Globalization.CultureInfo("en-US"))</td>
+                        <td>@item.TotalVenta.ToString("C", new System.Globalization.CultureInfo("en-US"))</td>
+                        <td>@item.TotalCosto.ToString("C", new System.Globalization.CultureInfo("en-US"))</td>
+                        <td>@item.GananciaBruta.ToString("C", new System.Globalization.CultureInfo("en-US"))</td>
                         <td>@item.Descuento.ToString("C", new System.Globalization.CultureInfo("en-US"))</td>
+                        <td>@item.GananciaNeta.ToString("C", new System.Globalization.CultureInfo("en-US"))</td>
                         <td>@item.Vendedor</td>
                     </tr>
                 }

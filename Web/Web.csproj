@@ -256,6 +256,10 @@
     <Content Include="Views\Error\UnauthorizedOperation.cshtml" />
     <Content Include="Views\ReporteVentas\Index.cshtml" />
     <Content Include="Views\ReporteVentas\ReporteVentasPorPeriodo.cshtml" />
+    <Content Include="Views\ReporteVentas\ReporteFinancieroPorPeriodo.cshtml" />
+    <Content Include="Views\ReporteVentas\ReporteGarantiasPorPeriodo.cshtml" />
+    <Content Include="Views\ReporteVentas\ReporteInventarioActual.cshtml" />
+    <Content Include="Views\ReporteVentas\ReporteClientesPorPeriodo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logica\Logica.csproj">

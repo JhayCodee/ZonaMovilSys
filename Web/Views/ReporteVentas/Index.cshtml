@@ -123,7 +123,7 @@
             const fechaFin = dates[1];
 
             $.ajax({
-                url: '/ReporteVentas/ReporteDevolucionesPorPeriodo',
+                url: '/ReporteVentas/ReporteGarantiasPorPeriodo',
                 data: { fechaInicio: fechaInicio, fechaFin: fechaFin },
                 success: function (response) {
                     if (!response.success) {
@@ -137,6 +137,7 @@
                 }
             });
         });
+
 
         document.getElementById('btnInventarioActual').addEventListener('click', function () {
             $.ajax({
@@ -155,8 +156,13 @@
         });
 
         document.getElementById('btnClientes').addEventListener('click', function () {
+            const dates = $('#daterange').val().split(' - ');
+            const fechaInicio = dates[0];
+            const fechaFin = dates[1];
+
             $.ajax({
-                url: '/ReporteVentas/ReporteClientes',
+                url: '/ReporteVentas/ReporteClientesPorPeriodo',
+                data: { fechaInicio: fechaInicio, fechaFin: fechaFin },
                 success: function (response) {
                     if (!response.success) {
                         showAlert(response.message);
@@ -169,5 +175,6 @@
                 }
             });
         });
+
     </script>
 }
