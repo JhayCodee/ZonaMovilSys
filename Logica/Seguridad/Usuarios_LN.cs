@@ -101,27 +101,52 @@ namespace Logica.Seguridad
 
         public bool UpdateUser(Usuario_VM user, ref string errorMessage)
         {
-            try
+            using (var transaction = _db.Database.BeginTransaction())
             {
-                ObjectParameter isSuccessParam = new ObjectParameter("IsSuccess", typeof(int));
-                ObjectParameter errorMsgParam = new ObjectParameter("ErrorMsg", typeof(string));
-
-                _db.sp_Usuario_Update(user.IdUsuario, user.Nombre, user.Apellidos, user.NombreUsuario, user.Correo, user.IdRol, user.Activo, isSuccessParam, errorMsgParam);
-
-                if ((int)isSuccessParam.Value == 0)
+                try
                 {
-                    errorMessage = errorMsgParam.Value.ToString();
+                    // Actualizar la información básica del usuario
+                    ObjectParameter isSuccessParam = new ObjectParameter("IsSuccess", typeof(int));
+                    ObjectParameter errorMsgParam = new ObjectParameter("ErrorMsg", typeof(string));
+
+                    _db.sp_Usuario_Update(user.IdUsuario, user.Nombre, user.Apellidos, user.NombreUsuario, user.Correo, user.IdRol, user.Activo, isSuccessParam, errorMsgParam);
+
+                    if ((int)isSuccessParam.Value == 0)
+                    {
+                        errorMessage = errorMsgParam.Value.ToString();
+                        return false;
+                    }
+
+                    // Si la contraseña no es nula ni vacía, actualizar la contraseña
+                    if (!string.IsNullOrEmpty(user.Contrasena))
+                    {
+                        var hash = new PasswordManager().HashPassword(user.Contrasena);
+
+                        var usuario = _db.Usuario.SingleOrDefault(u => u.IdUsuario == user.IdUsuario);
+                        if (usuario != null)
+                        {
+                            usuario.Contrasena = hash;
+                            _db.SaveChanges();
+                        }
+                        else
+                        {
+                            errorMessage = "Usuario no encontrado.";
+                            return false;
+                        }
+                    }
+
+                    transaction.Commit();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    errorMessage = ex.Message;
                     return false;
                 }
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                errorMessage = ex.Message;
-                return false;
             }
         }
+
 
 
         public bool DeleteUser(int userId, ref string errorMessage)

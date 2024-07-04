@@ -4,12 +4,80 @@
     let activeValue = true;
 
     $(function () {
-      
         showTableUsers();
         loadRoles();
 
+        // Inicializar la validación del formulario
+        $("#UserForm").validate({
+            rules: {
+                Nombre: {
+                    required: true,
+                    minlength: 2
+                },
+                Apellidos: {
+                    required: true,
+                    minlength: 2
+                },
+                NombreUsuario: {
+                    required: true,
+                    minlength: 2
+                },
+                Correo: {
+                    required: true,
+                    email: true
+                },
+                Contrasena: {
+                    required: function (element) {
+                        return !isUpdate;  // Requerido solo si no es una actualización
+                    },
+                    minlength: 6
+                },
+                IdRol: {
+                    required: true
+                }
+            },
+            messages: {
+                Nombre: {
+                    required: "Por favor ingrese el nombre",
+                    minlength: "El nombre debe tener al menos 2 caracteres"
+                },
+                Apellidos: {
+                    required: "Por favor ingrese los apellidos",
+                    minlength: "Los apellidos deben tener al menos 2 caracteres"
+                },
+                NombreUsuario: {
+                    required: "Por favor ingrese el nombre de usuario",
+                    minlength: "El nombre de usuario debe tener al menos 2 caracteres"
+                },
+                Correo: {
+                    required: "Por favor ingrese el correo electrónico",
+                    email: "Por favor ingrese un correo electrónico válido"
+                },
+                Contrasena: {
+                    required: "Por favor ingrese la contraseña",
+                    minlength: "La contraseña debe tener al menos 6 caracteres"
+                },
+                IdRol: {
+                    required: "Por favor seleccione un rol"
+                }
+            },
+            errorElement: "div",
+            errorPlacement: function (error, element) {
+                error.addClass("invalid-feedback");
+                element.closest(".mb-3").append(error);
+            },
+            highlight: function (element) {
+                $(element).addClass("is-invalid");
+            },
+            unhighlight: function (element) {
+                $(element).removeClass("is-invalid");
+            }
+        });
+
         $('#backUsers').on('click', () => {
             $("#UserForm")[0].reset();
+            $("#UserForm").find(".is-invalid").removeClass("is-invalid");
+            $("#UserForm").find(".invalid-feedback").remove();
             UsersContainer.Form.hide();
             UsersContainer.Index.show();
         });
@@ -18,8 +86,6 @@
             let userId = $(this).data('id');
             activeValue = $(this).data("activo");
             isUpdate = true;
-            $('#Contrasena').hide();
-            $('#lblPass').hide();
 
             $.ajax({
                 type: "POST",
@@ -98,7 +164,6 @@
             });
         });
 
-
         $("#saveUser").click(function (e) {
             e.preventDefault();
 
@@ -112,13 +177,11 @@
                     cancelButtonText: 'Cancelar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        getUserData();  
+                        getUserData();
                     }
                 });
             }
         });
-
-
     });
 
     const UsersContainer = {
@@ -130,7 +193,6 @@
     const $tblUsers = $('#tblUsers');
 
     function showTableUsers() {
-
         if ($.fn.DataTable.isDataTable($tblUsers))
             $tblUsers.DataTable().destroy();
 
@@ -163,7 +225,6 @@
                     data: null,
                     render: function (data, type, row) {
                         if (row.Activo) {
-
                             return '<span class="badge bg-label-success">Activo</span>';
                         } else {
                             return '<span class="badge bg-label-danger">Inactivo</span>';
@@ -193,7 +254,7 @@
                                             <i class='bx bx-trash'></i>
                                         </button>
                              `;
-                        } else { 
+                        } else {
                             buttons += `
                                         <button class="btn btn-success btn-sm activate-button" 
                                                 data-id="${row.IdUsuario}"
@@ -228,7 +289,7 @@
     function loadRoles() {
         $.ajax({
             type: "POST",
-            url: UsersContainer.Url + "/GetRoles", 
+            url: UsersContainer.Url + "/GetRoles",
             dataType: "json",
             success: function (response) {
                 if (response.status) {
@@ -246,7 +307,6 @@
     }
 
     function getUserData() {
-
         if (isUpdate) {
             activoValue = activeValue;
         }
@@ -299,6 +359,8 @@
                         // Limpiar formulario y otras operaciones después de guardar
                         isUpdate = false;
                         $("#UserForm")[0].reset();
+                        $("#UserForm").find(".is-invalid").removeClass("is-invalid");
+                        $("#UserForm").find(".invalid-feedback").remove();
                         UsersContainer.Form.hide();
                         UsersContainer.Index.show();
                         showTableUsers();
@@ -314,15 +376,13 @@
     }
 
     function fillUserData(user) {
-
         $('#IdUsuario').val(user.IdUsuario);
         $('#Nombre').val(user.Nombre);
         $('#Apellidos').val(user.Apellidos);
         $('#NombreUsuario').val(user.NombreUsuario);
         $('#Correo').val(user.Correo);
-        $('#Contrasena').val(user.Contrasena);
+        $('#Contrasena').val('');
         $('#IdRol').val(user.IdRol).trigger('change');
     }
-
 
 })(jQuery);
