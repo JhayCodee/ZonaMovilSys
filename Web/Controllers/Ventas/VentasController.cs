@@ -28,6 +28,7 @@ namespace Web.Controllers.Ventas
             ViewBag.Clientes = new SelectList(clientesDropdown, "Id", "Value");
             ViewBag.Productos = new SelectList(productosDropdown, "Id", "Value");
             ViewBag.Departamentos = new SelectList(departamentosDropdown, "Id", "Value");
+            ViewBag.PageName = "ventas";
             return View();
         }
 

@@ -18,7 +18,7 @@
 }
 
 <div class="container-fluid">
-    <div class="row">
+    <div class="row" id="tour-estadisticas">
         <div class="col-lg-8 mb-4 order-0">
             <div class="card">
                 <div class="d-flex align-items-end row">
@@ -28,6 +28,7 @@
                             <p class="mb-4">
                                 Hoy es un gran día para alcanzar nuevos objetivos. Explora las nuevas funcionalidades que hemos añadido y mejora tu experiencia.
                             </p>
+                            <button id="btn-start-tour" class="btn btn-primary">Iniciar recorrido</button>
                         </div>
                     </div>
                     <div class="col-sm-5 text-center text-sm-left">
@@ -41,7 +42,7 @@
         <div class="col-lg-4 col-md-12 order-1">
             <div class="row">
                 <div class="col-12 col-md-6 mb-4">
-                    <div class="card">
+                    <div class="card" id="tour-ganancias">
                         <div class="card-body">
                             <div class="card-title d-flex align-items-start justify-content-between">
                                 <div class="avatar flex-shrink-0">
@@ -54,7 +55,7 @@
                     </div>
                 </div>
                 <div class="col-12 col-md-6 mb-4">
-                    <div class="card">
+                    <div class="card" id="tour-productos">
                         <div class="card-body">
                             <div class="card-title d-flex align-items-start justify-content-between">
                                 <div class="avatar flex-shrink-0">
@@ -70,7 +71,7 @@
         </div>
 
         <!--Graficos -->
-        <div class="col-12 order-2 mb-4">
+        <div class="col-12 order-2 mb-4" id="tour-graficos">
             <div class="row">
                 <!-- Gráfico de Barras: Marcas más Vendidas -->
                 <div class="col-md-6 mb-4">
@@ -159,5 +160,65 @@
         var graficoCostosVsIngresos = new ApexCharts(document.querySelector("#costosVsIngresosChart"), opcionesCostosVsIngresos);
         graficoCostosVsIngresos.render();
 
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.2.0/intro.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var tour = introJs();
+            tour.setOptions({
+                steps: [
+                    {
+                        title: '🎉 BIENVENIDO 🎉',
+                        intro: 'Aquí te mostraremos los pasos esenciales, que debes saber para manejar el sistema, y como acceder a las ayudas.',
+                        position: 'bottom'
+                    },
+                    {
+                        element: '#layout-menu',
+                        intro: 'Aquí está el menú de navegación, este te será útil para trabajar en las diferentes secciones de la lógica del negocio.',
+                        position: 'bottom'
+                    },
+                    {
+                        element: '#layout-navbar',
+                        intro: 'En esta sección podra configurar su perfil, cerrar sesión y obtener ayuda.',
+                        position: 'bottom'
+                    },
+                    {
+                        element: '#tour-estadisticas',
+                        intro: "Esta es la página de inicio. Aquí podrás ver un resumen de tus ventas y productos más vendidos.",
+                        position: 'right'
+                    },
+                    {
+                        element: '#tour-ganancias',
+                        intro: "Como las ganancias que has obtenido.",
+                        position: 'left'
+                    },
+                    {
+                        element: '#tour-productos',
+                        intro: "Al igual que la cantidad de productos vendidos.",
+                        position: 'right'
+                    },
+                    {
+                        element: '#tour-graficos',
+                        intro: "También podras visualizar que productos son los más vendidos.",
+                        position: 'left'
+                    },
+                    {
+                        title: 'AYUDA',
+                        intro: 'Si tienes alguna duda, puedes consultar la documentación que se encontrara definida de la siguiente manera.<div style="text-align: center"><br><img width="48" height="48" src="https://img.icons8.com/fluency/48/refer-to-manual.png" alt="refer-to-manual"/></div>',
+                        position: 'bottom'
+                    },
+                    {
+                        title: '¡Listo!',
+                        intro: '¡Ahora ya puedes comenzar a trabajar!',
+                        position: 'bottom'
+                    }
+                ]
+            });
+
+            document.getElementById('btn-start-tour').addEventListener('click', function () {
+                tour.start();
+            });
+        });
     </script>
 }
