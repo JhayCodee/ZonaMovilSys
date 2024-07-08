@@ -237,6 +237,7 @@
     <Content Include="Content\vendor\fonts\boxicons\boxicons.woff" />
     <Content Include="Content\vendor\fonts\boxicons\boxicons.woff2" />
     <Content Include="App_Browsers\qt.browser" />
+    <Content Include="Imagenes\Manual De Usuario.pdf" />
     <None Include="packages.config" />
     <Content Include="Views\Acceso\Login.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />

@@ -24,6 +24,21 @@
             }
         });
 
+        //opcion para guardar con F1
+        $(document).ready(function () {
+            // Agregar evento para detectar la tecla presionada en todo el documento
+            $(document).keydown(function (e) {
+                // Verificar si la tecla presionada es la tecla F1 (código 112)
+                if (e.which == 113) {
+                    // Evitar el comportamiento predeterminado de la tecla F1 (como abrir la ayuda del navegador)
+                    e.preventDefault();
+                    // Ejecutar la misma función que se ejecuta al hacer clic en el botón #btnGuardarCliente
+                    $("#btnGuardarCliente").click();
+                }
+            });
+        });
+
+
         $('#tblClientes').on('click', '.edit-button', function () {
             isEditing = true;
             const id = $(this).data("id");
@@ -85,6 +100,19 @@
             $('#Form-Clientes').hide();
             $('#Index-Clientes').show();
             clearFormClient();
+        });
+
+        $(document).ready(function () {
+            // Agregar evento para detectar la tecla presionada en todo el documento
+            $(document).keydown(function (e) {
+                // Verificar si la tecla presionada es la tecla F1 (código 112)
+                if (e.which == 112) {
+                    // Evitar el comportamiento predeterminado de la tecla F1 (como abrir la ayuda del navegador)
+                    e.preventDefault();
+                    // Ejecutar la misma función que se ejecuta al hacer clic en el botón #btnGuardarCliente
+                    $("#btnRegresarCliente").click();
+                }
+            });
         });
     });
 
